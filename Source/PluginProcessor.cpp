@@ -149,6 +149,9 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             gSampler.turnBusOff(i);
     }
     
+    int busOnBefore = gSampler.numOfBusOn(12);
+    DBG(busOnBefore);
+
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
