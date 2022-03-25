@@ -16,6 +16,12 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     playSnareButton.onClick = [&]() {audioProcessor.playSample(61);};
     playCrashButton.onClick = [&]() {audioProcessor.playSample(66);};
     playSnareAndCrashButton.onClick = [&]() {audioProcessor.playMultiple(61, 66); };
+    a1.onClick = [this] {updateToggleState(&a1, "One"); };
+    a2.onClick = [this] {updateToggleState(&a2, "Two"); };
+    a3.onClick = [this] {updateToggleState(&a3, "Three"); };
+    addAndMakeVisible(a1);
+    addAndMakeVisible(a2);
+    addAndMakeVisible(a3);
     addAndMakeVisible(playSnareButton);
     addAndMakeVisible(playCrashButton);
     addAndMakeVisible(playSnareAndCrashButton);
@@ -37,9 +43,17 @@ void SamplerMAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
+void SamplerMAudioProcessorEditor::updateToggleState(juce::Button* button, juce::String name) {
+    int i = 0;
+}
+
 void SamplerMAudioProcessorEditor::resized()
 {
     playSnareButton.setBounds(20, 20, 180, 180);
     playCrashButton.setBounds(220, 20, 180, 180);
     playSnareAndCrashButton.setBounds(20, 220, 180, 180);
+
+    a1.setBounds(20, 420, 20, 20);
+    a2.setBounds(60, 420, 20, 20);
+    a3.setBounds(100, 420, 20, 20);
 }

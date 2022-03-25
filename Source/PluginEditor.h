@@ -24,6 +24,8 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void updateToggleState(juce::Button* button, juce::String name);
+
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -32,6 +34,9 @@ private:
     juce::TextButton playSnareButton {"SNARE"};
     juce::TextButton playCrashButton { "CRASH" };
     juce::TextButton playSnareAndCrashButton { "S C" };
+    juce::ToggleButton a1{ "1" };
+    juce::ToggleButton a2{ "2" };
+    juce::ToggleButton a3{ "3" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessorEditor)
 };
