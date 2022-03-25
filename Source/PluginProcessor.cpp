@@ -140,17 +140,20 @@ bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    //auto totalNumInputChannels  = getTotalNumInputChannels();
+
+    int numChannelTurnedOn = 0;
     for (int i = 0; i < 16; i++) {
         Bus* b = getBus(false, i);
-        if (b -> getCurrentLayout() != juce::AudioChannelSet::disabled())
+        if (b->getCurrentLayout() != juce::AudioChannelSet::disabled()) {
             gSampler.turnBusOn(i);
-        else
+            gSampler.busChannelVec[i] = numChannelTurnedOn;
+            numChannelTurnedOn++;
+        }
+        else {
             gSampler.turnBusOff(i);
+            gSampler.busChannelVec[i] = numChannelTurnedOn;
+        }
     }
-    
-    int busOnBefore = gSampler.numOfBusOn(12);
-    int fuckYouGitHub = 1000000;
 
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
@@ -180,8 +183,13 @@ void SamplerMAudioProcessor::setStateInformation (const void* data, int sizeInBy
     // whose contents will have been created by the getStateInformation() call.
 }
 
-void SamplerMAudioProcessor::playSnare() {
-    gSampler.noteOn(1, 61, 1.0f);
+void SamplerMAudioProcessor::playSample(int noteNum) {
+    gSampler.noteOn(1, noteNum, 1.0f);
+}
+
+void SamplerMAudioProcessor::playMultiple(int one, int two) {
+    playSample(one);
+    playSample(two);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {

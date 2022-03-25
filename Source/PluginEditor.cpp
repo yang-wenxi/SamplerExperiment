@@ -13,9 +13,12 @@
 SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    playSnareButton.onClick = [&]() {audioProcessor.playSnare();};
-    
+    playSnareButton.onClick = [&]() {audioProcessor.playSample(61);};
+    playCrashButton.onClick = [&]() {audioProcessor.playSample(66);};
+    playSnareAndCrashButton.onClick = [&]() {audioProcessor.playMultiple(61, 66); };
     addAndMakeVisible(playSnareButton);
+    addAndMakeVisible(playCrashButton);
+    addAndMakeVisible(playSnareAndCrashButton);
     setSize (500, 500);
 }
 
@@ -37,4 +40,6 @@ void SamplerMAudioProcessorEditor::paint (juce::Graphics& g)
 void SamplerMAudioProcessorEditor::resized()
 {
     playSnareButton.setBounds(20, 20, 180, 180);
+    playCrashButton.setBounds(220, 20, 180, 180);
+    playSnareAndCrashButton.setBounds(20, 220, 180, 180);
 }

@@ -29,7 +29,9 @@ private:
     // access the processor object that created it.
     SamplerMAudioProcessor& audioProcessor;
     
-    juce::TextButton playSnareButton {"61 SNARE"};
+    juce::TextButton playSnareButton {"SNARE"};
+    juce::TextButton playCrashButton { "CRASH" };
+    juce::TextButton playSnareAndCrashButton { "S C" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessorEditor)
 };

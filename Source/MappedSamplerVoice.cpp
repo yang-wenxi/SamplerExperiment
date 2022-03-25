@@ -59,15 +59,14 @@ void MappedSamplerVoice::controllerMoved(int controllerNumber, int newValue) {
 
 void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) {
     if (auto* playingSound = dynamic_cast<OneSample*>(getCurrentlyPlayingSound().get())) {
+
         auto& data = *playingSound -> getAudioData();
         const float* const inL = data.getReadPointer(0);
         const float* const inR = data.getNumChannels() > 1 ? data.getReadPointer(1) : nullptr;
         
         int key = getInstrument();
         float* out;
-        
-        DBG(outputBuffer.getNumChannels());
-        
+
         if (outputBuffer.getNumChannels() > key) {
             out = outputBuffer.getWritePointer(key, startSample);
             while (--numSamples >= 0) {
@@ -94,6 +93,9 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                     break;
                 }
             }
+        }
+        else {
+            stopNote(0, true);
         }
     }
 }

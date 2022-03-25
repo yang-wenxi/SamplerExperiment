@@ -54,7 +54,9 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    void playSnare();
+    void playSample(int noteNum);
+    void playMultiple(int one, int two);
+
     juce::MidiBuffer buttonBuffer;
     juce::BigInteger busLayoutCondition;
     juce::AudioProcessorValueTreeState tree;

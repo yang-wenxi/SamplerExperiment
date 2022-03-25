@@ -58,10 +58,10 @@ public:
     
     std::map<int, int> noteToIndexMap;
     std::map<juce::String, int> instrumentToNoteMap;
+    int busChannelVec[16] = {};
     juce::StringArray instruments {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
     juce::StringArray noteName {"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"};
     juce::BigInteger busCondition;
-
 
 private:
     juce::AudioFormatManager formatManager;
