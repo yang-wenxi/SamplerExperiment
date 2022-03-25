@@ -61,7 +61,7 @@ public:
     juce::StringArray instruments {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
     juce::StringArray noteName {"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"};
     juce::BigInteger busCondition;
-    juce::ReferenceCountedArray<juce::BigInteger> soundChannels;
+    //juce::ReferenceCountedArray<juce::BigInteger> soundChannels;
 
 private:
     juce::AudioFormatManager formatManager;

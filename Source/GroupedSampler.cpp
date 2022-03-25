@@ -19,7 +19,7 @@ void GroupedSampler::prepare() {
         auto* voice = new MappedSamplerVoice(i);
         voice -> setMidiNote(instrumentToNoteMap[instruments[i]]);
         addVoice(voice);
-        soundChannels.add(new juce::BigInteger());
+        //soundChannels.add(new juce::BigInteger());
     }
     
     formatManager.registerBasicFormats();
