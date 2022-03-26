@@ -53,7 +53,7 @@ void SamplerMAudioProcessorEditor::resized()
     playCrashButton.setBounds(220, 20, 180, 180);
     playSnareAndCrashButton.setBounds(20, 220, 180, 180);
 
-    a1.setBounds(20, 420, 20, 20);
-    a2.setBounds(60, 420, 20, 20);
-    a3.setBounds(100, 420, 20, 20);
+    a1.setBounds(20, 420, 40, 40);
+    a2.setBounds(80, 420, 40, 40);
+    a3.setBounds(140, 420, 40, 40);
 }

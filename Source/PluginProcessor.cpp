@@ -184,6 +184,9 @@ void SamplerMAudioProcessor::setStateInformation (const void* data, int sizeInBy
 }
 
 void SamplerMAudioProcessor::playSample(int noteNum) {
+    MappedSamplerVoice* mVoice = dynamic_cast<MappedSamplerVoice*>(gSampler.getVoice(1));
+    mVoice -> addChannel(5);
+    
     gSampler.noteOn(1, noteNum, 1.0f);
 }
 

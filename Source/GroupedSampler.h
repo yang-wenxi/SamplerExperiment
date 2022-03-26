@@ -32,6 +32,7 @@ public:
     void addSample(juce::String instrument, juce::String fileName);
     
     void addSampleVoice(MappedSamplerVoice* newVoice);
+    MappedSamplerVoice* getSampleVoice(int index);
     
     //void parameterChanged(const juce::String &parameterID, float newValue) override;
     void noteOn(int midiChannel, int midiNoteNumber, float velocity);

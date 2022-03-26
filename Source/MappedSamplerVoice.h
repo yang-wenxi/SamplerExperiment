@@ -12,6 +12,7 @@
 #include <JuceHeader.h>
 #include "OneSample.h"
 #include "EnvelopeEngine.h"
+#include "GroupedSampler.h"
 
 class MappedSamplerVoice : public juce::SamplerVoice
 {
@@ -20,6 +21,7 @@ public:
         instrument = i;
         currentSampleRate = 48000;
         pitchVal = 0;
+        channelList.at(0) = 0;
     }
     
     int getInstrument() {
@@ -37,6 +39,10 @@ public:
     bool canPlaySample(int note) const {
         return midiNotes[note];
     }
+    
+    void addChannel(int chan);
+    
+    void removeChannel(int chann);
 
     //void parameterChanged(const juce::String &parameterID, float newValue) override;
     bool canPlaySound(juce::SynthesiserSound* sampSound) override;
@@ -52,6 +58,7 @@ public:
     }
     */
 private:
+    std::vector<int> channelList;
     int instrument;
     int pitchVal;
     juce::BigInteger midiNotes;

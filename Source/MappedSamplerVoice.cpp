@@ -57,6 +57,19 @@ void MappedSamplerVoice::controllerMoved(int controllerNumber, int newValue) {
     
 }
 
+void MappedSamplerVoice::addChannel(int chan) {
+    channelList.push_back(chan);
+}
+
+void MappedSamplerVoice::removeChannel(int chan) {
+    for (int i = 0; i < channelList.size(); i++) {
+        if (channelList.at(i) == chan) {
+            channelList.erase(channelList.begin() + i);
+            break;
+        }
+    }
+}
+
 void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) {
     if (auto* playingSound = dynamic_cast<OneSample*>(getCurrentlyPlayingSound().get())) {
 
@@ -66,8 +79,13 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         
         int key = getInstrument();
         float* out;
-
-        if (outputBuffer.getNumChannels() > key) {
+        
+        std::vector<int> playbackChannels;
+        for (auto chan : channelList) {
+            
+        }
+        
+        if (!channelList.empty()) {
             out = outputBuffer.getWritePointer(key, startSample);
             while (--numSamples >= 0) {
                 auto pos = (int) sourceSamplePosition;
