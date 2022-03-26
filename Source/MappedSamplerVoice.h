@@ -41,9 +41,9 @@ public:
         return midiNotes[note];
     }
     
-    void addChannel(int chan);
+    void addPlaybackChannel(int chan);
     
-    void removeChannel(int chann);
+    void removePlaybackChannel(int chann);
 
     //void parameterChanged(const juce::String &parameterID, float newValue) override;
     bool canPlaySound(juce::SynthesiserSound* sampSound) override;

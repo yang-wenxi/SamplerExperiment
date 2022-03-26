@@ -10,6 +10,7 @@
 
 #include "MappedSamplerVoice.h"
 
+
 bool MappedSamplerVoice::canPlaySound(juce::SynthesiserSound* sampSound) {
     return ((dynamic_cast<OneSample*>(sampSound)) != nullptr);
 }
@@ -57,11 +58,11 @@ void MappedSamplerVoice::controllerMoved(int controllerNumber, int newValue) {
     
 }
 
-void MappedSamplerVoice::addChannel(int chan) {
+void MappedSamplerVoice::addPlaybackChannel(int chan) {
     channelList.push_back(chan);
 }
 
-void MappedSamplerVoice::removeChannel(int chan) {
+void MappedSamplerVoice::removePlaybackChannel(int chan) {
     for (int i = 0; i < channelList.size(); i++) {
         if (channelList.at(i) == chan) {
             channelList.erase(channelList.begin() + i);

@@ -125,11 +125,13 @@ bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
     int openedChannels = 0;
     for (int i = 0; i < 16; i++) {
         if (layouts.getChannelSet(false, i) != juce::AudioChannelSet::disabled()) {
-            //busChannelVec[i] = openedChannels;
+            busAvailable[i] = 1;
+            busChannelVec[i] = openedChannels;
             openedChannels++;
         }
         else {
-            //busChannelVec[i] = openedChannels;
+            busAvailable[i] = 0;
+            busChannelVec[i] = openedChannels;
         }
     }
     return true;
@@ -186,7 +188,7 @@ void SamplerMAudioProcessor::setStateInformation (const void* data, int sizeInBy
 
 void SamplerMAudioProcessor::playSample(int noteNum) {
     MappedSamplerVoice* mVoice = dynamic_cast<MappedSamplerVoice*>(gSampler.getVoice(1));
-    mVoice -> addChannel(5);
+    mVoice -> addPlaybackChannel(5);
     
     gSampler.noteOn(1, noteNum, 1.0f);
 }

@@ -11,4 +11,5 @@
 #pragma once
 
 
-//int busChannelVec[16] = {};
+static int busChannelVec[16] = { };
+static int busAvailable[16] = { };
