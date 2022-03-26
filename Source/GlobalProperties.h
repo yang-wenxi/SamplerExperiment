@@ -11,5 +11,11 @@
 #pragma once
 
 
+<<<<<<< Updated upstream
 static int busChannelVec[16] = { };
 static int busAvailable[16] = { };
+=======
+
+static int busChannelVector[16] = {};
+static int busAvailable[16] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+>>>>>>> Stashed changes

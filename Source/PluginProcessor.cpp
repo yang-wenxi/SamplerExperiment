@@ -122,18 +122,62 @@ void SamplerMAudioProcessor::releaseResources()
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
+<<<<<<< Updated upstream
     int openedChannels = 0;
     for (int i = 0; i < 16; i++) {
         if (layouts.getChannelSet(false, i) != juce::AudioChannelSet::disabled()) {
             busAvailable[i] = 1;
             busChannelVec[i] = openedChannels;
             openedChannels++;
+=======
+    
+    /*
+    for (int m = 0; m < 16; m++) {
+        //busChannelVector[m] = 0;
+        busAvailable[m] = 0;
+    }
+     
+    
+    DBG("-----------------------------------------------------------");
+    int openedChannels = 0;;
+    for (int i = 0; i < 16; i++) {
+        if (layouts.getChannelSet(false, i) != juce::AudioChannelSet::disabled()) {
+            busAvailable[i] = 1;
+            busChannelVector[i] = openedChannels;
+            openedChannels++;
+            DBG("bus " + std::to_string(i) + " avail");
+>>>>>>> Stashed changes
         }
+        
         else {
             busAvailable[i] = 0;
+<<<<<<< Updated upstream
             busChannelVec[i] = openedChannels;
         }
     }
+=======
+            busChannelVector[i] = openedChannels;
+        
+    }
+    
+    
+    DBG("---------------------------------------------------------------------------");
+    DBG("busAvailable");
+    juce::String baS = "";
+    for (auto ba : busAvailable) {
+        baS = baS + (std::to_string(ba) + "     ");
+    }
+    DBG(baS);
+    
+    DBG("busChannelVec");
+    juce::String bcV = "";
+    for (auto bc : busChannelVector) {
+        bcV = bcV + (std::to_string(bc) + "     ");
+    }
+    DBG(bcV);
+    */
+    
+>>>>>>> Stashed changes
     return true;
 }
 #endif
@@ -142,11 +186,16 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 {
     juce::ScopedNoDenormals noDenormals;
 
+<<<<<<< Updated upstream
     /*
+=======
+    
+>>>>>>> Stashed changes
     int numChannelTurnedOn = 0;
     for (int i = 0; i < 16; i++) {
         Bus* b = getBus(false, i);
         if (b->getCurrentLayout() != juce::AudioChannelSet::disabled()) {
+<<<<<<< Updated upstream
             gSampler.turnBusOn(i);
             gSampler.busChannelVec[i] = numChannelTurnedOn;
             numChannelTurnedOn++;
@@ -158,6 +207,34 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     }
      */
 
+=======
+            busAvailable[i] = 1;
+            busChannelVector[i] = numChannelTurnedOn;
+            numChannelTurnedOn++;
+        }
+        else {
+            busAvailable[i] = 0;
+            busChannelVector[i] = numChannelTurnedOn;
+        }
+    }
+    
+    
+    DBG("Processor asdhf,jsdhf kjshfdk dkjf----------------------------------");
+    DBG("busAvailable");
+    juce::String baS = "";
+    for (auto ba : busAvailable) {
+        baS = baS + (std::to_string(ba) + "  ");
+    }
+    DBG(baS);
+    
+    DBG("busChannelVec");
+    juce::String bcV = "";
+    for (auto bc : busChannelVector) {
+        bcV = bcV + (std::to_string(bc) + "  ");
+    }
+    DBG(bcV);
+    
+>>>>>>> Stashed changes
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 

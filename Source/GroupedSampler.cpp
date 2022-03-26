@@ -21,6 +21,15 @@ void GroupedSampler::prepare() {
         addVoice(voice);
     }
     
+<<<<<<< Updated upstream
+=======
+    MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(1));
+    v -> addPlayToChannel(1);
+    v -> addPlayToChannel(3);
+    v -> addPlayToChannel(5);
+    
+    busChannelVector[0] = 0;
+>>>>>>> Stashed changes
     formatManager.registerBasicFormats();
     loadSamples("A");
 }

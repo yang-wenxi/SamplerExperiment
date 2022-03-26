@@ -9,6 +9,7 @@
 */
 
 #include "MappedSamplerVoice.h"
+#include "GlobalProperties.h"
 
 
 bool MappedSamplerVoice::canPlaySound(juce::SynthesiserSound* sampSound) {
@@ -78,6 +79,7 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         const float* const inL = data.getReadPointer(0);
         const float* const inR = data.getNumChannels() > 1 ? data.getReadPointer(1) : nullptr;
         
+<<<<<<< Updated upstream
         int key = getInstrument();
         float* out;
         
@@ -88,6 +90,37 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         
         if (!channelList.empty()) {
             out = outputBuffer.getWritePointer(key, startSample);
+=======
+        std::vector<int> hasPlaybackChannel;
+        std::vector<float*> out;
+        
+        for (auto c : playToChannel) {
+            if (busAvailable[c]) {
+                hasPlaybackChannel.push_back(busChannelVector[c] - 1);
+            }
+        }
+        
+        DBG("Thread Voice------------------------------------");
+        DBG("busAvailable");
+        juce::String baS = "";
+        for (auto ba : busAvailable) {
+            baS = baS + (std::to_string(ba) + "  ");
+        }
+        DBG(baS);
+        
+        DBG("busChannelVec");
+        juce::String bcV = "";
+        for (auto bc : busChannelVector) {
+            bcV = bcV + (std::to_string(bc) + "  ");
+        }
+        DBG(bcV);
+        
+        if (!hasPlaybackChannel.empty()) {
+            for (auto c : hasPlaybackChannel) {
+                out.push_back(outputBuffer.getWritePointer(c, startSample));
+            }
+            
+>>>>>>> Stashed changes
             while (--numSamples >= 0) {
                 auto pos = (int) sourceSamplePosition;
                 auto alpha = (float)(sourceSamplePosition - pos);
@@ -100,11 +133,10 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 l = EE.applyTo(l);
                 r = EE.applyTo(r);
                 
-                if (out != nullptr)
-                    *out++ += l;
-                else {
-                    clearCurrentNote();
+                for (auto o : out) {
+                    *o++ += l;
                 }
+                
                 sourceSamplePosition += pitchRatio;
                 
                 if (sourceSamplePosition > playingSound -> length || EE.getState() == 0) {
@@ -115,6 +147,19 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         }
         else {
             stopNote(0, true);
+        }
+    }
+}
+
+void MappedSamplerVoice::addPlayToChannel(int chan) {
+    playToChannel.push_back(chan);
+}
+
+void MappedSamplerVoice::removePlayToChannel(int chan) {
+    for (int d = 0; d < playToChannel.size(); d++) {
+        if (playToChannel.at(d) == chan) {
+            playToChannel.erase(playToChannel.begin() + d);
+            break;
         }
     }
 }
