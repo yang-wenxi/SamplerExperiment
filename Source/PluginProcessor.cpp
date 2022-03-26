@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "GlobalProperties.h"
 
 //==============================================================================
 SamplerMAudioProcessor::SamplerMAudioProcessor()
@@ -146,12 +147,12 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         Bus* b = getBus(false, i);
         if (b->getCurrentLayout() != juce::AudioChannelSet::disabled()) {
             gSampler.turnBusOn(i);
-            gSampler.busChannelVec[i] = numChannelTurnedOn;
+            busChannelVector[i] = numChannelTurnedOn;
             numChannelTurnedOn++;
         }
         else {
             gSampler.turnBusOff(i);
-            gSampler.busChannelVec[i] = numChannelTurnedOn;
+            busChannelVector[i] = numChannelTurnedOn;
         }
     }
 

@@ -9,6 +9,7 @@
 */
 #include <JuceHeader.h>
 #include "GroupedSampler.h"
+#include "GlobalProperties.h"
 
 void GroupedSampler::prepare() {
     setMap();
@@ -22,6 +23,7 @@ void GroupedSampler::prepare() {
         //soundChannels.add(new juce::BigInteger());
     }
     
+    busChannelVector[0] = 0;
     formatManager.registerBasicFormats();
     loadSamples("A");
 }
@@ -43,8 +45,6 @@ void GroupedSampler::setMap() {
         int midiNote = instrumentToNoteMap[itr];
         noteToIndexMap[midiNote] = i;
     }
-
-    busChannelVec[0] = 0;
 }
 
 void GroupedSampler::addSample(juce::String instrument, juce::String fileName) {
