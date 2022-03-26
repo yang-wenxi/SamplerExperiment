@@ -12,7 +12,8 @@
 #include <JuceHeader.h>
 #include "OneSample.h"
 #include "EnvelopeEngine.h"
-#include "GroupedSampler.h"
+#include "GlobalProperties.h"
+
 
 class MappedSamplerVoice : public juce::SamplerVoice
 {

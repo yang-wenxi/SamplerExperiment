@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "GroupedSampler.h"
+#include "GlobalProperties.h"
 
 //==============================================================================
 /**

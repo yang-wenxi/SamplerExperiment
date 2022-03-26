@@ -6,6 +6,8 @@
               defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="eixVHm" name="SamplerM">
     <GROUP id="{BD92D26E-9D5C-05FE-3B37-40FD64D3B3B8}" name="Source">
+      <FILE id="N4o8tu" name="GlobalProperties.h" compile="0" resource="0"
+            file="Source/GlobalProperties.h"/>
       <FILE id="LU4v6b" name="SoundMap.h" compile="0" resource="0" file="Source/SoundMap.h"/>
       <GROUP id="{B9781B89-4449-59B8-ABCD-52B4A4C1BF57}" name="Audio">
         <FILE id="jCWfY0" name="EnvelopeEngine.cpp" compile="1" resource="0"

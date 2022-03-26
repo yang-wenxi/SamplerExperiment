@@ -122,17 +122,16 @@ void SamplerMAudioProcessor::releaseResources()
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
-    /*
-    DBG ("------------------------------------------------------------------------------------");
+    int openedChannels = 0;
     for (int i = 0; i < 16; i++) {
         if (layouts.getChannelSet(false, i) != juce::AudioChannelSet::disabled()) {
-            DBG (std::to_string(i + 1) + "  " + "is enabled");
-            
+            //busChannelVec[i] = openedChannels;
+            openedChannels++;
         }
         else {
+            //busChannelVec[i] = openedChannels;
         }
     }
-     */
     return true;
 }
 #endif
@@ -141,6 +140,7 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 {
     juce::ScopedNoDenormals noDenormals;
 
+    /*
     int numChannelTurnedOn = 0;
     for (int i = 0; i < 16; i++) {
         Bus* b = getBus(false, i);
@@ -154,6 +154,7 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             gSampler.busChannelVec[i] = numChannelTurnedOn;
         }
     }
+     */
 
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }

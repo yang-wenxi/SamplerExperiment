@@ -15,6 +15,7 @@
 #include "SoundMap.h"
 #include "SampleGroup.h"
 #include "EnvelopeEngine.h"
+#include "GlobalProperties.h"
 
 class GroupedSampler : public juce::Synthesiser
 {
@@ -32,7 +33,9 @@ public:
     void addSample(juce::String instrument, juce::String fileName);
     
     void addSampleVoice(MappedSamplerVoice* newVoice);
+
     MappedSamplerVoice* getSampleVoice(int index);
+
     
     //void parameterChanged(const juce::String &parameterID, float newValue) override;
     void noteOn(int midiChannel, int midiNoteNumber, float velocity);
@@ -59,7 +62,7 @@ public:
     
     std::map<int, int> noteToIndexMap;
     std::map<juce::String, int> instrumentToNoteMap;
-    int busChannelVec[16] = {};
+    
     juce::StringArray instruments {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
     juce::StringArray noteName {"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"};
     juce::BigInteger busCondition;

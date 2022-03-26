@@ -43,7 +43,7 @@ void GroupedSampler::setMap() {
         noteToIndexMap[midiNote] = i;
     }
 
-    busChannelVec[0] = 0;
+    //busChannelVec[0] = 0;
 }
 
 void GroupedSampler::addSample(juce::String instrument, juce::String fileName) {
