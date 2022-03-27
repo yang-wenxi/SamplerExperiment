@@ -15,6 +15,7 @@
 #include "SoundMap.h"
 #include "SampleGroup.h"
 #include "EnvelopeEngine.h"
+#include "GlobalProperties.h"
 
 class GroupedSampler : public juce::Synthesiser
 {
@@ -42,11 +43,8 @@ public:
     void loadSamples(juce::String rootNote);
     bool isNoteMapped (int midiNote);
     
-    void turnBusOn(int i);
-    void turnBusOff(int i);
-    void clearBus();
-    int numOfBusOn(int i);
-    bool busOn(int i);
+    void brodcastBusCondition(busConditionSender* cond);
+
     juce::BigInteger* getConditionLayout();
     
     
@@ -61,7 +59,7 @@ public:
     
     juce::StringArray instruments {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
     juce::StringArray noteName {"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"};
-    juce::BigInteger busCondition;
+    busConditionSender busCondition;
 
 private:
     juce::AudioFormatManager formatManager;

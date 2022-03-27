@@ -12,6 +12,7 @@
 #include <JuceHeader.h>
 #include "OneSample.h"
 #include "EnvelopeEngine.h"
+#include "GlobalProperties.h"
 
 class MappedSamplerVoice : public juce::SamplerVoice
 {
@@ -38,6 +39,13 @@ public:
         return midiNotes[note];
     }
 
+    void receiveBusCondition(busConditionSender* cond) {
+        busCondition = *cond;
+    }
+
+    void addPlaybackChannel(int chan);
+    void removePlaybackChannel(int chan);
+
     //void parameterChanged(const juce::String &parameterID, float newValue) override;
     bool canPlaySound(juce::SynthesiserSound* sampSound) override;
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sampSound, int pitchWheel) override;
@@ -51,6 +59,10 @@ public:
         juce::SamplerVoice::setCurrentPlaybackSampleRate(newSampleRate);
     }
     */
+
+    std::vector<int> playbackChannel;
+    busConditionSender busCondition;
+
 private:
     int instrument;
     int pitchVal;

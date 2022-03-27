@@ -58,20 +58,41 @@ void MappedSamplerVoice::controllerMoved(int controllerNumber, int newValue) {
     
 }
 
+void MappedSamplerVoice::addPlaybackChannel(int chan) {
+    playbackChannel.push_back(chan);
+}
+
+void MappedSamplerVoice::removePlaybackChannel(int chan) {
+    for (int i = 0; i < playbackChannel.size(); i++) {
+        if (chan == playbackChannel.at(i)) {
+            playbackChannel.erase(playbackChannel.begin() + i);
+            break;
+        }
+    }
+}
+
 void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) {
     if (auto* playingSound = dynamic_cast<OneSample*>(getCurrentlyPlayingSound().get())) {
-        DBG("------fetching things-----");
-        printingThings();
         
         auto& data = *playingSound -> getAudioData();
         const float* const inL = data.getReadPointer(0);
         const float* const inR = data.getNumChannels() > 1 ? data.getReadPointer(1) : nullptr;
         
         int key = getInstrument();
-        float* out;
+        std::vector<float*> out;
 
-        if (outputBuffer.getNumChannels() > key) {
-            out = outputBuffer.getWritePointer(key, startSample);
+        std::vector<int> hasPlaybackChannel;
+        for (auto c : playbackChannel) {
+            if (busCondition.busAvailable[c]) {
+                hasPlaybackChannel.push_back(busCondition.busChannelVec[c]);
+            }
+        }
+
+        if (!hasPlaybackChannel.empty()) {
+            for (auto c : hasPlaybackChannel) {
+                out.push_back(outputBuffer.getWritePointer(c, startSample));
+            }
+
             while (--numSamples >= 0) {
                 auto pos = (int) sourceSamplePosition;
                 auto alpha = (float)(sourceSamplePosition - pos);
@@ -84,11 +105,15 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 l = EE.applyTo(l);
                 r = EE.applyTo(r);
                 
-                if (out != nullptr)
-                    *out++ += l;
-                else {
-                    clearCurrentNote();
+                /*
+                for (auto f : out) {
+                    *f++ += l;
                 }
+                */
+
+                float* def = outputBuffer.getWritePointer(0, startSample);
+                *def++ += l;
+
                 sourceSamplePosition += pitchRatio;
                 
                 if (sourceSamplePosition > playingSound -> length || EE.getState() == 0) {

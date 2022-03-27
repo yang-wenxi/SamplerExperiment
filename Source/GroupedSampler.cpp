@@ -23,7 +23,16 @@ void GroupedSampler::prepare() {
         //soundChannels.add(new juce::BigInteger());
     }
     
-    busChannelVector[0] = 0;
+    MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*> (getVoice(1));
+    v->addPlaybackChannel(1);
+    v->addPlaybackChannel(3);
+    v->addPlaybackChannel(5);
+
+    v = dynamic_cast<MappedSamplerVoice*> (getVoice(6));
+    v->addPlaybackChannel(10);
+    v->addPlaybackChannel(11);
+    v->addPlaybackChannel(12);
+
     formatManager.registerBasicFormats();
     loadSamples("A");
 }
@@ -70,6 +79,13 @@ void GroupedSampler::loadSamples(juce::String rootNote) {
     }
 }
 
+void GroupedSampler::brodcastBusCondition(busConditionSender* cond) {
+    for (int i = 0; i < instruments.size(); i++) {
+        MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(i));
+        v->receiveBusCondition(cond);
+    }
+}
+
 void GroupedSampler::noteOn(int midiChannel, int midiNoteNumber, float velocity) {
     if (isNoteMapped(midiNoteNumber)) {
         int soundIndex = noteToIndexMap[midiNoteNumber];
@@ -87,32 +103,6 @@ bool GroupedSampler::isNoteMapped(int midiNoteNumber) {
     return (noteToIndexMap.find(midiNoteNumber) == noteToIndexMap.end()) ? false : true;
 }
 
-void GroupedSampler::turnBusOn(int i) {
-    busCondition.setBit(i);
-}
 
-void GroupedSampler::turnBusOff(int i) {
-    busCondition.setBit(i, false);
-}
-
-void GroupedSampler::clearBus() {
-    busCondition.clear();
-}
-
-int GroupedSampler::numOfBusOn(int i) {
-    int n = 0;
-    for (int bit = 0; bit < i; bit++) {
-        n += busCondition[bit] ? 1 : 0;
-    }
-    return n;
-}
-
-juce::BigInteger* GroupedSampler::getConditionLayout() {
-    return &busCondition;
-}
-
-bool GroupedSampler::busOn(int i) {
-    return busCondition[i];
-}
 
 

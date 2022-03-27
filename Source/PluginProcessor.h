@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "GroupedSampler.h"
+#include "GlobalProperties.h"
 
 //==============================================================================
 /**
@@ -58,8 +59,9 @@ public:
     void playMultiple(int one, int two);
 
     juce::MidiBuffer buttonBuffer;
-    juce::BigInteger busLayoutCondition;
     juce::AudioProcessorValueTreeState tree;
+
+    busConditionSender conditionSender;
     
 private:
     GroupedSampler gSampler;

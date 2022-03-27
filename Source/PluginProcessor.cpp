@@ -18,7 +18,8 @@ SamplerMAudioProcessor::SamplerMAudioProcessor()
                       #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
                       #endif
-                       .withOutput("OutputL", juce::AudioChannelSet::mono(), true)
+                       .withOutput("OutputL0", juce::AudioChannelSet::mono(), true)
+                       .withOutput("OutputL1", juce::AudioChannelSet::mono(), true)
                        .withOutput("OutputL2", juce::AudioChannelSet::mono(), true)
                        .withOutput("OutputL3", juce::AudioChannelSet::mono(), true)
                        .withOutput("OutputL4", juce::AudioChannelSet::mono(), true)
@@ -33,13 +34,12 @@ SamplerMAudioProcessor::SamplerMAudioProcessor()
                        .withOutput("OutputL13", juce::AudioChannelSet::mono(), true)
                        .withOutput("OutputL14", juce::AudioChannelSet::mono(), true)
                        .withOutput("OutputL15", juce::AudioChannelSet::mono(), true)
-                       .withOutput("OutputL16", juce::AudioChannelSet::mono(), true)
+                       
                      #endif
                        ), tree(*this, nullptr, "ParamList", createParams())
  #endif
 {
     gSampler.prepare();
-    busLayoutCondition.clear();
 }
 
 SamplerMAudioProcessor::~SamplerMAudioProcessor()
@@ -146,16 +146,16 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     for (int i = 0; i < 16; i++) {
         Bus* b = getBus(false, i);
         if (b->getCurrentLayout() != juce::AudioChannelSet::disabled()) {
-            busAvailable[i] = 1;
-            busChannelVector[i] = numChannelTurnedOn;
+            conditionSender.busAvailable[i] = 1;
+            conditionSender.busChannelVec[i] = numChannelTurnedOn;
             numChannelTurnedOn++;
         }
         else {
-            busAvailable[i] = 0;
-            busChannelVector[i] = numChannelTurnedOn;
+            conditionSender.busAvailable[i] = 0;
+            conditionSender.busChannelVec[i] = numChannelTurnedOn;
         }
     }
-    
+    gSampler.brodcastBusCondition(&conditionSender);
     //DBG("global var set");
     //printingThings();
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
