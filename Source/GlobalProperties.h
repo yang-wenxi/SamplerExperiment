@@ -14,3 +14,11 @@
 
 static int busChannelVector[16] = { };
 static int busAvailable[16] = { };
+
+static void printingThings() {
+    std::string toBePrinted = "";
+    for (auto item : busAvailable) {
+        toBePrinted += std::to_string(item);
+    }
+    DBG(toBePrinted);
+}

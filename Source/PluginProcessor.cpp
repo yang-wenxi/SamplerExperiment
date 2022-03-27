@@ -156,7 +156,8 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         }
     }
     
-    DBG("global var set");
+    //DBG("global var set");
+    //printingThings();
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
