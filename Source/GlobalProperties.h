@@ -12,4 +12,5 @@
 
 
 
-static int busChannelVector[16] = {};
+static int busChannelVector[16] = { };
+static int busAvailable[16] = { };

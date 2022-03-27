@@ -146,16 +146,17 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     for (int i = 0; i < 16; i++) {
         Bus* b = getBus(false, i);
         if (b->getCurrentLayout() != juce::AudioChannelSet::disabled()) {
-            gSampler.turnBusOn(i);
+            busAvailable[i] = 1;
             busChannelVector[i] = numChannelTurnedOn;
             numChannelTurnedOn++;
         }
         else {
-            gSampler.turnBusOff(i);
+            busAvailable[i] = 0;
             busChannelVector[i] = numChannelTurnedOn;
         }
     }
-
+    
+    DBG("global var set");
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
