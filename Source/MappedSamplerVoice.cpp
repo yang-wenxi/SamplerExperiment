@@ -60,8 +60,8 @@ void MappedSamplerVoice::controllerMoved(int controllerNumber, int newValue) {
 
 void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) {
     if (auto* playingSound = dynamic_cast<OneSample*>(getCurrentlyPlayingSound().get())) {
-        //DBG("------fetching things-----");
-        //printingThings();
+        DBG("------fetching things-----");
+        printingThings();
         
         auto& data = *playingSound -> getAudioData();
         const float* const inL = data.getReadPointer(0);
