@@ -79,18 +79,8 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         const float* const inL = data.getReadPointer(0);
         const float* const inR = data.getNumChannels() > 1 ? data.getReadPointer(1) : nullptr;
         
-<<<<<<< Updated upstream
         int key = getInstrument();
-        float* out;
-        
-        std::vector<int> playbackChannels;
-        for (auto chan : channelList) {
-            
-        }
-        
-        if (!channelList.empty()) {
-            out = outputBuffer.getWritePointer(key, startSample);
-=======
+
         std::vector<int> hasPlaybackChannel;
         std::vector<float*> out;
         
@@ -120,7 +110,6 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 out.push_back(outputBuffer.getWritePointer(c, startSample));
             }
             
->>>>>>> Stashed changes
             while (--numSamples >= 0) {
                 auto pos = (int) sourceSamplePosition;
                 auto alpha = (float)(sourceSamplePosition - pos);
