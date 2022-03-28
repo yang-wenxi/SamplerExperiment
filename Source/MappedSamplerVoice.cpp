@@ -129,12 +129,11 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 hasPlaybackChannel.push_back(busCondition.busChannelVec[c]);
             }
         }
-        int sz = (int)hasPlaybackChannel.size();
-        float *oL[sz];
-        //float* out;
+        std::vector<float*> outputList;
+
         if (!hasPlaybackChannel.empty()) {
             for (int ii = 0; ii < hasPlaybackChannel.size(); ii++) {
-                oL[ii] = outputBuffer.getWritePointer(hasPlaybackChannel.at(ii), startSample);
+                outputList.push_back(outputBuffer.getWritePointer(hasPlaybackChannel.at(ii), startSample));
             }
             //out = outputBuffer.getWritePointer(1, startSample);
             
@@ -154,7 +153,7 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 
                 
                 for (int chn = 0; chn < hasPlaybackChannel.size(); chn++) {
-                    *oL[chn]++ += l;
+                    *outputList[chn]++ += l;
                 }
                 
                 /*
