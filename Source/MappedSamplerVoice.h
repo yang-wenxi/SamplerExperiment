@@ -54,12 +54,7 @@ public:
     void controllerMoved(int controllerNumber, int newValue) override;
     void renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) override;
     void renderNextBlockI(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples);
-    /*
-    void setCurrentPlaybackSampleRate(double newSampleRate) override {
-        currentSampleRate = newSampleRate;
-        juce::SamplerVoice::setCurrentPlaybackSampleRate(newSampleRate);
-    }
-    */
+
 
     std::vector<int> playbackChannel;
     busConditionSender busCondition;
