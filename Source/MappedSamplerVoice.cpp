@@ -129,7 +129,7 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 hasPlaybackChannel.push_back(busCondition.busChannelVec[c]);
             }
         }
-        int sz = hasPlaybackChannel.size();
+        int sz = (int)hasPlaybackChannel.size();
         float *oL[sz];
         //float* out;
         if (!hasPlaybackChannel.empty()) {
