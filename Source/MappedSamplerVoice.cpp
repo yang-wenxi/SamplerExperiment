@@ -130,21 +130,13 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
             }
         }
         
-        float* out;
-        float* def;
         float *oL[hasPlaybackChannel.size()];
+        //float* out;
         if (!hasPlaybackChannel.empty()) {
-            /*
-            for (auto c : hasPlaybackChannel) {
-                outList.push_back(outputBuffer.getWritePointer(c, startSample));
+            for (int ii = 0; ii < hasPlaybackChannel.size(); ii++) {
+                oL[ii] = outputBuffer.getWritePointer(hasPlaybackChannel.at(ii), startSample);
             }
-             */
-            out = outputBuffer.getWritePointer(1, startSample);
-            def = outputBuffer.getWritePointer(3, startSample);
-            oL[0] = out;
-            oL[1] = def;
-            bool same = oL[0] == out;
-            DBG(std::to_string(same));
+            //out = outputBuffer.getWritePointer(1, startSample);
             
             while (--numSamples >= 0) {
                 auto pos = (int) sourceSamplePosition;
@@ -158,28 +150,21 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 l = EE.applyTo(l);
                 r = EE.applyTo(r);
                 
+                //*out++ += l;
                 
                 
-                //out++;
-                //*out += l;
-                /*
-                float* op = oL[0];
-                op++;
-                *op += l;
-                oL[0] = op;
-                */
-                DBG(std::to_string(hasPlaybackChannel.size()));
                 for (int chn = 0; chn < hasPlaybackChannel.size(); chn++) {
-                    float* n = oL[chn];
-                    n++;
-                    *n += l;
-                    oL[chn] = n;
+                    *oL[chn]++ += l;
                 }
                 
-                
-                same = oL[0] == out;
-                DBG(std::to_string(same));
-                DBG("-----------------------------------");
+                /*
+                bool same = *oL[1] == *out;
+                if (!same) {
+                    DBG(std::to_string(same));
+                    DBG(std::to_string(numSamples));
+                    DBG("-----------------------------------");
+                }
+                */
                 
                 sourceSamplePosition += pitchRatio;
                 
