@@ -186,6 +186,7 @@ void SamplerMAudioProcessor::numChannelsChanged() {
             conditionSender.busChannelVec[i] = numChannelTurnedOn;
         }
     }
+    juce::String visualStudio = "a piece of fucking shit";
     gSampler.brodcastBusCondition(&conditionSender);
 }
 
