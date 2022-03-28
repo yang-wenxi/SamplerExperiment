@@ -141,6 +141,7 @@ bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
+    bool changed = numBusesChanged();
 
     int numChannelTurnedOn = 0;
     for (int i = 0; i < 16; i++) {
