@@ -141,22 +141,7 @@ bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    bool changed = numBusesChanged();
-
-    int numChannelTurnedOn = 0;
-    for (int i = 0; i < 16; i++) {
-        Bus* b = getBus(false, i);
-        if (b->getCurrentLayout() != juce::AudioChannelSet::disabled()) {
-            conditionSender.busAvailable[i] = 1;
-            conditionSender.busChannelVec[i] = numChannelTurnedOn;
-            numChannelTurnedOn++;
-        }
-        else {
-            conditionSender.busAvailable[i] = 0;
-            conditionSender.busChannelVec[i] = numChannelTurnedOn;
-        }
-    }
-    gSampler.brodcastBusCondition(&conditionSender);
+    
     //DBG("global var set");
     //printingThings();
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
@@ -185,6 +170,23 @@ void SamplerMAudioProcessor::setStateInformation (const void* data, int sizeInBy
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+void SamplerMAudioProcessor::numChannelsChanged() {
+    int numChannelTurnedOn = 0;
+    for (int i = 0; i < 16; i++) {
+        Bus* b = getBus(false, i);
+        if (b->getCurrentLayout() != juce::AudioChannelSet::disabled()) {
+            conditionSender.busAvailable[i] = 1;
+            conditionSender.busChannelVec[i] = numChannelTurnedOn;
+            numChannelTurnedOn++;
+        }
+        else {
+            conditionSender.busAvailable[i] = 0;
+            conditionSender.busChannelVec[i] = numChannelTurnedOn;
+        }
+    }
+    gSampler.brodcastBusCondition(&conditionSender);
 }
 
 void SamplerMAudioProcessor::playSample(int noteNum) {
