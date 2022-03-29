@@ -12,7 +12,6 @@
 #include <JuceHeader.h>
 #include "OneSample.h"
 #include "MappedSamplerVoice.h"
-#include "SoundMap.h"
 #include "SampleGroup.h"
 #include "EnvelopeEngine.h"
 #include "GlobalProperties.h"

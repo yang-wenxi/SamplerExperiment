@@ -63,6 +63,8 @@ public:
     juce::AudioProcessorValueTreeState tree;
 
     busConditionSender conditionSender;
+
+    juce::AudioDeviceManager deviceManager;
     
 private:
     GroupedSampler gSampler;

@@ -14,7 +14,7 @@
 
 #define EE_DEFAULT_STATE_TIME 1000
 #include <cmath>
-#include "SoundMap.h"
+
 
 class EnvelopeEngine
 {

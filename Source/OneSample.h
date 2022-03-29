@@ -11,7 +11,7 @@
 #pragma once
 #include <JuceHeader.h>
 #include "MappedSamplerVoice.h"
-#include "SoundMap.h"
+
 
 
 class OneSample : public juce::SamplerSound
