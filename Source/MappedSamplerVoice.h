@@ -53,7 +53,7 @@ public:
     void controllerMoved(int controllerNumber, int newValue) override;
     void renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) override;
     
-    std::vector<int> playToChannel;
+    std::vector<int> playbackChannel;
 
 private:
     std::vector<int> channelList;

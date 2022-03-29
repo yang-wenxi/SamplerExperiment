@@ -91,7 +91,7 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         std::vector<int> hasPlaybackChannel;
         std::vector<float*> out;
         
-        for (auto c : playToChannel) {
+        for (auto c : playbackChannel) {
             if (busAvailable[c]) {
                 hasPlaybackChannel.push_back(busChannelVector[c] - 1);
             }
