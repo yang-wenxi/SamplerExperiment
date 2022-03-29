@@ -22,11 +22,8 @@ public:
         instrument = i;
         currentSampleRate = 48000;
         pitchVal = 0;
-<<<<<<< Updated upstream
-        channelList.at(0) = 0;
-=======
         playbackChannel.push_back(0);
->>>>>>> Stashed changes
+
     }
     
     int getInstrument() {
@@ -45,8 +42,7 @@ public:
         return midiNotes[note];
     }
     
-    void addPlaybackChannel(int chan);
-    
+    void addPlaybackChannel(int chan); 
     void removePlaybackChannel(int chann);
 
     //void parameterChanged(const juce::String &parameterID, float newValue) override;
@@ -58,15 +54,7 @@ public:
     void renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) override;
     
     std::vector<int> playToChannel;
-    void addPlayToChannel(int i);
-    void removePlayToChannel(int i);
-    
-    /*
-    void setCurrentPlaybackSampleRate(double newSampleRate) override {
-        currentSampleRate = newSampleRate;
-        juce::SamplerVoice::setCurrentPlaybackSampleRate(newSampleRate);
-    }
-    */
+
 private:
     std::vector<int> channelList;
     int instrument;

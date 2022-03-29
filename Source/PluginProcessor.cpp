@@ -174,37 +174,6 @@ bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-
-
-    int numChannelTurnedOn = 0;
-    for (int i = 0; i < 16; i++) {
-        Bus* b = getBus(false, i);
-        if (b->getCurrentLayout() != juce::AudioChannelSet::disabled()) {
-            busAvailable[i] = 1;
-            busChannelVector[i] = numChannelTurnedOn;
-            numChannelTurnedOn++;
-        }
-        else {
-            busAvailable[i] = 0;
-            busChannelVector[i] = numChannelTurnedOn;
-        }
-    }
-    
-    
-    DBG("Processor asdhf,jsdhf kjshfdk dkjf----------------------------------");
-    DBG("busAvailable");
-    juce::String baS = "";
-    for (auto ba : busAvailable) {
-        baS = baS + (std::to_string(ba) + "  ");
-    }
-    DBG(baS);
-    
-    DBG("busChannelVec");
-    juce::String bcV = "";
-    for (auto bc : busChannelVector) {
-        bcV = bcV + (std::to_string(bc) + "  ");
-    }
-    DBG(bcV);
     
 
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
@@ -256,6 +225,23 @@ juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::crea
 void SamplerMAudioProcessor::updateToggleState(juce::Button* button, juce::String name) {
     auto state = button->getToggleState();
     gSampler.toggleOutputChannel(1, std::stoi(name.toStdString()), state);
+}
+
+void SamplerMAudioProcessor::numChannelsChanged() {
+    int numChannelTurnedOn = 0;
+    for (int i = 0; i < 16; i++) {
+        Bus* b = getBus(false, i);
+        if (b->getCurrentLayout() != juce::AudioChannelSet::disabled()) {
+            conditionSender.busAvailable[i] = 1;
+            conditionSender.busChannelVec[i] = numChannelTurnedOn;
+            numChannelTurnedOn++;
+        }
+        else {
+            conditionSender.busAvailable[i] = 0;
+            conditionSender.busChannelVec[i] = numChannelTurnedOn;
+        }
+    }
+    gSampler.brodcastBusCondition(&conditionSender);
 }
 
 //==============================================================================

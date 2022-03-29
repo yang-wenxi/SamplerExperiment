@@ -59,10 +59,13 @@ public:
     void playMultiple(int one, int two);
 
     void updateToggleState(juce::Button* button, juce::String name);
+    void numChannelsChanged() override;
 
+    busConditionSender conditionSender;
     juce::MidiBuffer buttonBuffer;
     juce::BigInteger busLayoutCondition;
     juce::AudioProcessorValueTreeState tree;
+
     
 private:
     GroupedSampler gSampler;

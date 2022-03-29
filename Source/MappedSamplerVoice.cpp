@@ -60,13 +60,11 @@ void MappedSamplerVoice::controllerMoved(int controllerNumber, int newValue) {
 }
 
 void MappedSamplerVoice::addPlaybackChannel(int chan) {
-<<<<<<< Updated upstream
-    channelList.push_back(chan);
-=======
+
     if (playbackChannel.at(0) == 0)
         playbackChannel.clear();
     playbackChannel.push_back(chan);
->>>>>>> Stashed changes
+
 }
 
 void MappedSamplerVoice::removePlaybackChannel(int chan) {
