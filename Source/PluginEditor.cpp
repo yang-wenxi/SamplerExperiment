@@ -16,12 +16,12 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     playSnareButton.onClick = [&]() {audioProcessor.playSample(61);};
     playCrashButton.onClick = [&]() {audioProcessor.playSample(66);};
     playSnareAndCrashButton.onClick = [&]() {audioProcessor.playMultiple(61, 66); };
-    a1.onClick = [this] {audioProcessor.updateToggleState(&a1, "1"); };
-    a2.onClick = [this] {audioProcessor.updateToggleState(&a2, "2"); };
-    a3.onClick = [this] {audioProcessor.updateToggleState(&a3, "3"); };
-    a4.onClick = [this] {audioProcessor.updateToggleState(&a4, "4"); };
-    a5.onClick = [this] {audioProcessor.updateToggleState(&a5, "5"); };
-    a6.onClick = [this] {audioProcessor.updateToggleState(&a6, "6"); };
+    for (int i = 0; i < sizeof(snareSet); i++) {
+        snareSet[i] = new juce::ToggleButton(std::to_string(i));
+        juce::ToggleButton* b = snareSet[i];
+        snareSet[i]->onClick = [this] {audioProcessor.updateToggleState(b, std::to_string(i)); };
+
+    }
     addAndMakeVisible(a1);
     addAndMakeVisible(a2);
     addAndMakeVisible(a3);
@@ -43,7 +43,6 @@ void SamplerMAudioProcessorEditor::paint (juce::Graphics& g)
 {
 
 }
-
 
 
 void SamplerMAudioProcessorEditor::resized()
