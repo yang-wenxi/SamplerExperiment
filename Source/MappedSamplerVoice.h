@@ -23,7 +23,6 @@ public:
         currentSampleRate = 48000;
         pitchVal = 0;
         playbackChannel.push_back(0);
-
     }
     
     int getInstrument() {
@@ -52,8 +51,12 @@ public:
     void pitchWheelMoved(int newValue) override;
     void controllerMoved(int controllerNumber, int newValue) override;
     void renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) override;
+    void receiveBusCondition(busConditionSender* b) {
+        busCondition = *b;
+    }
     
     std::vector<int> playbackChannel;
+    busConditionSender busCondition;
 
 private:
     std::vector<int> channelList;

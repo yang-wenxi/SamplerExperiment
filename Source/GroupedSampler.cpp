@@ -21,21 +21,13 @@ void GroupedSampler::prepare() {
         addVoice(voice);
     }
     
-<<<<<<< Updated upstream
-    MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(1));
-    v -> addPlayToChannel(1);
-    v -> addPlayToChannel(3);
-    v -> addPlayToChannel(5);
-    
-    busChannelVector[0] = 0;
-=======
     MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*> (getVoice(1));
 
     v = dynamic_cast<MappedSamplerVoice*> (getVoice(6));
     v->addPlaybackChannel(10);
     v->addPlaybackChannel(11);
     v->addPlaybackChannel(12);
->>>>>>> Stashed changes
+
 
     formatManager.registerBasicFormats();
     loadSamples("A");
@@ -83,8 +75,7 @@ void GroupedSampler::loadSamples(juce::String rootNote) {
     }
 }
 
-<<<<<<< Updated upstream
-=======
+
 void GroupedSampler::brodcastBusCondition(busConditionSender* cond) {
     for (int i = 0; i < instruments.size(); i++) {
         MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(i));
@@ -100,7 +91,7 @@ void GroupedSampler::toggleOutputChannel(int voiceID, int chanID, bool state) {
         v->removePlaybackChannel(chanID);
 }
 
->>>>>>> Stashed changes
+
 void GroupedSampler::noteOn(int midiChannel, int midiNoteNumber, float velocity) {
     if (isNoteMapped(midiNoteNumber)) {
         int soundIndex = noteToIndexMap[midiNoteNumber];
@@ -118,32 +109,5 @@ bool GroupedSampler::isNoteMapped(int midiNoteNumber) {
     return (noteToIndexMap.find(midiNoteNumber) == noteToIndexMap.end()) ? false : true;
 }
 
-void GroupedSampler::turnBusOn(int i) {
-    busCondition.setBit(i);
-}
-
-void GroupedSampler::turnBusOff(int i) {
-    busCondition.setBit(i, false);
-}
-
-void GroupedSampler::clearBus() {
-    busCondition.clear();
-}
-
-int GroupedSampler::numOfBusOn(int i) {
-    int n = 0;
-    for (int bit = 0; bit < i; bit++) {
-        n += busCondition[bit] ? 1 : 0;
-    }
-    return n;
-}
-
-juce::BigInteger* GroupedSampler::getConditionLayout() {
-    return &busCondition;
-}
-
-bool GroupedSampler::busOn(int i) {
-    return busCondition[i];
-}
 
 

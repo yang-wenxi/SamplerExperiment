@@ -79,63 +79,58 @@ void MappedSamplerVoice::removePlaybackChannel(int chan) {
         playbackChannel.push_back(0);
 }
 
-void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) {
+void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float >& outputBuffer, int startSample, int numSamples) {
     if (auto* playingSound = dynamic_cast<OneSample*>(getCurrentlyPlayingSound().get())) {
 
-        auto& data = *playingSound -> getAudioData();
+        auto& data = *playingSound->getAudioData();
         const float* const inL = data.getReadPointer(0);
         const float* const inR = data.getNumChannels() > 1 ? data.getReadPointer(1) : nullptr;
-        
-        int key = getInstrument();
 
         std::vector<int> hasPlaybackChannel;
-        std::vector<float*> out;
-        
         for (auto c : playbackChannel) {
-            if (busAvailable[c]) {
-                hasPlaybackChannel.push_back(busChannelVector[c] - 1);
+            if (busCondition.busAvailable[c]) {
+                hasPlaybackChannel.push_back(busCondition.busChannelVec[c]);
             }
         }
-        
-        DBG("Thread Voice------------------------------------");
-        DBG("busAvailable");
-        juce::String baS = "";
-        for (auto ba : busAvailable) {
-            baS = baS + (std::to_string(ba) + "  ");
-        }
-        DBG(baS);
-        
-        DBG("busChannelVec");
-        juce::String bcV = "";
-        for (auto bc : busChannelVector) {
-            bcV = bcV + (std::to_string(bc) + "  ");
-        }
-        DBG(bcV);
-        
+        std::vector<float*> outputList;
+
         if (!hasPlaybackChannel.empty()) {
-            for (auto c : hasPlaybackChannel) {
-                out.push_back(outputBuffer.getWritePointer(c, startSample));
+            for (int ii = 0; ii < hasPlaybackChannel.size(); ii++) {
+                outputList.push_back(outputBuffer.getWritePointer(hasPlaybackChannel.at(ii), startSample));
             }
-            
+            //out = outputBuffer.getWritePointer(1, startSample);
+
             while (--numSamples >= 0) {
-                auto pos = (int) sourceSamplePosition;
+                auto pos = (int)sourceSamplePosition;
                 auto alpha = (float)(sourceSamplePosition - pos);
                 auto invAlpha = 1.0f - alpha;
-                
+
                 float l = (inL[pos] * invAlpha + inL[pos + 1] * alpha);
                 float r = (inR != nullptr) ? (inR[pos] * invAlpha + inR[pos + 1] * alpha)
                     : l;
-                
+
                 l = EE.applyTo(l);
                 r = EE.applyTo(r);
-                
-                for (auto o : out) {
-                    *o++ += l;
+
+                //*out++ += l;
+
+
+                for (int chn = 0; chn < hasPlaybackChannel.size(); chn++) {
+                    *outputList[chn]++ += l;
                 }
-                
+
+                /*
+                bool same = *oL[1] == *out;
+                if (!same) {
+                    DBG(std::to_string(same));
+                    DBG(std::to_string(numSamples));
+                    DBG("-----------------------------------");
+                }
+                */
+
                 sourceSamplePosition += pitchRatio;
-                
-                if (sourceSamplePosition > playingSound -> length || EE.getState() == 0) {
+
+                if (sourceSamplePosition > playingSound->length || EE.getState() == 0) {
                     clearCurrentNote();
                     break;
                 }
@@ -143,19 +138,6 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         }
         else {
             stopNote(0, true);
-        }
-    }
-}
-
-void MappedSamplerVoice::addPlayToChannel(int chan) {
-    playToChannel.push_back(chan);
-}
-
-void MappedSamplerVoice::removePlayToChannel(int chan) {
-    for (int d = 0; d < playToChannel.size(); d++) {
-        if (playToChannel.at(d) == chan) {
-            playToChannel.erase(playToChannel.begin() + d);
-            break;
         }
     }
 }
