@@ -35,6 +35,9 @@ private:
     juce::ToggleButton a1{ "1" };
     juce::ToggleButton a2{ "2" };
     juce::ToggleButton a3{ "3" };
+    juce::ToggleButton a4{ "4" };
+    juce::ToggleButton a5{ "5" };
+    juce::ToggleButton a6{ "6" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessorEditor)
 };
