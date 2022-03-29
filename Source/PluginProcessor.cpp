@@ -253,6 +253,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::crea
     return {paramVec.begin(), paramVec.end()};
 }
 
+void SamplerMAudioProcessor::updateToggleState(juce::Button* button, juce::String name) {
+    auto state = button->getToggleState();
+    gSampler.toggleOutputChannel(1, std::stoi(name.toStdString()), state);
+}
+
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

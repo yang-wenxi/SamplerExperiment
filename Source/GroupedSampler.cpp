@@ -21,12 +21,21 @@ void GroupedSampler::prepare() {
         addVoice(voice);
     }
     
+<<<<<<< Updated upstream
     MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(1));
     v -> addPlayToChannel(1);
     v -> addPlayToChannel(3);
     v -> addPlayToChannel(5);
     
     busChannelVector[0] = 0;
+=======
+    MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*> (getVoice(1));
+
+    v = dynamic_cast<MappedSamplerVoice*> (getVoice(6));
+    v->addPlaybackChannel(10);
+    v->addPlaybackChannel(11);
+    v->addPlaybackChannel(12);
+>>>>>>> Stashed changes
 
     formatManager.registerBasicFormats();
     loadSamples("A");
@@ -74,6 +83,24 @@ void GroupedSampler::loadSamples(juce::String rootNote) {
     }
 }
 
+<<<<<<< Updated upstream
+=======
+void GroupedSampler::brodcastBusCondition(busConditionSender* cond) {
+    for (int i = 0; i < instruments.size(); i++) {
+        MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(i));
+        v->receiveBusCondition(cond);
+    }
+}
+
+void GroupedSampler::toggleOutputChannel(int voiceID, int chanID, bool state) {
+    MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(voiceID));
+    if (state)
+        v->addPlaybackChannel(chanID);
+    else
+        v->removePlaybackChannel(chanID);
+}
+
+>>>>>>> Stashed changes
 void GroupedSampler::noteOn(int midiChannel, int midiNoteNumber, float velocity) {
     if (isNoteMapped(midiNoteNumber)) {
         int soundIndex = noteToIndexMap[midiNoteNumber];

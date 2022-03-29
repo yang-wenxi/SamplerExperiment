@@ -60,7 +60,13 @@ void MappedSamplerVoice::controllerMoved(int controllerNumber, int newValue) {
 }
 
 void MappedSamplerVoice::addPlaybackChannel(int chan) {
+<<<<<<< Updated upstream
     channelList.push_back(chan);
+=======
+    if (playbackChannel.at(0) == 0)
+        playbackChannel.clear();
+    playbackChannel.push_back(chan);
+>>>>>>> Stashed changes
 }
 
 void MappedSamplerVoice::removePlaybackChannel(int chan) {
@@ -70,6 +76,9 @@ void MappedSamplerVoice::removePlaybackChannel(int chan) {
             break;
         }
     }
+
+    if (playbackChannel.empty())
+        playbackChannel.push_back(0);
 }
 
 void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) {

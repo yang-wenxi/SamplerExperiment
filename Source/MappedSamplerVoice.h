@@ -22,7 +22,11 @@ public:
         instrument = i;
         currentSampleRate = 48000;
         pitchVal = 0;
+<<<<<<< Updated upstream
         channelList.at(0) = 0;
+=======
+        playbackChannel.push_back(0);
+>>>>>>> Stashed changes
     }
     
     int getInstrument() {

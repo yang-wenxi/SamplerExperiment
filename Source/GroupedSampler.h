@@ -46,12 +46,17 @@ public:
     void loadSamples(juce::String rootNote);
     bool isNoteMapped (int midiNote);
     
+<<<<<<< Updated upstream
     void turnBusOn(int i);
     void turnBusOff(int i);
     void clearBus();
     int numOfBusOn(int i);
     bool busOn(int i);
     juce::BigInteger* getConditionLayout();
+=======
+    void brodcastBusCondition(busConditionSender* cond);
+    void toggleOutputChannel(int voiceID, int chanID, bool state);
+>>>>>>> Stashed changes
     
     
     juce::ReferenceCountedArray<SampleGroup>* getGroup () {
