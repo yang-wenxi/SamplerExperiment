@@ -44,6 +44,7 @@ public:
     bool isNoteMapped (int midiNote);
     
     void brodcastBusCondition(busConditionSender* cond);
+    void toggleChannelState(int voiceID, int chanID, bool state);
 
     juce::BigInteger* getConditionLayout();
     

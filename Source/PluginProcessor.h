@@ -57,6 +57,7 @@ public:
     
     void playSample(int noteNum);
     void playMultiple(int one, int two);
+    void updateToggleState(juce::Button* button, juce::String name);
 
     juce::MidiBuffer buttonBuffer;
     juce::AudioProcessorValueTreeState tree;

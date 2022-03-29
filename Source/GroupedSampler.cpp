@@ -24,9 +24,6 @@ void GroupedSampler::prepare() {
     }
     
     MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*> (getVoice(1));
-    v->addPlaybackChannel(1);
-    v->addPlaybackChannel(3);
-    v->addPlaybackChannel(5);
 
     v = dynamic_cast<MappedSamplerVoice*> (getVoice(6));
     v->addPlaybackChannel(10);
@@ -77,6 +74,15 @@ void GroupedSampler::loadSamples(juce::String rootNote) {
             addSample(instr, fName);
         }
     }
+}
+
+void GroupedSampler::toggleChannelState(int voiceID, int chanID, bool state) {
+    MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(voiceID));
+    if (state)
+        v->addPlaybackChannel(chanID);
+    else
+        v->removePlaybackChannel(chanID);
+    std::string fuckyou = "github fucker fuck youuuuuuuuuuuuuuuuu!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1";
 }
 
 void GroupedSampler::brodcastBusCondition(busConditionSender* cond) {

@@ -21,6 +21,7 @@ public:
         instrument = i;
         currentSampleRate = 48000;
         pitchVal = 0;
+        playbackChannel.push_back(0);
     }
     
     int getInstrument() {

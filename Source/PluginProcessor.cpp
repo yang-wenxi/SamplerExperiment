@@ -123,17 +123,7 @@ void SamplerMAudioProcessor::releaseResources()
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
-    /*
-    DBG ("------------------------------------------------------------------------------------");
-    for (int i = 0; i < 16; i++) {
-        if (layouts.getChannelSet(false, i) != juce::AudioChannelSet::disabled()) {
-            DBG (std::to_string(i + 1) + "  " + "is enabled");
-            
-        }
-        else {
-        }
-    }
-     */
+
     return true;
 }
 #endif
@@ -197,6 +187,11 @@ void SamplerMAudioProcessor::playSample(int noteNum) {
 void SamplerMAudioProcessor::playMultiple(int one, int two) {
     playSample(one);
     playSample(two);
+}
+
+void SamplerMAudioProcessor::updateToggleState(juce::Button* button, juce::String name) {
+    auto state = button->getToggleState();
+    gSampler.toggleChannelState(1, std::stoi(name.toStdString()), state);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {

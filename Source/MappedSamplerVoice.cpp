@@ -59,6 +59,8 @@ void MappedSamplerVoice::controllerMoved(int controllerNumber, int newValue) {
 }
 
 void MappedSamplerVoice::addPlaybackChannel(int chan) {
+    if (playbackChannel.at(0) == 0)
+        playbackChannel.clear();
     playbackChannel.push_back(chan);
 }
 
@@ -68,6 +70,10 @@ void MappedSamplerVoice::removePlaybackChannel(int chan) {
             playbackChannel.erase(playbackChannel.begin() + i);
             break;
         }
+    }
+
+    if (playbackChannel.empty()) {
+        playbackChannel.push_back(0);
     }
 }
 

@@ -24,8 +24,6 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    void updateToggleState(juce::Button* button, juce::String name);
-
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

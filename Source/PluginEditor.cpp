@@ -16,9 +16,9 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     playSnareButton.onClick = [&]() {audioProcessor.playSample(61);};
     playCrashButton.onClick = [&]() {audioProcessor.playSample(66);};
     playSnareAndCrashButton.onClick = [&]() {audioProcessor.playMultiple(61, 66); };
-    a1.onClick = [this] {updateToggleState(&a1, "One"); };
-    a2.onClick = [this] {updateToggleState(&a2, "Two"); };
-    a3.onClick = [this] {updateToggleState(&a3, "Three"); };
+    a1.onClick = [this] {audioProcessor.updateToggleState(&a1, "1"); };
+    a2.onClick = [this] {audioProcessor.updateToggleState(&a2, "2"); };
+    a3.onClick = [this] {audioProcessor.updateToggleState(&a3, "3"); };
     addAndMakeVisible(a1);
     addAndMakeVisible(a2);
     addAndMakeVisible(a3);
@@ -43,9 +43,7 @@ void SamplerMAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
-void SamplerMAudioProcessorEditor::updateToggleState(juce::Button* button, juce::String name) {
-    int i = 0;
-}
+
 
 void SamplerMAudioProcessorEditor::resized()
 {
