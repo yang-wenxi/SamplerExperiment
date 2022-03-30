@@ -132,8 +132,6 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 {
     juce::ScopedNoDenormals noDenormals;
     
-    //DBG("global var set");
-    //printingThings();
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
@@ -177,10 +175,11 @@ void SamplerMAudioProcessor::numChannelsChanged() {
         }
     }
     juce::String visualStudio = "a piece of fucking shit";
-    auto* device = deviceManager.getCurrentAudioDevice();
-    auto outputChan = device->getActiveOutputChannels();
-    int numberOfChannels = outputChan.getHighestBit() + 1;
-    DBG(std::to_string(numberOfChannels));
+
+    //auto* device = deviceManager.getCurrentAudioDevice();
+    //auto outputChan = device->getActiveOutputChannels();
+    //int numberOfChannels = outputChan.getHighestBit() + 1;
+    //DBG(std::to_string(numberOfChannels));
 
     gSampler.brodcastBusCondition(&conditionSender);
 }
