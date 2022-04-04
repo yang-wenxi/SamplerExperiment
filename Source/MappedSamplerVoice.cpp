@@ -137,13 +137,13 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         }
         std::vector<float*> outputList;
         std::vector<float*> outputListR;
+
         if (!hasPlaybackChannel.empty()) {
             for (int index = 0; index < hasPlaybackChannel.size(); index++) {
                 outputList.push_back(outputBuffer.getWritePointer(hasPlaybackChannel.at(index * 2), startSample));
                 outputListR.push_back(outputBuffer.getWritePointer(hasPlaybackChannel.at(index * 2 + 1), startSample));
             }
-            //out = outputBuffer.getWritePointer(1, startSample);
-            
+       
             while (--numSamples >= 0) {
                 auto pos = (int) sourceSamplePosition;
                 auto alpha = (float)(sourceSamplePosition - pos);
@@ -155,23 +155,11 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 
                 l = EE.applyTo(l);
                 r = EE.applyTo(r);
-                
-                //*out++ += l;
-                
-                
+
                 for (int chn = 0; chn < hasPlaybackChannel.size(); chn++) {
                     *outputList[chn]++ += l;
                     *outputListR[chn]++ += r;
                 }
-                
-                /*
-                bool same = *oL[1] == *out;
-                if (!same) {
-                    DBG(std::to_string(same));
-                    DBG(std::to_string(numSamples));
-                    DBG("-----------------------------------");
-                }
-                */
                 
                 sourceSamplePosition += pitchRatio;
                 
