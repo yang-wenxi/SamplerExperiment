@@ -61,17 +61,28 @@ void GroupedSampler::addSample(juce::String instrument, juce::String fileName) {
     fmtReader = formatManager.createReaderFor(*file);
     juce::BigInteger note;
     note.setBit(midiNote);
-    sampleGroup.getObjectPointer(noteToIndexMap[midiNote]) -> addSample(new OneSample(instrument, *fmtReader, note, midiNote, 0.0f, 10.0f, 10.0f));
+    //sampleGroup.getObjectPointer(noteToIndexMap[midiNote]) -> addSample(new OneSample(instrument, *fmtReader, note, midiNote, 0.0f, 10.0f, 10.0f));
+    sampleBundleVector[noteToIndexMap[midiNote]].addSample(new OneSample(instrument, *fmtReader, note, midiNote, 0.0f, 10.0f, 10.0f));
 }
 
 void GroupedSampler::loadSamples(juce::String rootNote) {
-    for (int i = 0; i < instruments.size(); i++){
-        juce::String instr = instruments[i];
-        if(!sampleGroup.getObjectPointer(i) -> isGroupEmpty())
-            sampleGroup.getObjectPointer(i) -> clear();
-        for(int j = 1; j < 6; j++) {
-            juce::String fName {instr + std::to_string(j)+ ".wav"};
-            addSample(instr, fName);
+    //for (int i = 0; i < instruments.size(); i++){
+    //    juce::String instr = instruments[i];
+    //    if(!sampleGroup.getObjectPointer(i) -> isGroupEmpty())
+    //        sampleGroup.getObjectPointer(i) -> clear();
+    //    for(int j = 1; j < 6; j++) {
+    //        juce::String fName {instr + std::to_string(j)+ ".wav"};
+    //        addSample(instr, fName);
+    //    }
+    //}
+
+    for (int i = 0; i < instruments.size(); i++) {
+        juce::String inst = instruments[i];
+        if (!sampleBundleVector[i].isEmpty())
+            sampleBundleVector[i].clearBundle();
+        for (int k = 1; k < 6; k++) {
+            juce::String fName = { inst + std::to_string(k) + ".wav" };
+            addSample(inst, fName);
         }
     }
 }
@@ -93,12 +104,22 @@ void GroupedSampler::brodcastBusCondition(busConditionSender* cond) {
 }
 
 void GroupedSampler::noteOn(int midiChannel, int midiNoteNumber, float velocity) {
+    //if (isNoteMapped(midiNoteNumber)) {
+    //    int soundIndex = noteToIndexMap[midiNoteNumber];
+    //    DBG(midiNoteNumber);
+    //    OneSample* sample = sampleGroup.getObjectPointer(soundIndex) -> getASample();
+    //    auto* voice = dynamic_cast<MappedSamplerVoice*>(getVoice(soundIndex));
+    //    if (voice -> getCurrentlyPlayingSound()) {
+    //        stopVoice(voice, 0.0f, true);
+    //    }
+    //    startVoice(voice, sample, midiChannel, midiNoteNumber, velocity);
+    //}
+
     if (isNoteMapped(midiNoteNumber)) {
         int soundIndex = noteToIndexMap[midiNoteNumber];
-        DBG(midiNoteNumber);
-        OneSample* sample = sampleGroup.getObjectPointer(soundIndex) -> getASample();
+        OneSample* sample = sampleBundleVector[soundIndex].getASamplePtr();
         auto* voice = dynamic_cast<MappedSamplerVoice*>(getVoice(soundIndex));
-        if (voice -> getCurrentlyPlayingSound()) {
+        if (voice->getCurrentlyPlayingSound()) {
             stopVoice(voice, 0.0f, true);
         }
         startVoice(voice, sample, midiChannel, midiNoteNumber, velocity);
