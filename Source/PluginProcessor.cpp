@@ -34,10 +34,8 @@ SamplerMAudioProcessor::SamplerMAudioProcessor()
                        .withOutput("OutputL13", juce::AudioChannelSet::stereo(), true)
                        .withOutput("OutputL14", juce::AudioChannelSet::stereo(), true)
                        .withOutput("OutputL15", juce::AudioChannelSet::stereo(), true)
-
-                       
                      #endif
-                       ), tree(*this, nullptr, "ParamList", createParams())
+                       ), tree(*this, nullptr, "ParamListTree", createParams())
  #endif
 {
     gSampler.prepare();
@@ -203,6 +201,7 @@ void SamplerMAudioProcessor::updateToggleState(juce::Button* button, juce::Strin
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> paramVec;
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("FORCE_1", "Force", 0.0f, 1.0f, 0.27f));
+    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("FORCE_2", "Force 1", 0.0f, 0.5f, 0.45f));
     return {paramVec.begin(), paramVec.end()};
 }
 
