@@ -3,7 +3,7 @@
 <JUCERPROJECT id="BN2mDX" name="SamplerM" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               companyName="Xi" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
-              defines="JUCE_MODAL_LOOPS_PERMITTED=1">
+              defines="JUCE_MODAL_LOOPS_PERMITTED=1" headerPath="C:\Users\WdYan\Development\Library\foleys_gui_magic">
   <MAINGROUP id="eixVHm" name="SamplerM">
     <GROUP id="{BD92D26E-9D5C-05FE-3B37-40FD64D3B3B8}" name="Source">
       <FILE id="VRHxpY" name="SampleLoaderController.cpp" compile="1" resource="0"

@@ -10,10 +10,9 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "foleys_gui_magic.h"
 
-//==============================================================================
-/**
-*/
+
 class SamplerMAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
