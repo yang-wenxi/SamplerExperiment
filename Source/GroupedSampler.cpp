@@ -129,7 +129,3 @@ void GroupedSampler::noteOn(int midiChannel, int midiNoteNumber, float velocity)
 bool GroupedSampler::isNoteMapped(int midiNoteNumber) {
     return (noteToIndexMap.find(midiNoteNumber) == noteToIndexMap.end()) ? false : true;
 }
-
-
-
-

@@ -189,9 +189,10 @@ void SamplerMAudioProcessor::playSample(int noteNum) {
     gSampler.noteOn(1, noteNum, 1.0f);
 }
 
-void SamplerMAudioProcessor::playMultiple(int one, int two) {
-    playSample(one);
-    playSample(two);
+void SamplerMAudioProcessor::playMultiple(int list[]) {
+    for (int i = 0; i < sizeof(list); i++) {
+        playSample(list[i]);
+    }
 }
 
 void SamplerMAudioProcessor::updateToggleState(juce::Button* button, juce::String name) {

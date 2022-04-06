@@ -15,7 +15,7 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
 {
     playSnareButton.onClick = [&]() {audioProcessor.playSample(61);};
     playCrashButton.onClick = [&]() {audioProcessor.playSample(66);};
-    playSnareAndCrashButton.onClick = [&]() {audioProcessor.playMultiple(61, 66); };
+    playSnareAndCrashButton.onClick = [&]() {audioProcessor.playMultiple(new int[2] {62, 65}); };
     for (int i = 0; i < sizeof(snareSet); i++) {
         snareSet[i] = new juce::ToggleButton(std::to_string(i));
         juce::ToggleButton* b = snareSet[i];

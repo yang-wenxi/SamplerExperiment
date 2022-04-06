@@ -56,7 +56,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     void playSample(int noteNum);
-    void playMultiple(int one, int two);
+    void playMultiple(int list[]);
     void updateToggleState(juce::Button* button, juce::String name);
 
     juce::MidiBuffer buttonBuffer;
