@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "GroupedSampler.h"
 #include "GlobalProperties.h"
+#include "foleys_gui_magic.h"
 
 //==============================================================================
 /**
