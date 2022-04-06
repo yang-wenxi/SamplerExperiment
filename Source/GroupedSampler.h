@@ -65,6 +65,7 @@ private:
     juce::AudioFormatManager formatManager;
     juce::AudioFormatReader* fmtReader {nullptr};
     juce::ReferenceCountedArray<SampleGroup> sampleGroup;
+    std::vector<SampleGroup> sampleGroupVector;
     juce::File samplesFolder;
 };
 

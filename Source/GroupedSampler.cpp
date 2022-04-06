@@ -82,7 +82,7 @@ void GroupedSampler::toggleChannelState(int voiceID, int chanID, bool state) {
         v->addPlaybackChannel(chanID);
     else
         v->removePlaybackChannel(chanID);
-    std::string fuckyou = "github fucker fuck youuuuuuuuuuuuuuuuu!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1";
+    std::string fuckyou = "github fucker fuck youuuuuuuuuuuuuuuuu!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
 }
 
 void GroupedSampler::brodcastBusCondition(busConditionSender* cond) {
