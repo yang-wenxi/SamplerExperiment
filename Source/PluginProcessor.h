@@ -59,8 +59,9 @@ public:
     void playSample(int noteNum);
     void playMultiple(int list[]);
     void updateToggleState(juce::Button* button, juce::String name);
+    void updateChannelOutput(juce::String paramID);
     
-    void parameterChanged(const juce::String &parameterID, float newValue) override;
+    void parameterChanged(const juce::String& parameterID, float newValue) override;
 
     juce::MidiBuffer buttonBuffer;
     juce::AudioProcessorValueTreeState tree;

@@ -198,15 +198,29 @@ void SamplerMAudioProcessor::updateToggleState(juce::Button* button, juce::Strin
     gSampler.toggleChannelState(1, std::stoi(name.toStdString()), state);
 }
 
+void SamplerMAudioProcessor::updateChannelOutput(juce::String paramID) {
+
+}
+
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> paramVec;
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK", "Attack", 0.0f, 1.0f, 0.27f));
-    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY", "Decay", 0.0f, 0.5f, 0.45f));
-    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 0.5f, 0.45f));
-    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", 0.0f, 0.5f, 0.45f));
-    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("CHANNEL_1", "Channel_1", false));
+    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY", "Decay", 0.0f, 1.0f, 0.45f));
+    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 0.45f));
+    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", 0.0f, 20000.0f, 455.5f));
+    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("CHANNEL_1", "Channel_1", false));  
     
     return {paramVec.begin(), paramVec.end()};
+}
+
+void SamplerMAudioProcessor::parameterChanged(const juce::String& parameterID, float newValue) {
+    std::string pID = parameterID.toStdString();
+    if (pID.find("CHANNEL")) {
+
+    }
+    else if (pID.find("ADSR")) {
+
+    }
 }
 
 //==============================================================================
