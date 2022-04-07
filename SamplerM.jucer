@@ -27,7 +27,6 @@
               file="Source/MappedSamplerVoice.h"/>
         <FILE id="hjJmec" name="OneSample.cpp" compile="1" resource="0" file="Source/OneSample.cpp"/>
         <FILE id="pFG7DS" name="OneSample.h" compile="0" resource="0" file="Source/OneSample.h"/>
-        <FILE id="nQdH6u" name="SampleBundle.h" compile="0" resource="0" file="Source/SampleBundle.h"/>
         <FILE id="t1rES5" name="SampleGroup.h" compile="0" resource="0" file="Source/SampleGroup.h"/>
       </GROUP>
       <FILE id="tCXqE5" name="PluginProcessor.cpp" compile="1" resource="0"

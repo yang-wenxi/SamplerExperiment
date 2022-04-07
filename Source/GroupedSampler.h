@@ -15,7 +15,6 @@
 #include "SampleGroup.h"
 #include "EnvelopeEngine.h"
 #include "GlobalProperties.h"
-#include "SampleBundle.h"
 
 class GroupedSampler : public juce::Synthesiser
 {
@@ -49,10 +48,6 @@ public:
     juce::ReferenceCountedArray<SampleGroup>* getGroup () {
         return &sampleGroup;
     }
-
-    std::vector<SampleBundle>* getBundleVector() {
-        return &sampleBundleVector;
-    }
     
     typedef enum Instruments { KICK = 0, SNARE, CLAP, TOM, CLHAT, PERC, OPHAT, CRASH, RIDE }Instruments_t;
     
@@ -67,7 +62,6 @@ private:
     juce::AudioFormatManager formatManager;
     juce::AudioFormatReader* fmtReader {nullptr};
     juce::ReferenceCountedArray<SampleGroup> sampleGroup;
-    std::vector<SampleBundle> sampleBundleVector;
     juce::File samplesFolder;
 };
 
