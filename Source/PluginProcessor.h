@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class SamplerMAudioProcessor  : public juce::AudioProcessor
+class SamplerMAudioProcessor  : public juce::AudioProcessor, public juce::AudioProcessorValueTreeState::Listener
 {
 public:
     //==============================================================================
@@ -59,6 +59,8 @@ public:
     void playSample(int noteNum);
     void playMultiple(int list[]);
     void updateToggleState(juce::Button* button, juce::String name);
+    
+    void
 
     juce::MidiBuffer buttonBuffer;
     juce::AudioProcessorValueTreeState tree;

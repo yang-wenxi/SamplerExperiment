@@ -188,7 +188,7 @@ void SamplerMAudioProcessor::playSample(int noteNum) {
 }
 
 void SamplerMAudioProcessor::playMultiple(int list[]) {
-    for (int i = 0; i < sizeof(list); i++) {
+    for (int i = 0; i < *(&list + 1) - list; i++) {
         playSample(list[i]);
     }
 }
@@ -200,8 +200,12 @@ void SamplerMAudioProcessor::updateToggleState(juce::Button* button, juce::Strin
 
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> paramVec;
-    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("FORCE_1", "Force", 0.0f, 1.0f, 0.27f));
-    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("FORCE_2", "Force 1", 0.0f, 0.5f, 0.45f));
+    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK", "Attack", 0.0f, 1.0f, 0.27f));
+    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY", "Decay", 0.0f, 0.5f, 0.45f));
+    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 0.5f, 0.45f));
+    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", 0.0f, 0.5f, 0.45f));
+    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("CHANNEL_1", "Channel_1", false));
+    
     return {paramVec.begin(), paramVec.end()};
 }
 
