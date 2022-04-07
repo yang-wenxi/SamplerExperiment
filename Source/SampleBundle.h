@@ -45,13 +45,7 @@ public:
     OneSample* getASamplePtr() {
         int max = sampleBundle.size();
         int target = rand.nextInt(max);
-        return &sampleBundle[target];
-    }
-
-    OneSample getASample() {
-        int max = sampleBundle.size();
-        int target = rand.nextInt(max);
-        return sampleBundle[target];
+        return &(sampleBundle.at(target));
     }
 
 private:
@@ -63,6 +57,7 @@ private:
 SampleBundle::SampleBundle(int instrument)
 {
     this->instrument = instrument;
+    sampleBundle.clear();
 }
 
 SampleBundle::~SampleBundle()
