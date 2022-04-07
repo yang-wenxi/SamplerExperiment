@@ -60,7 +60,7 @@ public:
     void playMultiple(int list[]);
     void updateToggleState(juce::Button* button, juce::String name);
     
-    void
+    void parameterChanged(const juce::String &parameterID, float newValue) override;
 
     juce::MidiBuffer buttonBuffer;
     juce::AudioProcessorValueTreeState tree;
