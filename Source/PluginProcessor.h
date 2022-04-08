@@ -59,8 +59,10 @@ public:
     void playSample(int noteNum);
     void playMultiple(int list[]);
     void updateToggleState(juce::Button* button, juce::String name);
-    void updateChannelOutput(juce::String paramID);
-    
+    void updateChannelOutput(juce::String paramID, bool state);
+
+    juce::AudioProcessorValueTreeState::ParameterLayout createParams();
+    void channelControl(juce::String instrument, std::vector<std::unique_ptr<juce::RangedAudioParameter>>* paramVec);
     void parameterChanged(const juce::String& parameterID, float newValue) override;
 
     juce::MidiBuffer buttonBuffer;
@@ -72,7 +74,7 @@ public:
     
 private:
     GroupedSampler gSampler;
-    juce::AudioProcessorValueTreeState::ParameterLayout createParams ();
+    
     //==============================================================================
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessor)

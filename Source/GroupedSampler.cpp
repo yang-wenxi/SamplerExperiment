@@ -76,15 +76,15 @@ void GroupedSampler::loadSamples(juce::String rootNote) {
         }
     }
 
-    //for (int i = 0; i < instruments.size(); i++) {
-    //    juce::String inst = instruments[i];
-    //    if (!sampleBundleVector[i].isEmpty())
-    //        sampleBundleVector[i].clearBundle();
-    //    for (int k = 1; k < 6; k++) {
-    //        juce::String fName = { inst + std::to_string(k) + ".wav" };
-    //        addSample(inst, fName);
-    //    }
-    //}
+  /*  for (int i = 0; i < instruments.size(); i++) {
+        juce::String inst = instruments[i];
+        if (!sampleBundleVector[i].isEmpty())
+            sampleBundleVector[i].clearBundle();
+        for (int k = 1; k < 6; k++) {
+            juce::String fName = { inst + std::to_string(k) + ".wav" };
+            addSample(inst, fName);
+        }
+    }*/
 }
 
 void GroupedSampler::toggleChannelState(int voiceID, int chanID, bool state) {
@@ -101,6 +101,14 @@ void GroupedSampler::brodcastBusCondition(busConditionSender* cond) {
         MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(i));
         v->receiveBusCondition(cond);
     }
+}
+
+int GroupedSampler::getInstrumentMidi(juce::String instrument) {
+    return instrumentToNoteMap[instrument];
+}
+
+int GroupedSampler::getInstrumentIndex(juce::String instrument) {
+    return noteToIndexMap[getInstrumentMidi(instrument)];
 }
 
 void GroupedSampler::noteOn(int midiChannel, int midiNoteNumber, float velocity) {

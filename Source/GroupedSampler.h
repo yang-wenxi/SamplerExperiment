@@ -44,6 +44,9 @@ public:
     
     void brodcastBusCondition(busConditionSender* cond);
     void toggleChannelState(int voiceID, int chanID, bool state);
+
+    int getInstrumentMidi(juce::String instrument);
+    int getInstrumentIndex(juce::String instrument);
     
     juce::ReferenceCountedArray<SampleGroup>* getGroup () {
         return &sampleGroup;
