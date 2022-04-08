@@ -215,10 +215,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::crea
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY_ADSR", "Decay", 0.0f, 1.0f, 0.45f));
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN_ADSR", "Sustain", 0.0f, 1.0f, 0.45f));
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE_ADSR", "Release", 0.0f, 20000.0f, 455.5f));
-    
+    juce::StringArray instrumentsSet {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
     //Channel Control
-    for (int i = 0; i < gSampler.instruments.size(); i++) {
-        juce::String instrument = gSampler.instruments[i];
+    for (int i = 0; i < instrumentsSet.size(); i++) {
+        juce::String instrument = instrumentsSet[i];
         channelControl(instrument, &paramVec);
     }
     
@@ -227,13 +227,16 @@ juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::crea
 
 void SamplerMAudioProcessor::channelControl(juce::String instrument, std::vector<std::unique_ptr<juce::RangedAudioParameter>> *paramVec) {
     for (int i = 1; i <= 6; i++) {
-        paramVec -> push_back(std::make_unique<juce::AudioParameterBool>(instrument + "_CHANNEL+" + std::to_string(i), 
-            instrument.toLowerCase() + " channel " + std::to_string(i), false));
+        juce::String pID = instrument + "_CHANNEL+" + std::to_string(i);
+        juce::String pName = instrument.toLowerCase() + " channel " + std::to_string(i);
+        paramVec -> push_back(std::make_unique<juce::AudioParameterBool>(pID, pName, false));
     }
 };
 
 void SamplerMAudioProcessor::parameterChanged(const juce::String& parameterID, float newValue) {
+    DBG("Parameter Changed");
     if (parameterID.contains("CHANNEL")) {
+        DBG("ParameterChanged");
         bool state = newValue == 1.0f;
         updateChannelOutput(parameterID, state);
     }

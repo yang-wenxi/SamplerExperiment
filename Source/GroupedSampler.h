@@ -47,6 +47,9 @@ public:
 
     int getInstrumentMidi(juce::String instrument);
     int getInstrumentIndex(juce::String instrument);
+    int getNumSampleSet() {
+        return numSampleSet;
+    }
     
     juce::ReferenceCountedArray<SampleGroup>* getGroup () {
         return &sampleGroup;
@@ -60,6 +63,7 @@ public:
     juce::StringArray instruments {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
     juce::StringArray noteName {"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"};
     busConditionSender busCondition;
+    int numSampleSet = instruments.size();
 
 private:
     juce::AudioFormatManager formatManager;

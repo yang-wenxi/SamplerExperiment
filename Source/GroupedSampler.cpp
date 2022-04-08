@@ -88,6 +88,7 @@ void GroupedSampler::loadSamples(juce::String rootNote) {
 }
 
 void GroupedSampler::toggleChannelState(int voiceID, int chanID, bool state) {
+    DBG("Toggled state");
     MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(voiceID));
     if (state)
         v->addPlaybackChannel(chanID);

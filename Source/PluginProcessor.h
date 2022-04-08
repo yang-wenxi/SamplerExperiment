@@ -64,7 +64,7 @@ public:
     juce::AudioProcessorValueTreeState::ParameterLayout createParams();
     void channelControl(juce::String instrument, std::vector<std::unique_ptr<juce::RangedAudioParameter>>* paramVec);
     void parameterChanged(const juce::String& parameterID, float newValue) override;
-
+    
     juce::MidiBuffer buttonBuffer;
     juce::AudioProcessorValueTreeState tree;
 
