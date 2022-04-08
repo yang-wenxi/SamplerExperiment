@@ -16,7 +16,7 @@
 #include "EnvelopeEngine.h"
 #include "GlobalProperties.h"
 
-class GroupedSampler : public juce::Synthesiser
+class GroupedSampler : public juce::Synthesiser, public juce::AudioProcessorValueTreeState::Listener
 {
     const int kick = 60;
     const int snare = 61;
@@ -50,6 +50,7 @@ public:
     int getNumSampleSet() {
         return numSampleSet;
     }
+    void parameterChanged(const juce::String& parameterID, float newValue) override;
     
     juce::ReferenceCountedArray<SampleGroup>* getGroup () {
         return &sampleGroup;

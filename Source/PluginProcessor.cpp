@@ -174,12 +174,6 @@ void SamplerMAudioProcessor::numChannelsChanged() {
         }
     }
     juce::String visualStudio = "a piece of fucking shit";
-
-    //auto* device = deviceManager.getCurrentAudioDevice();
-    //auto outputChan = device->getActiveOutputChannels();
-    //int numberOfChannels = outputChan.getHighestBit() + 1;
-    //DBG(std::to_string(numberOfChannels));
-
     gSampler.brodcastBusCondition(&conditionSender);
 }
 
@@ -193,21 +187,21 @@ void SamplerMAudioProcessor::playMultiple(int list[]) {
     }
 }
 
-void SamplerMAudioProcessor::updateToggleState(juce::Button* button, juce::String name) {
-    auto state = button->getToggleState();
-    gSampler.toggleChannelState(1, std::stoi(name.toStdString()), state);
-}
-
-void SamplerMAudioProcessor::updateChannelOutput(juce::String paramID, bool state) {
-    int instrumentEnd = paramID.indexOfChar('_');
-    juce::String instrument = paramID.substring(0, instrumentEnd);
-    int instrumentIndex = gSampler.getInstrumentIndex(instrument);
-
-    int channelStart = paramID.indexOfChar('+') + 1;
-    int channel = std::stoi(paramID.substring(channelStart, channelStart + 1).toStdString());
-
-    gSampler.toggleChannelState(instrumentIndex, channel, state);
-}
+//void SamplerMAudioProcessor::updateToggleState(juce::Button* button, juce::String name) {
+//    auto state = button->getToggleState();
+//    gSampler.toggleChannelState(1, std::stoi(name.toStdString()), state);
+//}
+//
+//void SamplerMAudioProcessor::updateChannelOutput(juce::String paramID, bool state) {
+//    int instrumentEnd = paramID.indexOfChar('_');
+//    juce::String instrument = paramID.substring(0, instrumentEnd);
+//    int instrumentIndex = gSampler.getInstrumentIndex(instrument);
+//
+//    int channelStart = paramID.indexOfChar('+') + 1;
+//    int channel = std::stoi(paramID.substring(channelStart, channelStart + 1).toStdString());
+//
+//    gSampler.toggleChannelState(instrumentIndex, channel, state);
+//}
 
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> paramVec;
@@ -230,18 +224,6 @@ void SamplerMAudioProcessor::channelControl(juce::String instrument, std::vector
         juce::String pID = instrument + "_CHANNEL+" + std::to_string(i);
         juce::String pName = instrument.toLowerCase() + " channel " + std::to_string(i);
         paramVec -> push_back(std::make_unique<juce::AudioParameterBool>(pID, pName, false));
-    }
-};
-
-void SamplerMAudioProcessor::parameterChanged(const juce::String& parameterID, float newValue) {
-    DBG("Parameter Changed");
-    if (parameterID.contains("CHANNEL")) {
-        DBG("ParameterChanged");
-        bool state = newValue == 1.0f;
-        updateChannelOutput(parameterID, state);
-    }
-    else if (parameterID.contains("ADSR")) {
-
     }
 }
 

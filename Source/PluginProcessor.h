@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class SamplerMAudioProcessor  : public juce::AudioProcessor, public juce::AudioProcessorValueTreeState::Listener
+class SamplerMAudioProcessor  : public juce::AudioProcessor
 {
 public:
     //==============================================================================
@@ -58,12 +58,11 @@ public:
     
     void playSample(int noteNum);
     void playMultiple(int list[]);
-    void updateToggleState(juce::Button* button, juce::String name);
-    void updateChannelOutput(juce::String paramID, bool state);
+//    void updateToggleState(juce::Button* button, juce::String name);
+//    void updateChannelOutput(juce::String paramID, bool state);
 
     juce::AudioProcessorValueTreeState::ParameterLayout createParams();
     void channelControl(juce::String instrument, std::vector<std::unique_ptr<juce::RangedAudioParameter>>* paramVec);
-    void parameterChanged(const juce::String& parameterID, float newValue) override;
     
     juce::MidiBuffer buttonBuffer;
     juce::AudioProcessorValueTreeState tree;

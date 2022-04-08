@@ -87,6 +87,25 @@ void GroupedSampler::loadSamples(juce::String rootNote) {
     }*/
 }
 
+void GroupedSampler::parameterChanged(const juce::String& parameterID, float newValue) {
+    DBG("Parameter Changed");
+    if (parameterID.contains("CHANNEL")) {
+        DBG("ParameterChanged");
+        bool state = newValue == 1.0f;
+        int instrumentEnd = parameterID.indexOfChar('_');
+        juce::String instrument = parameterID.substring(0, instrumentEnd);
+        int instrumentIndex = getInstrumentIndex(instrument);
+
+        int channelStart = parameterID.indexOfChar('+') + 1;
+        int channel = std::stoi(parameterID.substring(channelStart, channelStart + 1).toStdString());
+
+        toggleChannelState(instrumentIndex, channel, state);
+    }
+    else if (parameterID.contains("ADSR")) {
+
+    }
+}
+
 void GroupedSampler::toggleChannelState(int voiceID, int chanID, bool state) {
     DBG("Toggled state");
     MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(voiceID));
