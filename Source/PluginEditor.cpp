@@ -31,7 +31,7 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     snareChannelAttachment_6 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
                                                                                                       snareChannel + "6", snareChannelControl_6);
     
-    juce::String crashChannel = "CHASH_CHANNEL+";
+    juce::String crashChannel = "CRASH_CHANNEL+";
     crashChannelAttachment_1 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
                                                                                                       crashChannel + "1", crashChannelControl_1);
     crashChannelAttachment_2 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
