@@ -23,12 +23,12 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
         "SNARE_CHANNEL+2", snareChannelControl_2);
     snareChannelAttachment_3 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
         "SNARE_CHANNEL+3", snareChannelControl_3);
-//    snareChannelAttachment_4 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
-//        "SNARE_CHANNEL+4", snareChannelControl_4);
-//    snareChannelAttachment_5 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
-//        "SNARE_CHANNEL+5", snareChannelControl_5);
-//    snareChannelAttachment_6 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
-//        "SNARE_CHANNEL+6", snareChannelControl_6);
+    snareChannelAttachment_4 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
+        "SNARE_CHANNEL+4", snareChannelControl_4);
+    snareChannelAttachment_5 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
+        "SNARE_CHANNEL+5", snareChannelControl_5);
+    snareChannelAttachment_6 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
+        "SNARE_CHANNEL+6", snareChannelControl_6);
     
     addAndMakeVisible(snareChannelControl_6);
     addAndMakeVisible(snareChannelControl_5);

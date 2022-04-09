@@ -28,8 +28,6 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    SamplerMAudioProcessor& audioProcessor;
-    
     juce::TextButton playSnareButton {"SNARE"};
     juce::TextButton playCrashButton { "CRASH" };
     juce::TextButton playSnareAndCrashButton { "S C" };
@@ -44,6 +42,9 @@ private:
     //std::vector<juce::ToggleButton> snareChannelControl;
     //std::vector<juce::ToggleButton> crashChannelControl;
     
+    juce::Slider parameterSlider {};
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> parameterSliderAttachment;
+    
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_1;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_2;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_3;
@@ -53,5 +54,6 @@ private:
     //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> snareChannelAttachment;
     //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> crashChannelAttachment;
 
+    SamplerMAudioProcessor& audioProcessor;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessorEditor)
 };
