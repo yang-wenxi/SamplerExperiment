@@ -31,8 +31,6 @@ class GroupedSampler : public juce::Synthesiser, public juce::AudioProcessorValu
 public:
     void addSample(juce::String instrument, juce::String fileName);
     
-    void addSampleVoice(MappedSamplerVoice* newVoice);
-    
     //void parameterChanged(const juce::String &parameterID, float newValue) override;
     void noteOn(int midiChannel, int midiNoteNumber, float velocity);
     
@@ -64,7 +62,7 @@ public:
     juce::StringArray instruments {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
     juce::StringArray noteName {"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"};
     busConditionSender busCondition;
-    int numSampleSet = instruments.size();
+    int numSampleSet;
 
 private:
     juce::AudioFormatManager formatManager;

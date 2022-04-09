@@ -62,6 +62,7 @@ public:
 //    void updateChannelOutput(juce::String paramID, bool state);
 
     juce::AudioProcessorValueTreeState::ParameterLayout createParams();
+    void addParamListener();
     void channelControl(juce::String instrument, std::vector<std::unique_ptr<juce::RangedAudioParameter>>* paramVec);
     
     juce::MidiBuffer buttonBuffer;

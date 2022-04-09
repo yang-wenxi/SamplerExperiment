@@ -120,7 +120,6 @@ void MappedSamplerVoice::renderNextBlockI(juce::AudioBuffer< float > &outputBuff
     }
 }
 
-
 void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) {
     if (auto* playingSound = dynamic_cast<OneSample*>(getCurrentlyPlayingSound().get())) {
         
@@ -177,3 +176,7 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
     }
 }
 
+void MappedSamplerVoice::parameterChanged(const juce::String &parameterID, float newValue) {
+    if (parameterID == "ATTACK_ADSR")
+        DBG(std::to_string(newValue));
+}

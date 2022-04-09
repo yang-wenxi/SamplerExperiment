@@ -12,6 +12,7 @@
 #include "GlobalProperties.h"
 
 void GroupedSampler::prepare() {
+    numSampleSet = instruments.size();
     setMap();
     samplesFolder = juce::File::getSpecialLocation(juce::File::userHomeDirectory).getChildFile("Development").getChildFile("Samples");
     
@@ -20,7 +21,6 @@ void GroupedSampler::prepare() {
         auto* voice = new MappedSamplerVoice(i);
         voice -> setMidiNote(instrumentToNoteMap[instruments[i]]);
         addVoice(voice);
-        //soundChannels.add(new juce::BigInteger());
     }
     
     MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*> (getVoice(1));

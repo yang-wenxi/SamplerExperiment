@@ -14,7 +14,7 @@
 #include "EnvelopeEngine.h"
 #include "GlobalProperties.h"
 
-class MappedSamplerVoice : public juce::SamplerVoice
+class MappedSamplerVoice : public juce::SamplerVoice, public juce::AudioProcessorValueTreeState::Listener
 {
 public:
     MappedSamplerVoice(int i) {
@@ -55,7 +55,7 @@ public:
     void controllerMoved(int controllerNumber, int newValue) override;
     void renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) override;
     void renderNextBlockI(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples);
-
+    void parameterChanged(const juce::String &parameterID, float newValue) override;
 
     std::vector<int> playbackChannel;
     busConditionSender busCondition;

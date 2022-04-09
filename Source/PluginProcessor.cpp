@@ -39,6 +39,7 @@ SamplerMAudioProcessor::SamplerMAudioProcessor()
  #endif
 {
     gSampler.prepare();
+    addParamListener();
 }
 
 SamplerMAudioProcessor::~SamplerMAudioProcessor()
@@ -131,9 +132,6 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 {
     juce::ScopedNoDenormals noDenormals;
     
-    auto atomicPtr = tree.getRawParameterValue("ATTACK_ADSR");
-    //atomicPtr->load();
-    DBG(std::to_string(atomicPtr->load()));
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
@@ -227,6 +225,15 @@ void SamplerMAudioProcessor::channelControl(juce::String instrument, std::vector
         juce::String pID = instrument + "_CHANNEL+" + std::to_string(i);
         juce::String pName = instrument.toLowerCase() + " channel " + std::to_string(i);
         paramVec -> push_back(std::make_unique<juce::AudioParameterBool>(pID, pName, false));
+    }
+}
+
+void SamplerMAudioProcessor::addParamListener() {
+    int sampleSetSize = gSampler.getNumSampleSet();
+    for (int i = 0; i < sampleSetSize; i++) {
+        if (auto* v = dynamic_cast<MappedSamplerVoice*>(gSampler.getVoice(i))) {
+            tree.addParameterListener("ATTACK_ADSR", v);
+        }
     }
 }
 
