@@ -22,13 +22,6 @@ void GroupedSampler::prepare() {
         voice -> setMidiNote(instrumentToNoteMap[instruments[i]]);
         addVoice(voice);
     }
-    
-    MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*> (getVoice(1));
-
-    v = dynamic_cast<MappedSamplerVoice*> (getVoice(6));
-    v->addPlaybackChannel(10);
-    v->addPlaybackChannel(11);
-    v->addPlaybackChannel(12);
 
     formatManager.registerBasicFormats();
     loadSamples("A");
