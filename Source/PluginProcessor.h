@@ -58,8 +58,6 @@ public:
     
     void playSample(int noteNum);
     void playMultiple(int list[]);
-//    void updateToggleState(juce::Button* button, juce::String name);
-//    void updateChannelOutput(juce::String paramID, bool state);
 
     juce::AudioProcessorValueTreeState::ParameterLayout createParams();
     void addParamListener();

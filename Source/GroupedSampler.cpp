@@ -18,7 +18,7 @@ void GroupedSampler::prepare() {
     
     for(int i = 0; i < instruments.size(); i++) {
         sampleGroup.add(new SampleGroup(i));
-        auto* voice = new MappedSamplerVoice(i);
+        auto* voice = new MappedSamplerVoice(i, instruments[i]);
         voice -> setMidiNote(instrumentToNoteMap[instruments[i]]);
         addVoice(voice);
     }
@@ -81,33 +81,18 @@ void GroupedSampler::loadSamples(juce::String rootNote) {
 }
 
 void GroupedSampler::parameterChanged(const juce::String& parameterID, float newValue) {
-    DBG("Parameter Changed");
-    if (parameterID.contains("CHANNEL")) {
-        DBG("ParameterChanged");
-        bool state = newValue == 1.0f;
-        int instrumentEnd = parameterID.indexOfChar('_');
-        juce::String instrument = parameterID.substring(0, instrumentEnd);
-        int instrumentIndex = getInstrumentIndex(instrument);
-
-        int channelStart = parameterID.indexOfChar('+') + 1;
-        int channel = std::stoi(parameterID.substring(channelStart, channelStart + 1).toStdString());
-
-        toggleChannelState(instrumentIndex, channel, state);
-    }
-    else if (parameterID.contains("ADSR")) {
-        
-    }
+    
 }
 
-void GroupedSampler::toggleChannelState(int voiceID, int chanID, bool state) {
-    DBG("Toggled state");
-    MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(voiceID));
-    if (state)
-        v->addPlaybackChannel(chanID);
-    else
-        v->removePlaybackChannel(chanID);
-    std::string fuckyou = "github fucker fuck youuuuuuuuuuuuuuuuu!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-}
+//void GroupedSampler::toggleChannelState(int voiceID, int chanID, bool state) {
+//    DBG("Toggled state");
+//    MappedSamplerVoice* v = dynamic_cast<MappedSamplerVoice*>(getVoice(voiceID));
+//    if (state)
+//        v->addPlaybackChannel(chanID);
+//    else
+//        v->removePlaybackChannel(chanID);
+//    std::string fuckyou = "github fucker fuck youuuuuuuuuuuuuuuuu!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+//}
 
 void GroupedSampler::brodcastBusCondition(busConditionSender* cond) {
     for (int i = 0; i < instruments.size(); i++) {

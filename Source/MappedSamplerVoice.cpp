@@ -84,7 +84,7 @@ void MappedSamplerVoice::renderNextBlockI(juce::AudioBuffer< float > &outputBuff
         const float* const inL = data.getReadPointer(0);
         const float* const inR = data.getNumChannels() > 1 ? data.getReadPointer(1) : nullptr;
         
-        int key = getInstrument();
+        int key = getInstrumentIndex();
         float* out;
 
         if (outputBuffer.getNumChannels() > key) {
@@ -179,4 +179,16 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
 void MappedSamplerVoice::parameterChanged(const juce::String &parameterID, float newValue) {
     if (parameterID == "ATTACK_ADSR")
         DBG(std::to_string(newValue));
+    else if (parameterID.contains("CHANNEL")) {
+        DBG(parameterID.toStdString());
+        DBG(std::to_string(getInstrumentIndex()));
+        DBG(getInstrument());
+        int i = parameterID.indexOfChar('+') + 1;
+        int channelIndex = std::stoi(parameterID.substring(i, i + 1).toStdString());
+        bool state = newValue == 1.0f;
+        if (state)
+            addPlaybackChannel(channelIndex);
+        else
+            removePlaybackChannel(channelIndex);
+    }
 }

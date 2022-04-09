@@ -188,22 +188,6 @@ void SamplerMAudioProcessor::playMultiple(int list[]) {
     }
 }
 
-//void SamplerMAudioProcessor::updateToggleState(juce::Button* button, juce::String name) {
-//    auto state = button->getToggleState();
-//    gSampler.toggleChannelState(1, std::stoi(name.toStdString()), state);
-//}
-//
-//void SamplerMAudioProcessor::updateChannelOutput(juce::String paramID, bool state) {
-//    int instrumentEnd = paramID.indexOfChar('_');
-//    juce::String instrument = paramID.substring(0, instrumentEnd);
-//    int instrumentIndex = gSampler.getInstrumentIndex(instrument);
-//
-//    int channelStart = paramID.indexOfChar('+') + 1;
-//    int channel = std::stoi(paramID.substring(channelStart, channelStart + 1).toStdString());
-//
-//    gSampler.toggleChannelState(instrumentIndex, channel, state);
-//}
-
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> paramVec;
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK_ADSR", "Attack", 0.0f, 1.0f, 0.27f));
@@ -232,7 +216,12 @@ void SamplerMAudioProcessor::addParamListener() {
     int sampleSetSize = gSampler.getNumSampleSet();
     for (int i = 0; i < sampleSetSize; i++) {
         if (auto* v = dynamic_cast<MappedSamplerVoice*>(gSampler.getVoice(i))) {
+            juce::String instrument = v->getInstrument();
             tree.addParameterListener("ATTACK_ADSR", v);
+            for (int chn = 1; chn <= 6; chn++) {
+                DBG((instrument + "_CHANNEL+" + std::to_string(chn)).toStdString());
+                tree.addParameterListener(instrument + "_CHANNEL+" + std::to_string(chn), v);
+            }
         }
     }
 }

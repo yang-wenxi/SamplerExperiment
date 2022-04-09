@@ -38,6 +38,13 @@ private:
     juce::ToggleButton snareChannelControl_4{ "4" };
     juce::ToggleButton snareChannelControl_5{ "5" };
     juce::ToggleButton snareChannelControl_6{ "6" };
+    
+    juce::ToggleButton crashChannelControl_1{ "1" };
+    juce::ToggleButton crashChannelControl_2{ "2" };
+    juce::ToggleButton crashChannelControl_3{ "3" };
+    juce::ToggleButton crashChannelControl_4{ "4" };
+    juce::ToggleButton crashChannelControl_5{ "5" };
+    juce::ToggleButton crashChannelControl_6{ "6" };
 
     //std::vector<juce::ToggleButton> snareChannelControl;
     //std::vector<juce::ToggleButton> crashChannelControl;
@@ -51,6 +58,13 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_4;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_5;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_6;
+    
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_1;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_2;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_3;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_4;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_5;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_6;
     //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> snareChannelAttachment;
     //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> crashChannelAttachment;
 

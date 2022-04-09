@@ -17,14 +17,19 @@
 class MappedSamplerVoice : public juce::SamplerVoice, public juce::AudioProcessorValueTreeState::Listener
 {
 public:
-    MappedSamplerVoice(int i) {
-        instrument = i;
+    MappedSamplerVoice(int i, juce::String instrument) {
+        instrumentIndex = i;
+        this->instrument = instrument;
         currentSampleRate = 48000;
         pitchVal = 0;
         playbackChannel.push_back(0);
     }
     
-    int getInstrument() {
+    int getInstrumentIndex() {
+        return instrumentIndex;
+    }
+    
+    juce::String getInstrument() {
         return instrument;
     }
     
@@ -61,7 +66,8 @@ public:
     busConditionSender busCondition;
 
 private:
-    int instrument;
+    int instrumentIndex;
+    juce::String instrument;
     int pitchVal;
     juce::BigInteger midiNotes;
     double currentSampleRate;
