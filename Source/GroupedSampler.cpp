@@ -102,7 +102,7 @@ void GroupedSampler::parameterChanged(const juce::String& parameterID, float new
         toggleChannelState(instrumentIndex, channel, state);
     }
     else if (parameterID.contains("ADSR")) {
-
+        
     }
 }
 

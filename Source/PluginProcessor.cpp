@@ -131,6 +131,9 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 {
     juce::ScopedNoDenormals noDenormals;
     
+    auto atomicPtr = tree.getRawParameterValue("ATTACK_ADSR");
+    //atomicPtr->load();
+    DBG(std::to_string(atomicPtr->load()));
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 

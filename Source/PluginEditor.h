@@ -42,7 +42,7 @@ private:
     //std::vector<juce::ToggleButton> snareChannelControl;
     //std::vector<juce::ToggleButton> crashChannelControl;
     
-    juce::Slider parameterSlider {};
+    juce::Slider parameterSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> parameterSliderAttachment;
     
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_1;
