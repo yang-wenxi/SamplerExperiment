@@ -14,8 +14,8 @@
 void GroupedSampler::prepare() {
     numSampleSet = instruments.size();
     setMap();
-    samplesFolder = juce::File::getSpecialLocation(juce::File::userHomeDirectory).getChildFile("Development").getChildFile("Samples");
-    
+    //samplesFolder = juce::File::getSpecialLocation(juce::File::userHomeDirectory).getChildFile("Development").getChildFile("Samples");
+    samplesFolder = juce::File("C:\\Program Files\\Common Files\\VST3\\Samples");
     for(int i = 0; i < instruments.size(); i++) {
         sampleGroup.add(new SampleGroup(i));
         auto* voice = new MappedSamplerVoice(i, instruments[i]);
@@ -51,6 +51,8 @@ void GroupedSampler::addSample(juce::String instrument, juce::String fileName) {
     
     int midiNote = instrumentToNoteMap[instrument];
     juce::File* file = new juce::File(samplesFolder.getChildFile(instrument).getChildFile(fileName));
+    bool exists = file->exists();
+    juce::String pth = file->getFullPathName();
     fmtReader = formatManager.createReaderFor(*file);
     juce::BigInteger note;
     note.setBit(midiNote);

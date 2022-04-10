@@ -190,6 +190,7 @@ void SamplerMAudioProcessor::playMultiple(int list[]) {
 
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> paramVec;
+    paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", 0.0f, 1.0f, 0.65f));
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK_ADSR", "Attack", 0.0f, 1.0f, 0.27f));
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY_ADSR", "Decay", 0.0f, 1.0f, 0.45f));
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN_ADSR", "Sustain", 0.0f, 1.0f, 0.45f));
@@ -217,9 +218,8 @@ void SamplerMAudioProcessor::addParamListener() {
     for (int i = 0; i < sampleSetSize; i++) {
         if (auto* v = dynamic_cast<MappedSamplerVoice*>(gSampler.getVoice(i))) {
             juce::String instrument = v->getInstrument();
-            tree.addParameterListener("ATTACK_ADSR", v);
+            tree.addParameterListener("GAIN", v);
             for (int chn = 1; chn <= 6; chn++) {
-                DBG((instrument + "_CHANNEL+" + std::to_string(chn)).toStdString());
                 tree.addParameterListener(instrument + "_CHANNEL+" + std::to_string(chn), v);
             }
         }

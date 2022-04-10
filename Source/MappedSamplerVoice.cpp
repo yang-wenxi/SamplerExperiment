@@ -158,8 +158,8 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 r = EE.applyTo(r);
 
                 for (int chn = 0; chn < hasPlaybackChannel.size(); chn++) {
-                    *outputListL[chn]++ += l;
-                    *outputListR[chn]++ += r;
+                    *outputListL[chn]++ += l * gain;
+                    *outputListR[chn]++ += r * gain;
                 }
                 
                 sourceSamplePosition += pitchRatio;
@@ -177,8 +177,8 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
 }
 
 void MappedSamplerVoice::parameterChanged(const juce::String &parameterID, float newValue) {
-    if (parameterID == "ATTACK_ADSR")
-        DBG(std::to_string(newValue));
+    if (parameterID == "GAIN")
+        gain = newValue;
     else if (parameterID.contains("CHANNEL")) {
         DBG(parameterID.toStdString());
         DBG(std::to_string(getInstrumentIndex()));

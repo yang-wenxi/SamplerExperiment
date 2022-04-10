@@ -49,7 +49,7 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     parameterSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
     addAndMakeVisible(parameterSlider);
     parameterSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree,
-                                                                                                       "ATTACK_ADSR", parameterSlider);
+                                                                                                       "GAIN", parameterSlider);
     addAndMakeVisible(snareChannelControl_6);
     addAndMakeVisible(snareChannelControl_5);
     addAndMakeVisible(snareChannelControl_4);
@@ -76,7 +76,7 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     
     addAndMakeVisible(playSnareButton);
     addAndMakeVisible(playCrashButton);
-    addAndMakeVisible(playSnareAndCrashButton);
+    //addAndMakeVisible(playSnareAndCrashButton);
     setSize (600, 600);
 }
 
@@ -95,7 +95,7 @@ void SamplerMAudioProcessorEditor::resized()
 {
     playSnareButton.setBounds(20, 20, 180, 180);
     playCrashButton.setBounds(220, 20, 180, 180);
-    playSnareAndCrashButton.setBounds(20, 220, 180, 180);
+    //playSnareAndCrashButton.setBounds(20, 220, 180, 180);
     
     snareChannelControl_1.setBounds(20, 420, 40, 40);
     snareChannelControl_2.setBounds(80, 420, 40, 40);
