@@ -201,7 +201,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::crea
         juce::String instrument = instrumentsSet[i];
         channelControl(instrument, &paramVec);
     }
-    
+
     return {paramVec.begin(), paramVec.end()};
 }
 
