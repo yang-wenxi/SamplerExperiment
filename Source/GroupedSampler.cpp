@@ -16,6 +16,8 @@ void GroupedSampler::prepare() {
     setMap();
     //samplesFolder = juce::File::getSpecialLocation(juce::File::userHomeDirectory).getChildFile("Development").getChildFile("Samples");
     samplesFolder = juce::File("C:\\Program Files\\Common Files\\VST3\\Samples");
+    if (!samplesFolder.exists())
+        samplesFolder = juce::File::getSpecialLocation(juce::File::userHomeDirectory).getChildFile("Development").getChildFile("Samples");
     for(int i = 0; i < instruments.size(); i++) {
         sampleGroup.add(new SampleGroup(i));
         auto* voice = new MappedSamplerVoice(i, instruments[i]);
