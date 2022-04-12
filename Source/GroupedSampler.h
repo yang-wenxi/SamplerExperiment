@@ -32,7 +32,7 @@ public:
     void addSample(juce::String instrument, juce::String fileName);
     
     //void parameterChanged(const juce::String &parameterID, float newValue) override;
-    void noteOn(int midiChannel, int midiNoteNumber, float velocity);
+    void noteOn(int midiChannel, int midiNoteNumber, float velocity) override;
     
     void prepare();
     void setMap();

@@ -30,7 +30,9 @@ private:
     // access the processor object that created it.
     juce::TextButton playSnareButton {"SNARE"};
     juce::TextButton playCrashButton { "CRASH" };
-    juce::TextButton playSnareAndCrashButton { "S C" };
+    juce::TextButton playTomButton { "TOM" };
+    juce::TextButton playKickButton { "KICK" };
+//    juce::TextButton playSnareAndCrashButton { "S C" };
     
     juce::ToggleButton snareChannelControl_1{ "1" };
     juce::ToggleButton snareChannelControl_2{ "2" };
@@ -65,6 +67,11 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_4;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_5;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_6;
+    
+//    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareButtonAttachment;
+//    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashButtonAttachment;
+//    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> tomButtonAttachment;
+    
     //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> snareChannelAttachment;
     //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> crashChannelAttachment;
 

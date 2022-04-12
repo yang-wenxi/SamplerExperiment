@@ -178,15 +178,16 @@ void SamplerMAudioProcessor::numChannelsChanged() {
     gSampler.brodcastBusCondition(&conditionSender);
 }
 
-void SamplerMAudioProcessor::playSample(int noteNum) {
+void SamplerMAudioProcessor::playSample(juce::String instrument) {
+    int noteNum = gSampler.getInstrumentMidi(instrument);
     gSampler.noteOn(1, noteNum, 1.0f);
 }
 
-void SamplerMAudioProcessor::playMultiple(int list[]) {
-    for (int i = 0; i < *(&list + 1) - list; i++) {
-        playSample(list[i]);
-    }
-}
+//void SamplerMAudioProcessor::playMultiple(int list[]) {
+//    for (int i = 0; i < *(&list + 1) - list; i++) {
+//        playSample(list[i]);
+//    }
+//}
 
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> paramVec;
@@ -196,9 +197,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::crea
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN_ADSR", "Sustain", 0.0f, 1.0f, 0.45f));
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE_ADSR", "Release", 0.0f, 20000.0f, 455.5f));
     juce::StringArray instrumentsSet {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
+    
     //Channel Control
     for (int i = 0; i < instrumentsSet.size(); i++) {
         juce::String instrument = instrumentsSet[i];
+//        paramVec.push_back(std::make_unique<juce::AudioParameterBool>(instrument + "_BUTTON", instrument.toLowerCase(), false));
         channelControl(instrument, &paramVec);
     }
 

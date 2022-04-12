@@ -13,9 +13,17 @@
 SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    playSnareButton.onClick = [&]() {audioProcessor.playSample(61);};
-    playCrashButton.onClick = [&]() {audioProcessor.playSample(66);};
-    playSnareAndCrashButton.onClick = [&]() {audioProcessor.playMultiple(new int[2] {62, 65}); };
+    playSnareButton.onClick = [&]() {audioProcessor.playSample("SNARE");};
+    playCrashButton.onClick = [&]() {audioProcessor.playSample("CRASH");};
+    playTomButton.onClick = [&]() {audioProcessor.playSample("TOM");};
+    playKickButton.onClick = [&]() {audioProcessor.playSample("KICK");};
+    
+//    snareButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
+//                                                                                                   "SNARE_BUTTON", playSnareButton);
+//    crashButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
+//                                                                                                   "CRASH_BUTTON", playCrashButton);
+//    tomButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
+//                                                                                                   "TOM_BUTTON", playTomButton);
     
     juce::String snareChannel = "SNARE_CHANNEL+";
     snareChannelAttachment_1 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
@@ -76,7 +84,8 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     
     addAndMakeVisible(playSnareButton);
     addAndMakeVisible(playCrashButton);
-    //addAndMakeVisible(playSnareAndCrashButton);
+    addAndMakeVisible(playTomButton);
+    addAndMakeVisible(playKickButton);
     setSize (600, 600);
 }
 
@@ -95,6 +104,8 @@ void SamplerMAudioProcessorEditor::resized()
 {
     playSnareButton.setBounds(20, 20, 180, 180);
     playCrashButton.setBounds(220, 20, 180, 180);
+    playTomButton.setBounds(20, 220, 180, 180);
+    playKickButton.setBounds(220, 220, 180, 180);
     //playSnareAndCrashButton.setBounds(20, 220, 180, 180);
     
     snareChannelControl_1.setBounds(20, 420, 40, 40);
@@ -112,5 +123,5 @@ void SamplerMAudioProcessorEditor::resized()
     crashChannelControl_6.setBounds(320, 480, 40, 40);
     
     
-    parameterSlider.setBounds(260, 220, 100, 100);
+    parameterSlider.setBounds(420, 260, 100, 100);
 }

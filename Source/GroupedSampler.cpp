@@ -85,7 +85,13 @@ void GroupedSampler::loadSamples(juce::String rootNote) {
 }
 
 void GroupedSampler::parameterChanged(const juce::String& parameterID, float newValue) {
-    
+//    if (parameterID.contains("BUTTON")) {
+//        DBG("Picked up change");
+//        int instrumentEndInd = parameterID.indexOfChar('_');
+//        juce::String instrumentName = parameterID.substring(0, instrumentEndInd);
+//        int noteID = instrumentToNoteMap[instrumentName];
+//        noteOn(1, noteID, 1.0);
+//    }
 }
 
 //void GroupedSampler::toggleChannelState(int voiceID, int chanID, bool state) {
