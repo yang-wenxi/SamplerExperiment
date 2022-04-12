@@ -183,12 +183,6 @@ void SamplerMAudioProcessor::playSample(juce::String instrument) {
     gSampler.noteOn(1, noteNum, 1.0f);
 }
 
-//void SamplerMAudioProcessor::playMultiple(int list[]) {
-//    for (int i = 0; i < *(&list + 1) - list; i++) {
-//        playSample(list[i]);
-//    }
-//}
-
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> paramVec;
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", 0.0f, 1.0f, 0.65f));

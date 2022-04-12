@@ -57,7 +57,6 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     void playSample(juce::String instrumentName);
-//    void playMultiple(int list[]);
 
     juce::AudioProcessorValueTreeState::ParameterLayout createParams();
     void addParamListener();
