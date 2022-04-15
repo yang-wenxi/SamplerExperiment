@@ -56,9 +56,7 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    /*std::unique_ptr<juce::ComboBox> snareChannelControl;*/
-    juce::ComboBox snareChannelControl{ "snare control" };
-
+    std::unique_ptr<juce::ComboBox> snareChannelControl;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CosmosUI)
 };
