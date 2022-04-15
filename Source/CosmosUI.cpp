@@ -32,11 +32,21 @@ CosmosUI::CosmosUI ()
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
+    snareChannelControl.reset (new juce::ComboBox ("snare channel"));
+    addAndMakeVisible (snareChannelControl.get());
+    snareChannelControl->setEditableText (false);
+    snareChannelControl->setJustificationType (juce::Justification::centred);
+    snareChannelControl->setTextWhenNothingSelected (juce::String());
+    snareChannelControl->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+    snareChannelControl->addListener (this);
+
+    snareChannelControl->setBounds (432, 416, 150, 24);
+
 
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (600, 400);
+    setSize (600, 600);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -48,6 +58,7 @@ CosmosUI::~CosmosUI()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
+    snareChannelControl = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -75,6 +86,21 @@ void CosmosUI::resized()
     //[/UserResized]
 }
 
+void CosmosUI::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
+{
+    //[UsercomboBoxChanged_Pre]
+    //[/UsercomboBoxChanged_Pre]
+
+    if (comboBoxThatHasChanged == snareChannelControl.get())
+    {
+        //[UserComboBoxCode_snareChannelControl] -- add your combo box handling code here..
+        //[/UserComboBoxCode_snareChannelControl]
+    }
+
+    //[UsercomboBoxChanged_Post]
+    //[/UsercomboBoxChanged_Post]
+}
+
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
@@ -93,8 +119,11 @@ BEGIN_JUCER_METADATA
 <JUCER_COMPONENT documentType="Component" className="CosmosUI" componentName=""
                  parentClasses="public juce::Component" constructorParams="" variableInitialisers=""
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="600" initialHeight="400">
+                 fixedSize="0" initialWidth="600" initialHeight="600">
   <BACKGROUND backgroundColour="ff323e44"/>
+  <COMBOBOX name="snare channel" id="6cda7dbb31b7056c" memberName="snareChannelControl"
+            virtualName="" explicitFocusOrder="0" pos="432 416 150 24" editable="0"
+            layout="36" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

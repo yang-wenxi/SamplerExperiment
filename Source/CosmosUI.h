@@ -33,7 +33,8 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class CosmosUI  : public juce::Component
+class CosmosUI  : public juce::Component,
+                  public juce::ComboBox::Listener
 {
 public:
     //==============================================================================
@@ -46,6 +47,7 @@ public:
 
     void paint (juce::Graphics& g) override;
     void resized() override;
+    void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
 
 
 
@@ -54,7 +56,8 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-
+//    std::unique_ptr<juce::ComboBox> snareChannelControl;
+    juce::ComboBox snareChannelControl;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CosmosUI)
