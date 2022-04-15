@@ -32,15 +32,14 @@ CosmosUI::CosmosUI ()
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    snareChannelControl.reset (new juce::ComboBox ("snare channel"));
-    addAndMakeVisible (snareChannelControl.get());
-    snareChannelControl->setEditableText (false);
-    snareChannelControl->setJustificationType (juce::Justification::centred);
-    snareChannelControl->setTextWhenNothingSelected (juce::String());
-    snareChannelControl->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    snareChannelControl->addListener (this);
+    addAndMakeVisible (snareChannelControl);
+    snareChannelControl.setEditableText (false);
+    snareChannelControl.setJustificationType (juce::Justification::centred);
+    snareChannelControl.setTextWhenNothingSelected (juce::String());
+    snareChannelControl.setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+    snareChannelControl.addListener (this);
 
-    snareChannelControl->setBounds (432, 416, 150, 24);
+    snareChannelControl.setBounds (432, 416, 150, 24);
 
 
     //[UserPreSize]
@@ -55,10 +54,7 @@ CosmosUI::CosmosUI ()
 
 CosmosUI::~CosmosUI()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
-    snareChannelControl = nullptr;
+    delete &snareChannelControl;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -79,11 +75,7 @@ void CosmosUI::paint (juce::Graphics& g)
 
 void CosmosUI::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
 
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
 }
 
 void CosmosUI::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
@@ -91,14 +83,12 @@ void CosmosUI::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
 
-    if (comboBoxThatHasChanged == snareChannelControl.get())
+    if (comboBoxThatHasChanged == &snareChannelControl)
     {
         //[UserComboBoxCode_snareChannelControl] -- add your combo box handling code here..
         //[/UserComboBoxCode_snareChannelControl]
     }
 
-    //[UsercomboBoxChanged_Post]
-    //[/UsercomboBoxChanged_Post]
 }
 
 
