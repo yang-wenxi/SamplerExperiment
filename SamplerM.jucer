@@ -6,10 +6,8 @@
               defines="JUCE_MODAL_LOOPS_PERMITTED=1" headerPath="C:\Users\WdYan\Development\Library\foleys_gui_magic&#10;/Users/yangwenxi/Development/Library/foleys_gui_magic">
   <MAINGROUP id="eixVHm" name="SamplerM">
     <GROUP id="{BD92D26E-9D5C-05FE-3B37-40FD64D3B3B8}" name="Source">
-      <FILE id="VRHxpY" name="SampleLoaderController.cpp" compile="1" resource="0"
-            file="Source/SampleLoaderController.cpp"/>
-      <FILE id="HbyCmu" name="SampleLoaderController.h" compile="0" resource="0"
-            file="Source/SampleLoaderController.h"/>
+      <FILE id="Y6ysRK" name="CosmosUI.cpp" compile="1" resource="0" file="Source/CosmosUI.cpp"/>
+      <FILE id="wRgfKk" name="CosmosUI.h" compile="0" resource="0" file="Source/CosmosUI.h"/>
       <FILE id="uFZb6t" name="GlobalProperties.h" compile="0" resource="0"
             file="Source/GlobalProperties.h"/>
       <GROUP id="{B9781B89-4449-59B8-ABCD-52B4A4C1BF57}" name="Audio">
