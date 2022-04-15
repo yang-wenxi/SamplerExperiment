@@ -131,9 +131,15 @@ bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-
     
-    gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    juce::MidiBuffer filteredBuffer = midiFilter(midiMessages);
+    
+    gSampler.renderNextBlock(buffer, filteredBuffer, 0, buffer.getNumSamples());
+}
+
+juce::MidiBuffer SamplerMAudioProcessor::midiFilter(juce::MidiBuffer messages) {
+    juce::MidiBuffer processedBuffer;
+    return processedBuffer;
 }
 
 //==============================================================================

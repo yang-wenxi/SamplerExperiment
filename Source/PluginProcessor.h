@@ -62,6 +62,8 @@ public:
     void addParamListener();
     void channelControl(juce::String instrument, std::vector<std::unique_ptr<juce::RangedAudioParameter>>* paramVec);
     
+    juce::MidiBuffer midiFilter(juce::MidiBuffer messages);
+    
     juce::MidiBuffer buttonBuffer;
     juce::AudioProcessorValueTreeState tree;
 

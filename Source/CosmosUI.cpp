@@ -33,7 +33,7 @@ CosmosUI::CosmosUI ()
     //[/Constructor_pre]
 
     snareChannelControl.reset (new juce::ComboBox ("snare channel"));
-    addAndMakeVisible (*snareChannelControl);
+    addAndMakeVisible (snareChannelControl.get());
     snareChannelControl->setEditableText (false);
     snareChannelControl->setJustificationType (juce::Justification::centred);
     snareChannelControl->setTextWhenNothingSelected (juce::String());

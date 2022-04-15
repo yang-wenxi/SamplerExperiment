@@ -26,13 +26,7 @@
 
 
 //==============================================================================
-/**
-                                                                    //[Comments]
-    An auto-generated component, created by the Projucer.
 
-    Describe your class and how it works here!
-                                                                    //[/Comments]
-*/
 class CosmosUI  : public juce::Component,
                   public juce::ComboBox::Listener
 {
