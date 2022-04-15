@@ -131,6 +131,7 @@ bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
+
     
     gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
