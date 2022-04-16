@@ -54,7 +54,3 @@ private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CosmosUI)
 };
-
-//[EndFile] You can add extra defines here...
-//[/EndFile]
-

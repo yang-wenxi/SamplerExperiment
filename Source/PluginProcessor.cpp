@@ -131,20 +131,39 @@ bool SamplerMAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
+    //midiHandler.processNotes(midiMessages);
     
-    juce::MidiBuffer filteredBuffer = midiFilter(midiMessages);
-    
-    gSampler.renderNextBlock(buffer, filteredBuffer, 0, buffer.getNumSamples());
+    midiHandler(midiMessages);
+    gSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
-juce::MidiBuffer SamplerMAudioProcessor::midiFilter(juce::MidiBuffer messages) {
+juce::MidiBuffer SamplerMAudioProcessor::midiHandler(juce::MidiBuffer messages) {
     SamplerMAudioProcessorEditor* editor = dynamic_cast<SamplerMAudioProcessorEditor*>(getActiveEditor());
     juce::MidiBuffer processedBuffer;
-    for (auto midi : messages) {
-        midi.getMessage();
-        if (editor != nullptr) {
-            juce::TextButton* snareButton = editor->getSnareButton();
-            
+    juce::MidiBuffer::Iterator mIt(messages);
+    juce::MidiMessage currentMsg;
+    int samplePos;
+
+    while (mIt.getNextEvent(currentMsg, samplePos)) {
+        int noteNumber = currentMsg.getNoteNumber();
+        // trigerring drum hit
+        if (currentMsg.isNoteOn()) {
+            switch (noteNumber) {
+            case (60):
+                editor->getKickButton()->triggerClick();
+                break;
+            case (61):
+                editor->getSnareButton()->triggerClick();
+                break;
+            case (62):
+                editor->getTomBotton()->triggerClick();
+                break;
+            case (66):
+                editor->getCrashButton()->triggerClick();
+                break;
+            default:
+                break;
+            }
         }
     }
     

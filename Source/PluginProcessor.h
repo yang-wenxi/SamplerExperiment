@@ -13,6 +13,7 @@
 #include "GlobalProperties.h"
 #include "foleys_gui_magic.h"
 
+
 //==============================================================================
 /**
 */
@@ -62,20 +63,15 @@ public:
     void addParamListener();
     void channelControl(juce::String instrument, std::vector<std::unique_ptr<juce::RangedAudioParameter>>* paramVec);
     
-    juce::MidiBuffer midiFilter(juce::MidiBuffer messages);
-    
+    juce::MidiBuffer midiHandler(juce::MidiBuffer messages);
+
     juce::MidiBuffer buttonBuffer;
     juce::AudioProcessorValueTreeState tree;
 
     busConditionSender conditionSender;
-
-    juce::AudioDeviceManager deviceManager;
     
 private:
     GroupedSampler gSampler;
-    
     //==============================================================================
-    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessor)
 };
-
