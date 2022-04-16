@@ -139,6 +139,9 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
 juce::MidiBuffer SamplerMAudioProcessor::midiFilter(juce::MidiBuffer messages) {
     juce::MidiBuffer processedBuffer;
+    for (auto midi : messages) {
+        midi.getMessage();
+    }
     return processedBuffer;
 }
 
