@@ -138,10 +138,16 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 }
 
 juce::MidiBuffer SamplerMAudioProcessor::midiFilter(juce::MidiBuffer messages) {
+    SamplerMAudioProcessorEditor* editor = dynamic_cast<SamplerMAudioProcessorEditor*>(getActiveEditor());
     juce::MidiBuffer processedBuffer;
     for (auto midi : messages) {
         midi.getMessage();
+        if (editor != nullptr) {
+            juce::TextButton* snareButton = editor->getSnareButton();
+            
+        }
     }
+    
     return processedBuffer;
 }
 

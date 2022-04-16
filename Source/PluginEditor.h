@@ -30,6 +30,14 @@ public:
     juce::TextButton* getCrashButton() {
         return &playCrashButton;
     }
+    
+    juce::TextButton* getTomBotton() {
+        return &playTomButton;
+    }
+    
+    juce::TextButton* getKickButton() {
+        return &playKickButton;
+    }
 
 private:
     // This reference is provided as a quick way for your editor to
