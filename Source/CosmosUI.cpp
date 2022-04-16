@@ -41,13 +41,28 @@ CosmosUI::CosmosUI ()
     snareChannelControl->addListener (this);
 
     snareChannelControl->setBounds (432, 416, 150, 24);
+
+
+    //[UserPreSize]
+    //[/UserPreSize]
+
     setSize (600, 600);
 
+
+    //[Constructor] You can add your own custom stuff here..
+    //[/Constructor]
 }
 
 CosmosUI::~CosmosUI()
 {
+    //[Destructor_pre]. You can add your own custom destruction code here..
+    //[/Destructor_pre]
+
     snareChannelControl = nullptr;
+
+
+    //[Destructor]. You can add your own custom destruction code here..
+    //[/Destructor]
 }
 
 //==============================================================================
@@ -64,7 +79,11 @@ void CosmosUI::paint (juce::Graphics& g)
 
 void CosmosUI::resized()
 {
+    //[UserPreResize] Add your own custom resize code here..
+    //[/UserPreResize]
 
+    //[UserResized] Add your own custom resize handling here..
+    //[/UserResized]
 }
 
 void CosmosUI::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)

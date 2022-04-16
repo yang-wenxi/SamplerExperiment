@@ -26,7 +26,13 @@
 
 
 //==============================================================================
+/**
+                                                                    //[Comments]
+    An auto-generated component, created by the Projucer.
 
+    Describe your class and how it works here!
+                                                                    //[/Comments]
+*/
 class CosmosUI  : public juce::Component,
                   public juce::ComboBox::Listener
 {
@@ -51,6 +57,12 @@ private:
 
     //==============================================================================
     std::unique_ptr<juce::ComboBox> snareChannelControl;
+
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CosmosUI)
 };
+
+//[EndFile] You can add extra defines here...
+//[/EndFile]
+
