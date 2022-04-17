@@ -139,13 +139,13 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 juce::MidiBuffer SamplerMAudioProcessor::midiHandler(juce::MidiBuffer messages) {
     SamplerMAudioProcessorEditor* editor = dynamic_cast<SamplerMAudioProcessorEditor*>(getActiveEditor());
     juce::MidiBuffer processedMsg;
-    juce::MidiBuffer::Iterator mIt(messages);
     juce::MidiMessage currentMsg;
-    int samplePos;
-
-    while (mIt.getNextEvent(currentMsg, samplePos)) {
+    
+    for (auto msg : messages) {
+        currentMsg = msg.getMessage();
         int noteNumber = currentMsg.getNoteNumber();
-        // trigerring drum hit
+        int samplePos = currentMsg.getTimeStamp();
+        
         if (currentMsg.isNoteOn()) {
             switch (noteNumber) {
             case (60):
