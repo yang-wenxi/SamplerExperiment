@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "foleys_gui_magic.h"
+#include "SampleSetSwitch.h"
 
 
 class SamplerMAudioProcessorEditor  : public juce::AudioProcessorEditor
@@ -89,6 +90,7 @@ private:
     //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> snareChannelAttachment;
     //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> crashChannelAttachment;
 
+    SampleSetSwitch sampleSetSwitch;
     SamplerMAudioProcessor& audioProcessor;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessorEditor)
 };

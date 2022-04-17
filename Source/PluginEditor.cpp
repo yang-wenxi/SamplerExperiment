@@ -86,6 +86,8 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     addAndMakeVisible(playCrashButton);
     addAndMakeVisible(playTomButton);
     addAndMakeVisible(playKickButton);
+    
+    addAndMakeVisible(sampleSetSwitch);
     setSize (600, 600);
 }
 
@@ -122,6 +124,7 @@ void SamplerMAudioProcessorEditor::resized()
     crashChannelControl_5.setBounds(260, 480, 40, 40);
     crashChannelControl_6.setBounds(320, 480, 40, 40);
     
+    sampleSetSwitch.setBounds(400, 0, 200, 200);
     
     parameterSlider.setBounds(420, 260, 100, 100);
 }
