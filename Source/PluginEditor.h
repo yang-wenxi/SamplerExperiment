@@ -14,7 +14,7 @@
 #include "SampleSetSwitch.h"
 
 
-class SamplerMAudioProcessorEditor  : public juce::AudioProcessorEditor
+class SamplerMAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::AudioProcessorValueTreeState::Listener
 {
 public:
     SamplerMAudioProcessorEditor (SamplerMAudioProcessor&);
@@ -39,6 +39,8 @@ public:
     juce::TextButton* getKickButton() {
         return &playKickButton;
     }
+    
+    void parameterChanged(const juce::String &parameterID, float newValue) override;
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -83,6 +85,7 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_5;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_6;
     
+    
 //    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareButtonAttachment;
 //    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashButtonAttachment;
 //    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> tomButtonAttachment;
@@ -90,7 +93,7 @@ private:
     //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> snareChannelAttachment;
     //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> crashChannelAttachment;
 
-    SampleSetSwitch sampleSetSwitch;
     SamplerMAudioProcessor& audioProcessor;
+    SampleSetSwitch sampleSetSwitch{*audioProcessor};
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessorEditor)
 };

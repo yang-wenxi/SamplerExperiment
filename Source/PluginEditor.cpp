@@ -53,6 +53,7 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     crashChannelAttachment_6 = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
                                                                                                       crashChannel + "6", crashChannelControl_6);
     
+    
     parameterSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     parameterSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
     addAndMakeVisible(parameterSlider);
@@ -89,6 +90,10 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     
     addAndMakeVisible(sampleSetSwitch);
     setSize (600, 600);
+    
+    audioProcessor.tree.addParameterListener("ROOM_A", this);
+    audioProcessor.tree.addParameterListener("ROOM_B", this);
+    audioProcessor.tree.addParameterListener("ROOM_C", this);
 }
 
 SamplerMAudioProcessorEditor::~SamplerMAudioProcessorEditor()
@@ -127,4 +132,8 @@ void SamplerMAudioProcessorEditor::resized()
     sampleSetSwitch.setBounds(400, 0, 200, 200);
     
     parameterSlider.setBounds(420, 260, 100, 100);
+}
+
+void SamplerMAudioProcessorEditor::parameterChanged(const juce::String &parameterID, float newValue) {
+    int i = 0;
 }

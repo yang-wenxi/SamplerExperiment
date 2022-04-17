@@ -27,41 +27,39 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-SampleSetSwitch::SampleSetSwitch ()
+SampleSetSwitch::SampleSetSwitch (juce::AudioProcessor* processor)
 {
-    //[Constructor_pre] You can add your own custom stuff here..
-    //[/Constructor_pre]
-
-    roomC.reset (new juce::TextButton ("Room C"));
-    addAndMakeVisible (roomC.get());
-    roomC->setRadioGroupId (1001);
-    roomC->setColour (juce::TextButton::buttonColourId, juce::Colours::white);
-
-    roomC->setBounds (50, 150, 100, 24);
-
-    roomB.reset (new juce::TextButton ("Room B"));
-    addAndMakeVisible (roomB.get());
-    roomB->setRadioGroupId (1001);
-    roomB->setColour (juce::TextButton::buttonColourId, juce::Colours::white);
-
-    roomB->setBounds (50, 100, 100, 24);
-
-    roomA.reset (new juce::TextButton ("Room A"));
+    audioProcessor = dynamic_cast<SamplerMAudioProcessor*>(processor);
+    
+    roomA.reset (new juce::ToggleButton ("Room A"));
     addAndMakeVisible (roomA.get());
     roomA->setRadioGroupId (1001);
-    roomA->setColour (juce::TextButton::buttonColourId, juce::Colours::white);
+    roomA->addListener (this);
 
     roomA->setBounds (50, 50, 100, 24);
 
+    roomB.reset (new juce::ToggleButton ("Room B"));
+    addAndMakeVisible (roomB.get());
+    roomB->setRadioGroupId (1001);
+    roomB->addListener (this);
 
-    //[UserPreSize]
-    //[/UserPreSize]
+    roomB->setBounds (50, 80, 100, 24);
+
+    roomC.reset (new juce::ToggleButton ("Room C"));
+    addAndMakeVisible (roomC.get());
+    roomC->setRadioGroupId (1001);
+    roomC->addListener (this);
+
+    roomC->setBounds (50, 110, 100, 24);
 
     setSize (200, 200);
-
-
-    //[Constructor] You can add your own custom stuff here..
-    //[/Constructor]
+    
+    roomAttachment_A = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor->tree,
+                                                                                                      "ROOM_A", &roomA);
+    roomAttachment_B = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor->tree,
+                                                                                                      "ROOM_B", &roomB);
+    roomAttachment_C = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor->tree,
+                                                                                                      "ROOM_C", &roomC);
 }
 
 SampleSetSwitch::~SampleSetSwitch()
@@ -69,14 +67,18 @@ SampleSetSwitch::~SampleSetSwitch()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    roomC = nullptr;
-    roomB = nullptr;
     roomA = nullptr;
+    roomB = nullptr;
+    roomC = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
 }
+
+//void SampleSetSwitch::receiveTree(juce::AudioProcessorValueTreeState* tree) {
+//    parentTree = tree;
+//}
 
 //==============================================================================
 void SampleSetSwitch::paint (juce::Graphics& g)
@@ -99,6 +101,31 @@ void SampleSetSwitch::resized()
     //[/UserResized]
 }
 
+void SampleSetSwitch::buttonClicked (juce::Button* buttonThatWasClicked)
+{
+    //[UserbuttonClicked_Pre]
+    //[/UserbuttonClicked_Pre]
+
+    if (buttonThatWasClicked == roomA.get())
+    {
+        //[UserButtonCode_roomA] -- add your button handler code here..
+        //[/UserButtonCode_roomA]
+    }
+    else if (buttonThatWasClicked == roomB.get())
+    {
+        //[UserButtonCode_roomB] -- add your button handler code here..
+        //[/UserButtonCode_roomB]
+    }
+    else if (buttonThatWasClicked == roomC.get())
+    {
+        //[UserButtonCode_roomC] -- add your button handler code here..
+        //[/UserButtonCode_roomC]
+    }
+
+    //[UserbuttonClicked_Post]
+    //[/UserbuttonClicked_Post]
+}
+
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
@@ -119,15 +146,15 @@ BEGIN_JUCER_METADATA
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="200" initialHeight="200">
   <BACKGROUND backgroundColour="ff808080"/>
-  <TEXTBUTTON name="Room C" id="486c3f9de0419895" memberName="roomC" virtualName=""
-              explicitFocusOrder="0" pos="50 150 100 24" bgColOff="ffffffff"
-              buttonText="Room C" connectedEdges="0" needsCallback="0" radioGroupId="1001"/>
-  <TEXTBUTTON name="Room B" id="8899a207c5597c6c" memberName="roomB" virtualName=""
-              explicitFocusOrder="0" pos="50 100 100 24" bgColOff="ffffffff"
-              buttonText="Room B" connectedEdges="0" needsCallback="0" radioGroupId="1001"/>
-  <TEXTBUTTON name="Room A" id="9c4f085414802b21" memberName="roomA" virtualName=""
-              explicitFocusOrder="0" pos="50 50 100 24" bgColOff="ffffffff"
-              buttonText="Room A" connectedEdges="0" needsCallback="0" radioGroupId="1001"/>
+  <TOGGLEBUTTON name="Room A" id="cf600e062c008c2a" memberName="roomA" virtualName=""
+                explicitFocusOrder="0" pos="50 50 100 24" buttonText="Room A"
+                connectedEdges="0" needsCallback="1" radioGroupId="1001" state="0"/>
+  <TOGGLEBUTTON name="Room B" id="93ac68dfac82b749" memberName="roomB" virtualName=""
+                explicitFocusOrder="0" pos="50 80 100 24" buttonText="Room B"
+                connectedEdges="0" needsCallback="1" radioGroupId="1001" state="0"/>
+  <TOGGLEBUTTON name="Room C" id="f1a9e5a30768e2b8" memberName="roomC" virtualName=""
+                explicitFocusOrder="0" pos="50 110 100 24" buttonText="Room C"
+                connectedEdges="0" needsCallback="1" radioGroupId="1001" state="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

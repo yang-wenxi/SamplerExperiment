@@ -20,6 +20,7 @@
 #pragma once
 
 //[Headers]     -- You can add your own extra header files here --
+#include "PluginProcessor.h"
 #include <JuceHeader.h>
 //[/Headers]
 
@@ -33,33 +34,30 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class SampleSetSwitch  : public juce::Component
+class SampleSetSwitch  : public juce::Component,
+                         public juce::Button::Listener
 {
 public:
     //==============================================================================
-    SampleSetSwitch ();
+    SampleSetSwitch (juce::AudioProcessor* processor);
     ~SampleSetSwitch() override;
 
     //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
-    //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
+    void buttonClicked (juce::Button* buttonThatWasClicked) override;
+//    void receiveTree(juce::AudioProcessorValueTreeState* tree);
 
-
-
+    SamplerMAudioProcessor* audioProcessor;
 private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
-
-    //==============================================================================
-    std::unique_ptr<juce::TextButton> roomC;
-    std::unique_ptr<juce::TextButton> roomB;
-    std::unique_ptr<juce::TextButton> roomA;
-
-
-    //==============================================================================
+    std::unique_ptr<juce::ToggleButton> roomA;
+    std::unique_ptr<juce::ToggleButton> roomB;
+    std::unique_ptr<juce::ToggleButton> roomC;
+    
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> roomAttachment_A;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> roomAttachment_B;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> roomAttachment_C;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SampleSetSwitch)
 };
 

@@ -224,6 +224,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::crea
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY_ADSR", "Decay", 0.0f, 1.0f, 0.45f));
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN_ADSR", "Sustain", 0.0f, 1.0f, 0.45f));
     paramVec.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE_ADSR", "Release", 0.0f, 20000.0f, 455.5f));
+    
+    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("ROOM_A", "room A", true));
+    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("ROOM_B", "room B", false));
+    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("ROOM_C", "room C", false));
+    
     juce::StringArray instrumentsSet {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
     
     //Channel Control
