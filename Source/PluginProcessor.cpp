@@ -147,21 +147,23 @@ juce::MidiBuffer SamplerMAudioProcessor::midiHandler(juce::MidiBuffer messages) 
         int samplePos = currentMsg.getTimeStamp();
         
         if (currentMsg.isNoteOn()) {
-            switch (noteNumber) {
-            case (60):
-                editor->getKickButton()->triggerClick();
-                break;
-            case (61):
-                editor->getSnareButton()->triggerClick();
-                break;
-            case (62):
-                editor->getTomBotton()->triggerClick();
-                break;
-            case (66):
-                editor->getCrashButton()->triggerClick();
-                break;
-            default:
-                break;
+            if (editor != nullptr) {
+                switch (noteNumber) {
+                case (60):
+                    editor->getKickButton()->triggerClick();
+                    break;
+                case (61):
+                    editor->getSnareButton()->triggerClick();
+                    break;
+                case (62):
+                    editor->getTomBotton()->triggerClick();
+                    break;
+                case (66):
+                    editor->getCrashButton()->triggerClick();
+                    break;
+                default:
+                    break;
+                }
             }
         }
     }
@@ -212,9 +214,11 @@ void SamplerMAudioProcessor::numChannelsChanged() {
     gSampler.brodcastBusCondition(&conditionSender);
 }
 
-void SamplerMAudioProcessor::playSample(juce::String instrument) {
-    int noteNum = gSampler.getInstrumentMidi(instrument);
-    gSampler.noteOn(1, noteNum, 1.0f);
+void SamplerMAudioProcessor::playSample(juce::String instrument, bool fromScreenClick) {
+    if (fromScreenClick) {
+        //int noteNum = gSampler.getInstrumentMidi(instrument);
+        gSampler.noteOn(1, gSampler.getInstrumentMidi(instrument), 1.0f);
+    }
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {

@@ -13,10 +13,14 @@
 SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    playSnareButton.onClick = [&]() {audioProcessor.playSample("SNARE");};
-    playCrashButton.onClick = [&]() {audioProcessor.playSample("CRASH");};
-    playTomButton.onClick = [&]() {audioProcessor.playSample("TOM");};
-    playKickButton.onClick = [&]() {audioProcessor.playSample("KICK");};
+    Timer::startTimerHz(30);
+
+    playSnareButton.onClick = [&]() {audioProcessor.playSample("SNARE", true);};
+    playCrashButton.onClick = [&]() {audioProcessor.playSample("CRASH", true);};
+    playTomButton.onClick = [&]() {audioProcessor.playSample("TOM", true);};
+    playKickButton.onClick = [&]() {audioProcessor.playSample("KICK", true);};
+
+
     
 //    snareButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
 //                                                                                                   "SNARE_BUTTON", playSnareButton);
@@ -59,6 +63,12 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     addAndMakeVisible(parameterSlider);
     parameterSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree,
                                                                                                        "GAIN", parameterSlider);
+
+    openNewWindowButton.setBounds(100, 550, 200, 25);
+    openNewWindowButton.onClick = [this]() {openNewWindow(openNewWindowButton, "window_1"); };
+
+    window_1.setAlwaysOnTop(true);
+
     addAndMakeVisible(snareChannelControl_6);
     addAndMakeVisible(snareChannelControl_5);
     addAndMakeVisible(snareChannelControl_4);
@@ -72,6 +82,8 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     addAndMakeVisible(crashChannelControl_4);
     addAndMakeVisible(crashChannelControl_5);
     addAndMakeVisible(crashChannelControl_6);
+
+    addAndMakeVisible(openNewWindowButton);
     
  /*   for (int i = 1; i <= 6; i++) {
         juce::ToggleButton snareButton{ std::to_string(i) };
@@ -89,7 +101,7 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     addAndMakeVisible(playKickButton);
     
     addAndMakeVisible(sampleSetSwitch);
-    setSize (600, 600);
+    setSize (700, 700);
     
     audioProcessor.tree.addParameterListener("ROOM_A", this);
     audioProcessor.tree.addParameterListener("ROOM_B", this);
@@ -98,6 +110,7 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
 
 SamplerMAudioProcessorEditor::~SamplerMAudioProcessorEditor()
 {
+    Timer::stopTimer();
 }
 
 //==============================================================================
@@ -135,6 +148,10 @@ void SamplerMAudioProcessorEditor::resized()
     parameterSlider.setBounds(420, 260, 100, 100);
 }
 
+void SamplerMAudioProcessorEditor::timerCallback() {
+    repaint();
+}
+
 void SamplerMAudioProcessorEditor::parameterChanged(const juce::String &parameterID, float newValue) {
     if (parameterID.contains("ROOM") && newValue == 1.0f) {
         juce::String room = parameterID.substring(5, 6);
@@ -147,6 +164,18 @@ void SamplerMAudioProcessorEditor::parameterChanged(const juce::String &paramete
         else if (room == "C") {
             currentRoom = ROOM_C;
         }
-        DBG(std::to_string(currentRoom));
+    }
+}
+
+void SamplerMAudioProcessorEditor::openNewWindow(juce::ToggleButton& button, juce::String buttonData) {
+    if (buttonData == "window_1") {
+        bool isToggled = button.getToggleState();
+        if (isToggled) {
+            addAndMakeVisible(window_1);
+            window_1.setBounds(400, 500, 100, 100);
+        }
+        else {
+            removeChildComponent(&window_1);
+        }
     }
 }

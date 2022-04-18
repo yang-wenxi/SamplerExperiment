@@ -12,9 +12,10 @@
 #include "PluginProcessor.h"
 #include "foleys_gui_magic.h"
 #include "SampleSetSwitch.h"
+#include "NewWindow.h"
 
 
-class SamplerMAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::AudioProcessorValueTreeState::Listener
+class SamplerMAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::AudioProcessorValueTreeState::Listener, public juce::Timer
 {
 public:
     SamplerMAudioProcessorEditor (SamplerMAudioProcessor&);
@@ -23,6 +24,7 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    void timerCallback() override;
     
     juce::TextButton* getSnareButton() {
         return &playSnareButton;
@@ -39,7 +41,7 @@ public:
     juce::TextButton* getKickButton() {
         return &playKickButton;
     }
-    
+
     void parameterChanged(const juce::String &parameterID, float newValue) override;
 
 private:
@@ -65,6 +67,8 @@ private:
     juce::ToggleButton crashChannelControl_5{ "5" };
     juce::ToggleButton crashChannelControl_6{ "6" };
 
+    juce::ToggleButton openNewWindowButton{ "Open new window" };
+
     //std::vector<juce::ToggleButton> snareChannelControl;
     //std::vector<juce::ToggleButton> crashChannelControl;
     
@@ -89,6 +93,9 @@ private:
 
     int currentRoom = ROOM_A;
     enum ROOM {ROOM_A = 0, ROOM_B = 1, ROOM_C = 2};
+
+    NewWindow window_1;
+    void openNewWindow(juce::ToggleButton& button, juce::String buttonData);
 
     SamplerMAudioProcessor& audioProcessor;
     SampleSetSwitch sampleSetSwitch{&audioProcessor};
