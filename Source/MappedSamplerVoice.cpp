@@ -25,6 +25,7 @@ void MappedSamplerVoice::startNote(int midiNoteNumber, float velocity, juce::Syn
         sourceSamplePosition = 0.0;
         EE.setSampleRate(sound -> sourceSampleRate);
         EE.turnOn();
+        currentNoteOnVel = velocity;
     }
     else
     {
@@ -158,8 +159,8 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 r = EE.applyTo(r);
 
                 for (int chn = 0; chn < hasPlaybackChannel.size(); chn++) {
-                    *outputListL[chn]++ += l * gain;
-                    *outputListR[chn]++ += r * gain;
+                    *outputListL[chn]++ += l * gain * currentNoteOnVel;
+                    *outputListR[chn]++ += r * gain * currentNoteOnVel;
                 }
                 
                 sourceSamplePosition += pitchRatio;

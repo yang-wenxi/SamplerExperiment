@@ -57,7 +57,7 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    void playSample(juce::String instrumentName, bool fromScreenClicked);
+    void playSample(juce::String instrumentName);
 
     juce::AudioProcessorValueTreeState::ParameterLayout createParams();
     void addParamListener();
@@ -72,6 +72,10 @@ public:
     
 private:
     GroupedSampler gSampler;
+    juce::MidiMessage currentMsg;
+    float currentNoteOnVelocity = 1.0f;
+    float currentNoteOffVelocity = 1.0f;
+    bool triggerFromMidi = false;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessor)
 };

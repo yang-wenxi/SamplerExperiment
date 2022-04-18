@@ -66,6 +66,7 @@ public:
     busConditionSender busCondition;
 
 private:
+    float currentNoteOnVel = 1.0f;
     float gain = 0.6f;
     int instrumentIndex;
     juce::String instrument;

@@ -139,7 +139,6 @@ void SamplerMAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 juce::MidiBuffer SamplerMAudioProcessor::midiHandler(juce::MidiBuffer messages) {
     SamplerMAudioProcessorEditor* editor = dynamic_cast<SamplerMAudioProcessorEditor*>(getActiveEditor());
     juce::MidiBuffer processedMsg;
-    juce::MidiMessage currentMsg;
     
     for (auto msg : messages) {
         currentMsg = msg.getMessage();
@@ -147,7 +146,9 @@ juce::MidiBuffer SamplerMAudioProcessor::midiHandler(juce::MidiBuffer messages) 
         int samplePos = currentMsg.getTimeStamp();
         
         if (currentMsg.isNoteOn()) {
+            //currentNoteOnVelocity = currentMsg.getVelocity();
             if (editor != nullptr) {
+                triggerFromMidi = true;
                 switch (noteNumber) {
                 case (60):
                     editor->getKickButton()->triggerClick();
@@ -214,11 +215,13 @@ void SamplerMAudioProcessor::numChannelsChanged() {
     gSampler.brodcastBusCondition(&conditionSender);
 }
 
-void SamplerMAudioProcessor::playSample(juce::String instrument, bool fromScreenClick) {
-    if (fromScreenClick) {
-        //int noteNum = gSampler.getInstrumentMidi(instrument);
-        gSampler.noteOn(1, gSampler.getInstrumentMidi(instrument), 1.0f);
-    }
+void SamplerMAudioProcessor::playSample(juce::String instrument) {
+    int noteNum = gSampler.getInstrumentMidi(instrument);
+    if (triggerFromMidi)
+        triggerFromMidi = false;
+    else 
+        gSampler.noteOn(1, noteNum, 1.0f);
+        
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {

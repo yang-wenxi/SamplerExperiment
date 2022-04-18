@@ -15,10 +15,10 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
 {
     Timer::startTimerHz(30);
 
-    playSnareButton.onClick = [&]() {audioProcessor.playSample("SNARE", true);};
-    playCrashButton.onClick = [&]() {audioProcessor.playSample("CRASH", true);};
-    playTomButton.onClick = [&]() {audioProcessor.playSample("TOM", true);};
-    playKickButton.onClick = [&]() {audioProcessor.playSample("KICK", true);};
+    playSnareButton.onClick = [&]() {audioProcessor.playSample("SNARE");};
+    playCrashButton.onClick = [&]() {audioProcessor.playSample("CRASH");};
+    playTomButton.onClick = [&]() {audioProcessor.playSample("TOM");};
+    playKickButton.onClick = [&]() {audioProcessor.playSample("KICK");};
 
 
     
