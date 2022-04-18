@@ -31,99 +31,50 @@ SampleSetSwitch::SampleSetSwitch (juce::AudioProcessor* processor)
 {
     audioProcessor = dynamic_cast<SamplerMAudioProcessor*>(processor);
     
-    roomA.reset (new juce::ToggleButton ("Room A"));
-    addAndMakeVisible (roomA.get());
-    roomA->setRadioGroupId (1001);
-    roomA->addListener (this);
+    addAndMakeVisible (roomA);
+    roomA.setRadioGroupId (1001);
 
-    roomA->setBounds (50, 50, 100, 24);
+    addAndMakeVisible (roomB);
+    roomB.setRadioGroupId (1001);
+    
+    addAndMakeVisible (roomC);
+    roomC.setRadioGroupId (1001);
 
-    roomB.reset (new juce::ToggleButton ("Room B"));
-    addAndMakeVisible (roomB.get());
-    roomB->setRadioGroupId (1001);
-    roomB->addListener (this);
+    roomA.setBounds (50, 50, 100, 24);
+    roomB.setBounds (50, 80, 100, 24);
+    roomC.setBounds (50, 110, 100, 24);
 
-    roomB->setBounds (50, 80, 100, 24);
-
-    roomC.reset (new juce::ToggleButton ("Room C"));
-    addAndMakeVisible (roomC.get());
-    roomC->setRadioGroupId (1001);
-    roomC->addListener (this);
-
-    roomC->setBounds (50, 110, 100, 24);
 
     setSize (200, 200);
-    
+
+
     roomAttachment_A = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor->tree,
-                                                                                                      "ROOM_A", &roomA);
+                                                                                                      "ROOM_A", roomA);
     roomAttachment_B = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor->tree,
-                                                                                                      "ROOM_B", &roomB);
+                                                                                                      "ROOM_B", roomB);
     roomAttachment_C = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor->tree,
-                                                                                                      "ROOM_C", &roomC);
+                                                                                                      "ROOM_C", roomC);
 }
 
 SampleSetSwitch::~SampleSetSwitch()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
-    //[/Destructor_pre]
-
-    roomA = nullptr;
-    roomB = nullptr;
-    roomC = nullptr;
-
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
+    
 }
-
-//void SampleSetSwitch::receiveTree(juce::AudioProcessorValueTreeState* tree) {
-//    parentTree = tree;
-//}
 
 //==============================================================================
 void SampleSetSwitch::paint (juce::Graphics& g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
     g.fillAll (juce::Colours::grey);
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
 }
 
 void SampleSetSwitch::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
+    
 }
 
 void SampleSetSwitch::buttonClicked (juce::Button* buttonThatWasClicked)
 {
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
-    if (buttonThatWasClicked == roomA.get())
-    {
-        //[UserButtonCode_roomA] -- add your button handler code here..
-        //[/UserButtonCode_roomA]
-    }
-    else if (buttonThatWasClicked == roomB.get())
-    {
-        //[UserButtonCode_roomB] -- add your button handler code here..
-        //[/UserButtonCode_roomB]
-    }
-    else if (buttonThatWasClicked == roomC.get())
-    {
-        //[UserButtonCode_roomC] -- add your button handler code here..
-        //[/UserButtonCode_roomC]
-    }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
+    
 }
 
 

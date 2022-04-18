@@ -103,7 +103,8 @@ SamplerMAudioProcessorEditor::~SamplerMAudioProcessorEditor()
 //==============================================================================
 void SamplerMAudioProcessorEditor::paint (juce::Graphics& g)
 {
-
+    
+    g.fillAll(roomColours[currentRoom]);
 }
 
 
@@ -135,5 +136,17 @@ void SamplerMAudioProcessorEditor::resized()
 }
 
 void SamplerMAudioProcessorEditor::parameterChanged(const juce::String &parameterID, float newValue) {
-    int i = 0;
+    if (parameterID.contains("ROOM") && newValue == 1.0f) {
+        juce::String room = parameterID.substring(5, 6);
+        if (room == "A") {
+            currentRoom = ROOM_A;
+        }
+        else if (room == "B") {
+            currentRoom = ROOM_B;
+        }
+        else if (room == "C") {
+            currentRoom = ROOM_C;
+        }
+        DBG(std::to_string(currentRoom));
+    }
 }

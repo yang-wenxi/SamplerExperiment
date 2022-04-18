@@ -85,15 +85,14 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_5;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_6;
     
-    
-//    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareButtonAttachment;
-//    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashButtonAttachment;
-//    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> tomButtonAttachment;
-    
-    //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> snareChannelAttachment;
-    //std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> crashChannelAttachment;
+    std::vector<juce::Colour> roomColours;
+    roomColours.push_back(juce::Colours::grey);
+    roomColours.push_back(juce::Colours::black);
+    roomColours.push_back(juce::Colours::white);
+    int currentRoom = ROOM_A;
+    enum ROOM {ROOM_A = 0, ROOM_B = 1, ROOM_C = 2};
 
     SamplerMAudioProcessor& audioProcessor;
-    SampleSetSwitch sampleSetSwitch{*audioProcessor};
+    SampleSetSwitch sampleSetSwitch{&audioProcessor};
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessorEditor)
 };

@@ -43,21 +43,30 @@ public:
     ~SampleSetSwitch() override;
 
     //==============================================================================
+    //[UserMethods]     -- You can add your own custom methods in this section.
+    //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
     void buttonClicked (juce::Button* buttonThatWasClicked) override;
-//    void receiveTree(juce::AudioProcessorValueTreeState* tree);
 
-    SamplerMAudioProcessor* audioProcessor;
+
+
 private:
-    std::unique_ptr<juce::ToggleButton> roomA;
-    std::unique_ptr<juce::ToggleButton> roomB;
-    std::unique_ptr<juce::ToggleButton> roomC;
-    
+    //[UserVariables]   -- You can add your own custom variables in this section.
+    //[/UserVariables]
+
+    //==============================================================================
+    juce::ToggleButton roomA{"Room A"};
+    juce::ToggleButton roomB{"Room B"};
+    juce::ToggleButton roomC{"Room C"};
+
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> roomAttachment_A;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> roomAttachment_B;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> roomAttachment_C;
+    
+    SamplerMAudioProcessor* audioProcessor;
+    //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SampleSetSwitch)
 };
 
