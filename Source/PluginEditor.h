@@ -85,10 +85,8 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_5;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_6;
     
-    std::vector<juce::Colour> roomColours;
-    roomColours.push_back(juce::Colours::grey);
-    roomColours.push_back(juce::Colours::black);
-    roomColours.push_back(juce::Colours::white);
+    std::vector<juce::Colour> roomColours{ juce::Colours::grey, juce::Colours::black, juce::Colours::white };
+
     int currentRoom = ROOM_A;
     enum ROOM {ROOM_A = 0, ROOM_B = 1, ROOM_C = 2};
 
