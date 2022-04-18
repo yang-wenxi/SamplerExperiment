@@ -11,8 +11,11 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "foleys_gui_magic.h"
-#include "SampleSetSwitch.h"
 #include "NewWindow.h"
+#include "DrumSetSelectWindow.h"
+#include "OutputChannelSelectWindow.h"
+#include "RoomSelectWindow.h"
+#include "SampleSetSwitch.h"
 
 
 class SamplerMAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::AudioProcessorValueTreeState::Listener, public juce::Timer
@@ -45,27 +48,13 @@ public:
     void parameterChanged(const juce::String &parameterID, float newValue) override;
 
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
+    SamplerMAudioProcessor& audioProcessor;
+
     juce::TextButton playSnareButton {"SNARE"};
     juce::TextButton playCrashButton { "CRASH" };
     juce::TextButton playTomButton { "TOM" };
     juce::TextButton playKickButton { "KICK" };
 //    juce::TextButton playSnareAndCrashButton { "S C" };
-    
-    juce::ToggleButton snareChannelControl_1{ "1" };
-    juce::ToggleButton snareChannelControl_2{ "2" };
-    juce::ToggleButton snareChannelControl_3{ "3" };
-    juce::ToggleButton snareChannelControl_4{ "4" };
-    juce::ToggleButton snareChannelControl_5{ "5" };
-    juce::ToggleButton snareChannelControl_6{ "6" };
-    
-    juce::ToggleButton crashChannelControl_1{ "1" };
-    juce::ToggleButton crashChannelControl_2{ "2" };
-    juce::ToggleButton crashChannelControl_3{ "3" };
-    juce::ToggleButton crashChannelControl_4{ "4" };
-    juce::ToggleButton crashChannelControl_5{ "5" };
-    juce::ToggleButton crashChannelControl_6{ "6" };
 
     juce::ToggleButton openNewWindowButton{ "Open new window" };
 
@@ -75,29 +64,29 @@ private:
     juce::Slider parameterSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> parameterSliderAttachment;
     
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_1;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_2;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_3;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_4;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_5;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> snareChannelAttachment_6;
-    
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_1;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_2;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_3;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_4;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_5;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> crashChannelAttachment_6;
-    
     std::vector<juce::Colour> roomColours{ juce::Colours::grey, juce::Colours::black, juce::Colours::white };
 
+    juce::ToggleButton roomSelectButton{ "Select a room" };
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> roomSelectButtonAtachment;
+    RoomSelectWindow roomSelectWin{ &audioProcessor };
     int currentRoom = ROOM_A;
     enum ROOM {ROOM_A = 0, ROOM_B = 1, ROOM_C = 2};
+
+    juce::ToggleButton drumSelectButton{ "Select a drum set" };
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> drumSelectButtonAtachment;
+    DrumSetSelectWindow drumSelectWindow{ &audioProcessor };
+
+    juce::ToggleButton outputSelectButton_Snare{ "Select Snare Output" };
+    juce::ToggleButton outputSelectButton_Crash{ "Select Crash Output" };
+    OutputChannelSelectWindow outputSelectWindow{ &audioProcessor };
 
     NewWindow window_1;
     void openNewWindow(juce::ToggleButton& button, juce::String buttonData);
 
-    SamplerMAudioProcessor& audioProcessor;
-    SampleSetSwitch sampleSetSwitch{&audioProcessor};
+    void attachParameters();
+    void linkParamChangeListeners();
+
+    enum RadioGroups {OUTPUT_CHANNEL_SELECT = 1010};
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SamplerMAudioProcessorEditor)
 };

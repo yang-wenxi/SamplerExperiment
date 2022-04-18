@@ -14,8 +14,9 @@
 //==============================================================================
 NewWindow::NewWindow()
 {
+    setAlwaysOnTop(true);
+    setBounds(400, 500, 100, 100);
     imOn.setBounds(10, 30, 80, 40);
-
     addAndMakeVisible(imOn);
     setSize(100, 100);
 }

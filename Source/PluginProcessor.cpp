@@ -235,6 +235,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::crea
     paramVec.push_back(std::make_unique<juce::AudioParameterBool>("ROOM_A", "room A", true));
     paramVec.push_back(std::make_unique<juce::AudioParameterBool>("ROOM_B", "room B", false));
     paramVec.push_back(std::make_unique<juce::AudioParameterBool>("ROOM_C", "room C", false));
+
+    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("BUTTON_SELECT_ROOM", "select room", false));
+    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("BUTTON_SELECT_DRUMSET", "select drum set", false));
+    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("BUTTON_SELECT_SNARE", "select snare", false));
+    
     
     juce::StringArray instrumentsSet {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
     

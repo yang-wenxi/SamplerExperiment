@@ -6,14 +6,6 @@
               defines="JUCE_MODAL_LOOPS_PERMITTED=1" headerPath="C:\Users\WdYan\Development\Library\foleys_gui_magic&#10;/Users/yangwenxi/Development/Library/foleys_gui_magic">
   <MAINGROUP id="eixVHm" name="SamplerM">
     <GROUP id="{BD92D26E-9D5C-05FE-3B37-40FD64D3B3B8}" name="Source">
-      <FILE id="IM3CWL" name="NewWindow.cpp" compile="1" resource="0" file="Source/NewWindow.cpp"/>
-      <FILE id="EsH8MN" name="NewWindow.h" compile="0" resource="0" file="Source/NewWindow.h"/>
-      <FILE id="VA4Nij" name="SampleSetSwitch.cpp" compile="1" resource="0"
-            file="Source/SampleSetSwitch.cpp"/>
-      <FILE id="yZJcYB" name="SampleSetSwitch.h" compile="0" resource="0"
-            file="Source/SampleSetSwitch.h"/>
-      <FILE id="Y6ysRK" name="CosmosUI.cpp" compile="1" resource="0" file="Source/CosmosUI.cpp"/>
-      <FILE id="wRgfKk" name="CosmosUI.h" compile="0" resource="0" file="Source/CosmosUI.h"/>
       <FILE id="uFZb6t" name="GlobalProperties.h" compile="0" resource="0"
             file="Source/GlobalProperties.h"/>
       <FILE id="tCXqE5" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -23,6 +15,30 @@
       <FILE id="jt4ZpP" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="WWDhs0" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <GROUP id="{86712773-2606-DE42-1A03-E471CFA0D39B}" name="OtherComponents">
+        <FILE id="vJ54nO" name="SampleSetSwitch.h" compile="0" resource="0"
+              file="Source/SampleSetSwitch.h"/>
+        <FILE id="vMmlm0" name="SampleSetSwitch.cpp" compile="1" resource="0"
+              file="Source/SampleSetSwitch.cpp"/>
+        <FILE id="IM3CWL" name="NewWindow.cpp" compile="1" resource="0" file="Source/NewWindow.cpp"/>
+        <FILE id="EsH8MN" name="NewWindow.h" compile="0" resource="0" file="Source/NewWindow.h"/>
+        <FILE id="Y6ysRK" name="CosmosUI.cpp" compile="1" resource="0" file="Source/CosmosUI.cpp"/>
+        <FILE id="wRgfKk" name="CosmosUI.h" compile="0" resource="0" file="Source/CosmosUI.h"/>
+      </GROUP>
+      <GROUP id="{A82D8658-FB77-27FF-6A38-F453DB51A828}" name="SelectWindows">
+        <FILE id="AzV0eU" name="RoomSelectWindow.cpp" compile="1" resource="0"
+              file="Source/RoomSelectWindow.cpp"/>
+        <FILE id="ZpJ7D8" name="RoomSelectWindow.h" compile="0" resource="0"
+              file="Source/RoomSelectWindow.h"/>
+        <FILE id="eR1BIf" name="OutputChannelSelectWindow.cpp" compile="1"
+              resource="0" file="Source/OutputChannelSelectWindow.cpp"/>
+        <FILE id="jvQBlz" name="OutputChannelSelectWindow.h" compile="0" resource="0"
+              file="Source/OutputChannelSelectWindow.h"/>
+        <FILE id="LfhTcL" name="DrumSetSelectWindow.cpp" compile="1" resource="0"
+              file="Source/DrumSetSelectWindow.cpp"/>
+        <FILE id="EZESpp" name="DrumSetSelectWindow.h" compile="0" resource="0"
+              file="Source/DrumSetSelectWindow.h"/>
+      </GROUP>
       <GROUP id="{B9781B89-4449-59B8-ABCD-52B4A4C1BF57}" name="Audio">
         <FILE id="jCWfY0" name="EnvelopeEngine.cpp" compile="1" resource="0"
               file="Source/EnvelopeEngine.cpp"/>
