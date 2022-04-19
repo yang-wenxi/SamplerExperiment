@@ -20,6 +20,7 @@ DrumSetSelectWindow::DrumSetSelectWindow(juce::AudioProcessor* processor)
 
 DrumSetSelectWindow::~DrumSetSelectWindow()
 {
+
 }
 
 void DrumSetSelectWindow::paint (juce::Graphics& g)

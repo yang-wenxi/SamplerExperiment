@@ -26,6 +26,8 @@ public:
     void resized() override;
 
 private:
+    SamplerMAudioProcessor* audioProcessor;
+    
     juce::ToggleButton roomA{ "Room A" };
     juce::ToggleButton roomB{ "Room B" };
     juce::ToggleButton roomC{ "Room C" };
@@ -33,7 +35,6 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> roomAttachment_A;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> roomAttachment_B;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> roomAttachment_C;
-
-    SamplerMAudioProcessor* audioProcessor;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RoomSelectWindow)
 };

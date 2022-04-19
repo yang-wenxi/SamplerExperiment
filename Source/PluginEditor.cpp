@@ -13,12 +13,17 @@
 SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+    DBG("++++++ editor");
     Timer::startTimerHz(30);
 
     playSnareButton.onClick = [&]() {audioProcessor.playSample("SNARE");};
     playCrashButton.onClick = [&]() {audioProcessor.playSample("CRASH");};
     playTomButton.onClick = [&]() {audioProcessor.playSample("TOM");};
     playKickButton.onClick = [&]() {audioProcessor.playSample("KICK");};
+    
+    outputSelectButton_Crash.onClick = [this]() {openNewWindow(outputSelectButton_Crash, "outputSelect+crash"); };
+    outputSelectButton_Snare.onClick = [this]() {openNewWindow(outputSelectButton_Snare, "outputSelect+snare"); };
+    roomSelectButton.onClick = [this]() {openNewWindow(roomSelectButton, "roomSelect"); };
     
     parameterSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     parameterSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
@@ -27,7 +32,7 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     playCrashButton.setBounds(220, 20, 180, 180);
     playTomButton.setBounds(20, 220, 180, 180);
     playKickButton.setBounds(220, 220, 180, 180);
-    //playSnareAndCrashButton.setBounds(20, 220, 180, 180);
+
 
     parameterSlider.setBounds(420, 260, 100, 100);
 
@@ -36,18 +41,15 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     outputSelectButton_Crash.setBounds(550, 200, 100, 40);
     drumSelectButton.setBounds(550, 250, 100, 40);
 
-    openNewWindowButton.setBounds(100, 550, 200, 25);
-    openNewWindowButton.onClick = [this]() {openNewWindow(openNewWindowButton, "window_1"); };
+    
 
-    outputSelectButton_Crash.onClick = [this]() {openNewWindow(outputSelectButton_Crash, "outputselect+crash"); };
-    outputSelectButton_Snare.onClick = [this]() {openNewWindow(outputSelectButton_Snare, "outputselect+snare"); };
-
+    
+    
     addAndMakeVisible(parameterSlider);
     addAndMakeVisible(roomSelectButton);
     addAndMakeVisible(outputSelectButton_Snare);
     addAndMakeVisible(outputSelectButton_Crash);
     addAndMakeVisible(drumSelectButton);
-    addAndMakeVisible(openNewWindowButton);
 
     addAndMakeVisible(playSnareButton);
     addAndMakeVisible(playCrashButton);
@@ -67,6 +69,7 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
 SamplerMAudioProcessorEditor::~SamplerMAudioProcessorEditor()
 {
     Timer::stopTimer();
+    DBG("aaaa------------ editor");
 }
 
 //==============================================================================
@@ -94,38 +97,33 @@ void SamplerMAudioProcessorEditor::timerCallback() {
 
 void SamplerMAudioProcessorEditor::openNewWindow(juce::ToggleButton& button, juce::String buttonData) {
     bool isToggled = button.getToggleState();
-    if (buttonData == "window_1") {
-        if (isToggled) {
-            addAndMakeVisible(window_1);
-        }
-        else {
-            removeChildComponent(&window_1);
-        }
-    }
 
-    if (buttonData.contains("outputselect")) {
+    if (buttonData.contains("outputSelect")) {
         int instrumentIndex = buttonData.indexOfChar('+') + 1;
         juce::String instrumentName = buttonData.substring(instrumentIndex, buttonData.length()).toLowerCase();
         if (isToggled) {
-            if (instrumentName != "snare") {
+            if (instrumentName != "snare")
                 outputSelectButton_Snare.setToggleState(false, juce::NotificationType::dontSendNotification);
-                DBG("new Snare Value Set");
-            }
-            if (instrumentName != "crash") {
+            if (instrumentName != "crash")
                 outputSelectButton_Crash.setToggleState(false, juce::NotificationType::dontSendNotification);
-                DBG("new Crash Value Set");
-            }
+            
             outputSelectWindow.instrumentToSelect(instrumentName);
             addAndMakeVisible(outputSelectWindow);
         }
         else
             removeChildComponent(&outputSelectWindow);
     }
+    
+    if (buttonData == "roomSelect") {
+        if (isToggled) addAndMakeVisible(roomSelectWin);
+        else removeChildComponent(&roomSelectWin);
+    }
 }
 
 
 void SamplerMAudioProcessorEditor::parameterChanged(const juce::String &parameterID, float newValue) {
     if (parameterID.contains("ROOM")) {
+        DBG("ppppaaaarameeeterrr channawefgjiaw");
         if (newValue == 1.0f) {
             juce::String room = parameterID.substring(5, 6);
             if (room == "A") {
@@ -139,34 +137,34 @@ void SamplerMAudioProcessorEditor::parameterChanged(const juce::String &paramete
             }
         }
     }
-
-    if (parameterID == "BUTTON_SELECT_ROOM") {
-        if (newValue == 1.0f)
-            addAndMakeVisible(roomSelectWin);
-        else
-            removeChildComponent(&roomSelectWin);
-    }
 }
 
 void SamplerMAudioProcessorEditor::attachParameters()
 {
     parameterSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree,
         "GAIN", parameterSlider);
-
-    roomSelectButtonAtachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
-        "BUTTON_SELECT_ROOM", roomSelectButton);
-    drumSelectButtonAtachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.tree,
-        "BUTTON_SELECT_DRUMSET", drumSelectButton);
 }
 
 void SamplerMAudioProcessorEditor::linkParamChangeListeners()
 {
+    DBG("listener add");
     audioProcessor.tree.addParameterListener("ROOM_A", this);
     audioProcessor.tree.addParameterListener("ROOM_B", this);
     audioProcessor.tree.addParameterListener("ROOM_C", this);
+}
 
-    audioProcessor.tree.addParameterListener("BUTTON_SELECT_ROOM", this);
-    audioProcessor.tree.addParameterListener("button_select_drumset", this);
-    //audioProcessor.tree.addParameterListener("BUTTON_SELECT_SNARE", this);
-
+juce::TextButton* SamplerMAudioProcessorEditor::getPlayButton(juce::String instrumentToPlay) {
+    if (instrumentToPlay == "kick") {
+        return &playKickButton;
+    }
+    if (instrumentToPlay == "snare") {
+        return &playSnareButton;
+    }
+    if (instrumentToPlay == "tom") {
+        return &playTomButton;
+    }
+    if (instrumentToPlay == "crash") {
+        return &playCrashButton;
+    }
+    return nullptr;
 }

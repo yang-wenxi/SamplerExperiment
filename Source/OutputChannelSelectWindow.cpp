@@ -34,7 +34,6 @@ OutputChannelSelectWindow::OutputChannelSelectWindow(juce::AudioProcessor* proce
     crashChannelControl_6.setBounds(320, 120, 40, 40);
 
     attachParameters();
-
 }
 
 OutputChannelSelectWindow::~OutputChannelSelectWindow()

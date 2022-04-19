@@ -14,6 +14,7 @@
 //==============================================================================
 
 RoomSelectWindow::RoomSelectWindow(juce::AudioProcessor* processor) {
+    DBG("RRRRROOOOOMMMMMMM");
     audioProcessor = dynamic_cast<SamplerMAudioProcessor*>(processor);
 
     setAlwaysOnTop(true);
@@ -45,6 +46,7 @@ RoomSelectWindow::RoomSelectWindow(juce::AudioProcessor* processor) {
 
 RoomSelectWindow::~RoomSelectWindow()
 {
+    DBG("ROOOMMM ----------------------");
 }
 
 void RoomSelectWindow::paint (juce::Graphics& g)

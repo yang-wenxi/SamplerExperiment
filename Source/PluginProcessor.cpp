@@ -151,16 +151,16 @@ juce::MidiBuffer SamplerMAudioProcessor::midiHandler(juce::MidiBuffer messages) 
                 triggerFromMidi = true;
                 switch (noteNumber) {
                 case (60):
-                    editor->getKickButton()->triggerClick();
+                    editor->getPlayButton("kick")->triggerClick();
                     break;
                 case (61):
-                    editor->getSnareButton()->triggerClick();
+                    editor->getPlayButton("snare")->triggerClick();
                     break;
                 case (62):
-                    editor->getTomBotton()->triggerClick();
+                    editor->getPlayButton("tom")->triggerClick();
                     break;
                 case (66):
-                    editor->getCrashButton()->triggerClick();
+                    editor->getPlayButton("crash")->triggerClick();
                     break;
                 default:
                     break;
