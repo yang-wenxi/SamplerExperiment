@@ -60,7 +60,7 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     //outputSelectButton_Snare.setRadioGroupId(OUTPUT_CHANNEL_SELECT);
     //outputNotShowButton.setRadioGroupId(OUTPUT_CHANNEL_SELECT);
     
-    setSize (700, 700);
+    setSize (705, 700);
 
     attachParameters();
     linkParamChangeListeners();
