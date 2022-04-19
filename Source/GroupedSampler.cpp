@@ -72,16 +72,6 @@ void GroupedSampler::loadSamples(juce::String rootNote) {
             addSample(instr, fName);
         }
     }
-
-  /*  for (int i = 0; i < instruments.size(); i++) {
-        juce::String inst = instruments[i];
-        if (!sampleBundleVector[i].isEmpty())
-            sampleBundleVector[i].clearBundle();
-        for (int k = 1; k < 6; k++) {
-            juce::String fName = { inst + std::to_string(k) + ".wav" };
-            addSample(inst, fName);
-        }
-    }*/
 }
 
 void GroupedSampler::parameterChanged(const juce::String& parameterID, float newValue) {
