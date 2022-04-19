@@ -17,7 +17,7 @@
 //==============================================================================
 /**
 */
-class SamplerMAudioProcessor  : public juce::AudioProcessor
+class SamplerMAudioProcessor  : public juce::AudioProcessor, public juce::AudioProcessorValueTreeState::Listener
 {
 public:
     //==============================================================================
@@ -53,22 +53,28 @@ public:
     const juce::String getProgramName (int index) override;
     void changeProgramName (int index, const juce::String& newName) override;
     void numChannelsChanged() override;
+
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    
-    void playSample(juce::String instrumentName);
 
-    juce::AudioProcessorValueTreeState::ParameterLayout createParams();
-    void addParamListener();
+    //==============================================================================
+    //Custumized functions
+    void playSample(juce::String instrumentName);
     void channelControl(juce::String instrument, std::vector<std::unique_ptr<juce::RangedAudioParameter>>* paramVec);
-    
     juce::MidiBuffer midiHandler(juce::MidiBuffer messages);
 
+    //==============================================================================
+    //ValueTreeState
+    juce::AudioProcessorValueTreeState::ParameterLayout createParams();
+    void addParamListener();
+    void parameterChanged(const juce::String& parameterID, float newValue) override;
+    //==============================================================================
+    //Property Holders
+    busConditionSender conditionSender;
     juce::MidiBuffer buttonBuffer;
     juce::AudioProcessorValueTreeState tree;
-
-    busConditionSender conditionSender;
+    int currentRoom = ROOM_A;
     
 private:
     GroupedSampler gSampler;

@@ -19,3 +19,5 @@ public:
     int busChannelVec[16] = { };
     int busAvailable[16] = { };
 };
+
+enum ROOM { ROOM_A = 0, ROOM_B = 1, ROOM_C = 2 };

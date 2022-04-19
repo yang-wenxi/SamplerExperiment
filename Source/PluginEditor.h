@@ -16,9 +16,10 @@
 #include "OutputChannelSelectWindow.h"
 #include "RoomSelectWindow.h"
 #include "SampleSetSwitch.h"
+#include "GlobalProperties.h"
 
 
-class SamplerMAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::AudioProcessorValueTreeState::Listener, public juce::Timer
+class SamplerMAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::Timer
 {
 public:
     SamplerMAudioProcessorEditor (SamplerMAudioProcessor&);
@@ -28,7 +29,6 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     void timerCallback() override;
-    void parameterChanged(const juce::String &parameterID, float newValue) override;
     
     juce::TextButton* getPlayButton(juce::String instrumentToPlay);
     
@@ -49,7 +49,6 @@ private:
     juce::ToggleButton roomSelectButton{ "Select a room" };
     RoomSelectWindow roomSelectWin{ &audioProcessor };
     int currentRoom = ROOM_A;
-    enum ROOM {ROOM_A = 0, ROOM_B = 1, ROOM_C = 2};
 
     juce::ToggleButton drumSelectButton{ "Select a drum set" };
     DrumSetSelectWindow drumSelectWindow{ &audioProcessor };
@@ -64,7 +63,6 @@ private:
     
     void openNewWindow(juce::ToggleButton& button, juce::String buttonData);
     void attachParameters();
-    void linkParamChangeListeners();
 
     enum RadioGroups {OUTPUT_CHANNEL_SELECT = 1010};
 

@@ -175,7 +175,7 @@ juce::MidiBuffer SamplerMAudioProcessor::midiHandler(juce::MidiBuffer messages) 
 //==============================================================================
 bool SamplerMAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return true; 
 }
 
 juce::AudioProcessorEditor* SamplerMAudioProcessor::createEditor()
@@ -235,10 +235,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::crea
     paramVec.push_back(std::make_unique<juce::AudioParameterBool>("ROOM_A", "room A", true));
     paramVec.push_back(std::make_unique<juce::AudioParameterBool>("ROOM_B", "room B", false));
     paramVec.push_back(std::make_unique<juce::AudioParameterBool>("ROOM_C", "room C", false));
-
-    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("BUTTON_SELECT_ROOM", "select room", false));
-    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("BUTTON_SELECT_DRUMSET", "select drum set", false));
-    paramVec.push_back(std::make_unique<juce::AudioParameterBool>("BUTTON_SELECT_SNARE", "select snare", false));
     
     
     juce::StringArray instrumentsSet {"KICK", "SNARE", "TOM", "OPH", "CLH", "RIDE", "CRASH", "CLAP", "PERC"};
@@ -246,7 +242,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::crea
     //Channel Control
     for (int i = 0; i < instrumentsSet.size(); i++) {
         juce::String instrument = instrumentsSet[i];
-//        paramVec.push_back(std::make_unique<juce::AudioParameterBool>(instrument + "_BUTTON", instrument.toLowerCase(), false));
         channelControl(instrument, &paramVec);
     }
 
@@ -270,6 +265,28 @@ void SamplerMAudioProcessor::addParamListener() {
             for (int chn = 1; chn <= 6; chn++) {
                 tree.addParameterListener(instrument + "_CHANNEL+" + std::to_string(chn), v);
             }
+        }
+    }
+
+    tree.addParameterListener("ROOM_A", this);
+    tree.addParameterListener("ROOM_B", this);
+    tree.addParameterListener("ROOM_C", this);
+}
+
+void SamplerMAudioProcessor::parameterChanged(const juce::String& parameterID, float newValue)
+{
+    if (parameterID.contains("ROOM")) {
+        SamplerMAudioProcessorEditor* editor = dynamic_cast<SamplerMAudioProcessorEditor*>(getActiveEditor());
+        if (newValue == 1.0f) {
+            juce::String room = parameterID.substring(5, 6);
+            if (room == "A")
+                currentRoom = ROOM_A;
+            if (room == "B")
+                currentRoom = ROOM_B;
+            if (room == "C")
+                currentRoom = ROOM_C;
+            if (editor != nullptr)
+                editor->setCurrentRoom(currentRoom);
         }
     }
 }
