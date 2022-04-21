@@ -53,6 +53,10 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
     addAndMakeVisible(playTomButton);
     addAndMakeVisible(playKickButton);
     
+    randomGain.onClick = [this]() {shuffleGain(); };
+    randomGain.setBounds(550, 550, 50, 50);
+    addAndMakeVisible(randomGain);
+    
     setSize (705, 700);
 
     attachParameters();
@@ -129,4 +133,11 @@ juce::TextButton* SamplerMAudioProcessorEditor::getPlayButton(juce::String instr
         return &playCrashButton;
 
     return nullptr;
+}
+
+void SamplerMAudioProcessorEditor::shuffleGain() {
+    juce::Random rand;
+    float newGain = rand.nextFloat();
+    DBG(std::to_string(newGain));
+    audioProcessor.tree.setNewState(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", 0.0f, 1.0f, newGain));
 }

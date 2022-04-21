@@ -45,7 +45,12 @@ private:
     juce::TextButton playKickButton { "KICK" };
 
     juce::Slider parameterSlider;
-
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> parameterSliderAttachment;
+    
+    juce::TextButton randomGain{"shuffle gain"};
+    void shuffleGain();
+    
+    
     juce::ToggleButton roomSelectButton{ "Select a room" };
     RoomSelectWindow roomSelectWin{ &audioProcessor };
     int currentRoom = ROOM_A;
@@ -57,8 +62,6 @@ private:
     juce::ToggleButton outputSelectButton_Crash{ "Select Crash Output" };
     OutputChannelSelectWindow outputSelectWindow{ &audioProcessor };
 
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> parameterSliderAttachment;
-    
     std::vector<juce::Colour> roomColours{ juce::Colours::grey, juce::Colours::black, juce::Colours::white };
     
     void openNewWindow(juce::ToggleButton& button, juce::String buttonData);
