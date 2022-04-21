@@ -65,7 +65,6 @@ SamplerMAudioProcessorEditor::SamplerMAudioProcessorEditor (SamplerMAudioProcess
 SamplerMAudioProcessorEditor::~SamplerMAudioProcessorEditor()
 {
     Timer::stopTimer();
-    DBG("aaaa------------ editor");
 }
 
 //==============================================================================
@@ -82,8 +81,6 @@ void SamplerMAudioProcessorEditor::resized()
     playCrashButton.setBounds(220, 20, 180, 180);
     playTomButton.setBounds(20, 220, 180, 180);
     playKickButton.setBounds(220, 220, 180, 180);
-    //playSnareAndCrashButton.setBounds(20, 220, 180, 180);
-    
     parameterSlider.setBounds(420, 260, 100, 100);
 }
 
