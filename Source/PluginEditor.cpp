@@ -136,5 +136,5 @@ void SamplerMAudioProcessorEditor::shuffleGain() {
     juce::Random rand;
     float newGain = rand.nextFloat();
     DBG(std::to_string(newGain));
-    //audioProcessor.tree.setNewState(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", 0.0f, 1.0f, newGain));
+    parameterSlider.setValue(newGain);
 }
