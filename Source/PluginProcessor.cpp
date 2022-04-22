@@ -221,7 +221,6 @@ void SamplerMAudioProcessor::playSample(juce::String instrument) {
         triggerFromMidi = false;
     else 
         gSampler.noteOn(1, noteNum, 1.0f);
-        
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout SamplerMAudioProcessor::createParams() {
