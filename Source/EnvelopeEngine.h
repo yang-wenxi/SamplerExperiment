@@ -14,6 +14,7 @@
 
 #define EE_DEFAULT_STATE_TIME 1000
 #include <cmath>
+#include <JuceHeader.h>
 
 
 class EnvelopeEngine
@@ -114,9 +115,20 @@ public:
         envelopeState = off;
     }
     
-    inline juce::AudioBuffer<float> applyTo(juce::AudioBuffer<float> &inputBuffer);
+    inline void applyToBuffer(juce::AudioBuffer< float > &bufferToProcess) {
+        int numerOfSamples = bufferToProcess.getNumSamples();
+        int currentSample = 0;
+        float* writePointerL = bufferToProcess.getWritePointer(0, 0);
+        float* writePointerR = bufferToProcess.getWritePointer(1, 0);
+        while (++currentSample < numerOfSamples) {
+            float l = bufferToProcess.getSample(0, currentSample);
+            float r = bufferToProcess.getSample(0, currentSample);
+            *writePointerL++ = applyTo(l);
+            *writePointerR++ = applyTo(r);
+        }
+    }
     
-    inline double applyTo(double sample, double* biasedOutput = nullptr) {
+    inline float applyTo(float sample, double* biasedOutput = nullptr) {
         switch (envelopeState) {
             case off:
             {

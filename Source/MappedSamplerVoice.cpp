@@ -122,6 +122,11 @@ void MappedSamplerVoice::renderNextBlockI(juce::AudioBuffer< float > &outputBuff
 }
 
 void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) {
+    renderNextBlockByBuffer(outputBuffer, startSample, numSamples);
+    //renderNextBlockBySample(outputBuffer, startSample, numSamples);
+}
+
+void MappedSamplerVoice::renderNextBlockBySample(juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples) {
     if (auto* playingSound = dynamic_cast<OneSample*>(getCurrentlyPlayingSound().get())) {
         
         auto& data = *playingSound -> getAudioData();
@@ -140,7 +145,63 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         int numOutputChannels = hasPlaybackChannel.size();
 
         if (!hasPlaybackChannel.empty()) {
-            for (int index = 0; index < hasPlaybackChannel.size(); index++) {
+            for (int index = 0; index < numOutputChannels; index++) {
+                int currentPlaybackChannel = hasPlaybackChannel[index];
+                outputListL.push_back(outputBuffer.getWritePointer(currentPlaybackChannel * 2, startSample));
+                outputListR.push_back(outputBuffer.getWritePointer(currentPlaybackChannel * 2 + 1, startSample));
+            }
+       
+            while (--numSamples >= 0) {
+                auto pos = (int) sourceSamplePosition;
+                auto alpha = (float)(sourceSamplePosition - pos);
+                auto invAlpha = 1.0f - alpha;
+                
+                float l = (inL[pos] * invAlpha + inL[pos + 1] * alpha);
+                float r = (inR != nullptr) ? (inR[pos] * invAlpha + inR[pos + 1] * alpha)
+                    : l;
+                
+                l = EE.applyTo(l);
+                r = EE.applyTo(r);
+                
+                for (int chn = 0; chn < hasPlaybackChannel.size(); chn++) {
+                    *outputListL[chn]++ += l * gain * currentNoteOnVel;
+                    *outputListR[chn]++ += r * gain * currentNoteOnVel;
+                }
+                
+                sourceSamplePosition += pitchRatio;
+
+                if (sourceSamplePosition > playingSound -> length || EE.getState() == 0) {
+                    clearCurrentNote();
+                    break;
+                }
+            }
+        }
+        else {
+            stopNote(0, true);
+        }
+    }
+}
+
+void MappedSamplerVoice::renderNextBlockByBuffer(juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples) {
+    if (auto* playingSound = dynamic_cast<OneSample*>(getCurrentlyPlayingSound().get())) {
+        
+        auto& data = *playingSound -> getAudioData();
+        const float* const inL = data.getReadPointer(0);
+        const float* const inR = data.getNumChannels() > 1 ? data.getReadPointer(1) : nullptr;
+        
+        std::vector<int> hasPlaybackChannel;
+        for (auto c : playbackChannel) {
+            if (busCondition.busAvailable[c]) {
+                hasPlaybackChannel.push_back(busCondition.busChannelVec[c]);
+            }
+        }
+        std::vector<float*> outputListL;
+        std::vector<float*> outputListR;
+
+        int numOutputChannels = hasPlaybackChannel.size();
+
+        if (!hasPlaybackChannel.empty()) {
+            for (int index = 0; index < numOutputChannels; index++) {
                 int currentPlaybackChannel = hasPlaybackChannel[index];
                 outputListL.push_back(outputBuffer.getWritePointer(currentPlaybackChannel * 2, startSample));
                 outputListR.push_back(outputBuffer.getWritePointer(currentPlaybackChannel * 2 + 1, startSample));
@@ -155,9 +216,6 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 float l = (inL[pos] * invAlpha + inL[pos + 1] * alpha);
                 float r = (inR != nullptr) ? (inR[pos] * invAlpha + inR[pos + 1] * alpha)
                     : l;
-                
-//                l = EE.applyTo(l);
-//                r = EE.applyTo(r);
 
                 for (int chn = 0; chn < hasPlaybackChannel.size(); chn++) {
                     *outputListL[chn]++ += l * gain * currentNoteOnVel;
@@ -172,10 +230,17 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                     break;
                 }
             }
+            
             processedBuffer.setSize(2, renderedSamples);
             processedBuffer.copyFrom(0, 0, outputBuffer, hasPlaybackChannel[0], startSample, renderedSamples);
             processedBuffer.copyFrom(1, 0, outputBuffer, hasPlaybackChannel[1], startSample, renderedSamples);
             
+            EE.applyToBuffer(processedBuffer);
+            for (int index = 0; index < hasPlaybackChannel.size(); index++) {
+                int channelToOutput = hasPlaybackChannel[index];
+                outputBuffer.copyFrom(channelToOutput * 2, startSample, processedBuffer, 0, 0, renderedSamples);
+                outputBuffer.copyFrom(channelToOutput * 2 + 1, startSample, processedBuffer, 1, 0, renderedSamples);
+            }
         }
         else {
             stopNote(0, true);

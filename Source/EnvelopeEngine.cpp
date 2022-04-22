@@ -93,13 +93,3 @@ void EnvelopeEngine::shutDown() {
     incValueShutdown = -(1000.0 * envOutput) / shutdownTime / releaseTime;
     envelopeState = shutdown;
 }
-
-inline juce::AudioBuffer<float> EnvelopeEngine::applyTo(juce::AudioBuffer<float> &buffer) {
-    int numerOfSamples = buffer.getNumSamples();
-    int currentSample = 0;
-    float* writePointerL = buffer.getWritePointer(0, 0);
-    float* writePointerL = buffer.getWritePointer(1, 0);
-    while (++currentSample < numerOfSamples) {
-        
-    }
-}

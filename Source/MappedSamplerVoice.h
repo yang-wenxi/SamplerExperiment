@@ -62,6 +62,8 @@ public:
     void parameterChanged(const juce::String &parameterID, float newValue) override;
 
     void renderSample(juce::AudioBuffer< float > &bufferToProcess, int numSamples);
+    void renderNextBlockBySample(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples);
+    void renderNextBlockByBuffer(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples);
     
     std::vector<int> playbackChannel;
     busConditionSender busCondition;
