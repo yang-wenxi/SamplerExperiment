@@ -172,8 +172,9 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                     break;
                 }
             }
-            
             processedBuffer.setSize(2, renderedSamples);
+            processedBuffer.copyFrom(0, 0, outputBuffer, hasPlaybackChannel[0], startSample, renderedSamples);
+            processedBuffer.copyFrom(1, 0, outputBuffer, hasPlaybackChannel[1], startSample, renderedSamples);
             
         }
         else {

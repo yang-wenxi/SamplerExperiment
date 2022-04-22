@@ -114,10 +114,7 @@ public:
         envelopeState = off;
     }
     
-    inline juce::AudioBuffer<float> applyTo(juce::AudioBuffer<float> &inputBuffer) {
-        juce::AudioBuffer<float> processedBuffer;
-        return processedBuffer;
-    }
+    inline juce::AudioBuffer<float> applyTo(juce::AudioBuffer<float> &inputBuffer);
     
     inline double applyTo(double sample, double* biasedOutput = nullptr) {
         switch (envelopeState) {
