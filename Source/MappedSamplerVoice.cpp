@@ -248,10 +248,6 @@ void MappedSamplerVoice::renderNextBlockByBuffer(juce::AudioBuffer<float> &outpu
     }
 }
 
-void MappedSamplerVoice::renderSample(juce::AudioBuffer<float> &bufferToProcess, int numSamples) {
-    
-}
-
 void MappedSamplerVoice::parameterChanged(const juce::String &parameterID, float newValue) {
     if (parameterID == "GAIN")
         gain = newValue;
