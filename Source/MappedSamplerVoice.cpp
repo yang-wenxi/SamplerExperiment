@@ -127,7 +127,7 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         auto& data = *playingSound -> getAudioData();
         const float* const inL = data.getReadPointer(0);
         const float* const inR = data.getNumChannels() > 1 ? data.getReadPointer(1) : nullptr;
-
+        
         std::vector<int> hasPlaybackChannel;
         for (auto c : playbackChannel) {
             if (busCondition.busAvailable[c]) {
@@ -137,7 +137,7 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
         std::vector<float*> outputListL;
         std::vector<float*> outputListR;
 
-        int num = hasPlaybackChannel.size();
+        int numOutputChannels = hasPlaybackChannel.size();
 
         if (!hasPlaybackChannel.empty()) {
             for (int index = 0; index < hasPlaybackChannel.size(); index++) {
@@ -146,6 +146,7 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 outputListR.push_back(outputBuffer.getWritePointer(currentPlaybackChannel * 2 + 1, startSample));
             }
        
+            int renderedSamples = 0;
             while (--numSamples >= 0) {
                 auto pos = (int) sourceSamplePosition;
                 auto alpha = (float)(sourceSamplePosition - pos);
@@ -155,8 +156,8 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 float r = (inR != nullptr) ? (inR[pos] * invAlpha + inR[pos + 1] * alpha)
                     : l;
                 
-                l = EE.applyTo(l);
-                r = EE.applyTo(r);
+//                l = EE.applyTo(l);
+//                r = EE.applyTo(r);
 
                 for (int chn = 0; chn < hasPlaybackChannel.size(); chn++) {
                     *outputListL[chn]++ += l * gain * currentNoteOnVel;
@@ -164,17 +165,25 @@ void MappedSamplerVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffe
                 }
                 
                 sourceSamplePosition += pitchRatio;
+                renderedSamples++;
                 
                 if (sourceSamplePosition > playingSound -> length || EE.getState() == 0) {
                     clearCurrentNote();
                     break;
                 }
             }
+            
+            processedBuffer.setSize(2, renderedSamples);
+            
         }
         else {
             stopNote(0, true);
         }
     }
+}
+
+void MappedSamplerVoice::renderSample(juce::AudioBuffer<float> &bufferToProcess, int numSamples) {
+    
 }
 
 void MappedSamplerVoice::parameterChanged(const juce::String &parameterID, float newValue) {

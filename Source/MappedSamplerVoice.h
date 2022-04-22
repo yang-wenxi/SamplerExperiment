@@ -61,10 +61,13 @@ public:
     void renderNextBlockI(juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples);
     void parameterChanged(const juce::String &parameterID, float newValue) override;
 
+    void renderSample(juce::AudioBuffer< float > &bufferToProcess, int numSamples);
+    
     std::vector<int> playbackChannel;
     busConditionSender busCondition;
 
 private:
+    juce::AudioBuffer<float> processedBuffer;
     float currentNoteOnVel = 1.0f;
     float gain = 0.6f;
     int instrumentIndex;
