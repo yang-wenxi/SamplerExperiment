@@ -52,7 +52,6 @@ public:
     void addPlaybackChannel(int chan);
     void removePlaybackChannel(int chan);
 
-    //void parameterChanged(const juce::String &parameterID, float newValue) override;
     bool canPlaySound(juce::SynthesiserSound* sampSound) override;
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sampSound, int pitchWheel) override;
     void stopNote(float velocity, bool allowTailOff) override;
